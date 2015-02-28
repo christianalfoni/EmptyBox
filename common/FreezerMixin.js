@@ -64,7 +64,7 @@ var FreezerMixin = {
   },
   componentWillUnmount: function () {
     Object.keys(this.subscriptions).forEach(function (subscription) {
-      subscription.contextPath.getListener().off('update', subscription.callback);
+      this.subscriptions[subscription].contextPath.getListener().off('update', subscription.callback);
     }, this);
   }
 };

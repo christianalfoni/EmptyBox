@@ -9,7 +9,7 @@ var start = require('./server/core/start.js');
 
 var app = express();
 
-// Add more routes here
+// Add more routes or plugins here
 
 start(app);
 

@@ -51,16 +51,16 @@ module.exports = function (app) {
     });
 
     app.get('/', function (req, res) {
-
+      console.log('Got request');
       Promise.all([
           loadIndex(),
           articles.load()
         ])
         .then(function (results) {
+          index = results[0];
           return writeEntry(results[1]);
         })
         .then(function (results) {
-          index = results[0];
           index = index.replace('{{BLOG}}', 'Front page');
           res.type('html');
           res.send(index);
