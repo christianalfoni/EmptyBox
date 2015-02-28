@@ -16,6 +16,7 @@ Inspired by the Jekyll blog service. **EmptyBox** is a boilerplate ready for pro
 2. In project root `npm install` to install dependencies
 3. `npm start` to start the service
 4. Go to `localhost:3000`
+5. Open the test article at `localhost:3000/articles/test.md`
 
 ## Deploying to Heroku
 1. Create a Heroku account
