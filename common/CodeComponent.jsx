@@ -1,0 +1,20 @@
+var React = require('react');
+var hljs = require('highlight.js');
+
+var CodeComponent = React.createClass({
+  componentDidMount: function () {
+    this.refs.code.getDOMNode().innerHTML = hljs.highlight(this.props.language, this.props.code).value;
+  },
+  componentDidUpdate: function () {
+    this.refs.code.getDOMNode().innerHTML = hljs.highlight(this.props.language, this.props.code).value;
+  },
+  render: function () {
+    return React.createElement('pre', null,
+      React.createElement('code', {
+          ref: 'code'
+        }, this.props.code)
+    );
+  }
+});
+
+module.exports = CodeComponent;

@@ -1,0 +1,36 @@
+{
+  "name": "github-react-blog",
+  "version": "0.1.0",
+  "description": "A blog creator based on React",
+  "blog": {
+    "css": {
+      "base": "styles/main.css",
+      "highlight": "node_modules/highlight.js/styles/magula.css"
+    }
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Christian Alfoni",
+  "license": "MIT",
+  "dependencies": {
+    "css-loader": "^0.9.1",
+    "es6-promise": "^2.0.1",
+    "express": "^4.12.0",
+    "freezer-js": "^0.3.3",
+    "highlight.js": "^8.4.0",
+    "http-proxy": "^1.8.1",
+    "jsx-loader": "^0.12.2",
+    "marked": "^0.3.3",
+    "node-jsx": "^0.12.4",
+    "page": "^1.6.1",
+    "raw-loader": "^0.5.1",
+    "react": "^0.13.0-rc1",
+    "react-hot-loader": "^1.1.5",
+    "style-loader": "^0.8.3",
+    "webpack": "^1.6.0",
+    "webpack-dev-server": "^1.7.0"
+  }
+}
