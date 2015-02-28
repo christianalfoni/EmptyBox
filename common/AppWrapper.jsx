@@ -3,12 +3,13 @@ var React = require('react');
 function AppWrapper(storeState, Component) {
 
   var Wrapper = React.createClass({
-    childContextTypes: Object.keys(storeState).reduce(function (contextTypes, key) {
-      contextTypes[key] = React.PropTypes.object.isRequired
-      return contextTypes;
-    }, {}),
+    childContextTypes: {
+      store: React.PropTypes.object.isRequired
+    },
     getChildContext: function () {
-      return this.props.state;
+      return {
+        store: this.props.store
+      };
     },
     render: function () {
       return <Component/>

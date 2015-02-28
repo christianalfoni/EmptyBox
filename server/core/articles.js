@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var Promise = require('es6-promise').Promise;
+var parseArticle = require('./../../common/parseArticle.js');
 var articlesPath = path.resolve(__dirname, '..', '..', 'posts');
 var articles = [];
 
@@ -19,22 +20,7 @@ var readArticle = function (article) {
       if (err) {
         return console.log('Could not load article', err);
       }
-
-      var articleDetails = article.split('_');
-      console.log('articleDetails', articleDetails);
-      var year = articleDetails[0];
-      var month = articleDetails[1];
-      var date = articleDetails[2];
-      var title = articleDetails[3].split('-').join(' ').split('.')[0];
-      articles.push({
-        year: Number(year),
-        month: Number(month),
-        date: Number(date),
-        title: title,
-        content: content.toString(),
-        file: article,
-        url: '/articles/' + article.replace('.md', '')
-      });
+      articles.push(parseArticle(article, content.toString()));
       resolve(content);
     });
   });
@@ -90,7 +76,7 @@ module.exports = {
   },
   getByUrl: function (url) {
     return articles.filter(function (article) {
-      return aritcle.url === url;
+      return article.url === url;
     }).pop();
   }
 };

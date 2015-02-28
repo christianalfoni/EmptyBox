@@ -7,13 +7,12 @@ var articles = require('./articles.js');
 
 module.exports = function (url) {
 
-  console.log('url', url);
-  var state = {};
+  var store = {};
   var article = articles.getByUrl(url);
-  state.articles = {
+  store.articles = {
     current: article
   };
-  var Wrapper = new AppWrapper(state, Blog);
-  return React.renderToString(<Wrapper state={state}/>);
+  var Wrapper = new AppWrapper(store, Blog);
+  return React.renderToString(<Wrapper store={store}/>);
 
 };

@@ -1,9 +1,10 @@
 var React = require('react');
 var Article = require('./../common/ArticleComponent.jsx');
-var FreezerMixin = require('./../common/FreezerMixin.js');
+var Mixin = require('./../common/Mixin.js');
+var markdownRenderer = require('./../common/markdownRenderer.jsx');
 
 var Front = React.createClass({
-  mixins: [FreezerMixin],
+  mixins: [Mixin],
   contextTypes: {
     articles: React.PropTypes.object.isRequired
   },
@@ -13,12 +14,11 @@ var Front = React.createClass({
     };
   },
   renderArticle: function (article) {
-    console.log('article', article);
     return (
       <li>
         <div>{new Date(article.published).toString()}</div>
         <div><a href={article.url}>{article.title}</a></div>
-        <div>{article.description}</div>
+        {markdownRenderer(article.description)}
       </li>
     );
   },
@@ -32,20 +32,18 @@ var Front = React.createClass({
 });
 
 var Blog = React.createClass({
-  mixins: [FreezerMixin],
-  contextTypes: {
-    articles: React.PropTypes.object.isRequired
-  },
+  mixins: [Mixin],
   getContextState: function () {
     return {
       article: ['articles', 'current']
     };
   },
   render: function () {
+    console.log('Rendering!');
     return (
       <div>
         <h1><a href="/">Tha blog!</a></h1>
-        {this.state.article ? <Article content={this.state.article}/> : <Front/>}
+        {this.state.article ? <Article content={this.state.article.content}/> : <Front/>}
       </div>
     );
   }

@@ -1,19 +1,22 @@
 var React = require('react');
-var Freezer = require('freezer-js');
+var Baobab = require('baobab');
 var Page = require('page');
 var AppWrapper = require('./../common/AppWrapper.jsx');
+var parseArticle = require('./../common/parseArticle');
 var Blog = require('./Blog.jsx');
 
-var store = new Freezer({{BLOG_STATE}});
+var store = new Baobab({{BLOG_STATE}}, {
+  shiftReferences: true
+});
 
 var Wrapper = new AppWrapper(store.get(), Blog);
-var render = function (storeState) {
-  React.render(<Wrapper state={storeState}/>, document.body);
+var render = function () {
+  React.render(<Wrapper store={store}/>, document.body);
 };
 
 Page('/', function () {
-    store.get().articles.set('current', null);
-    render(store.get()); 
+    store.select('articles').set('current', null);
+    render(); 
 });
 
 {{BLOG_ROUTES}}

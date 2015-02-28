@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var Promise = require('es6-promise').Promise;
+var marked = require('marked');
 
 var readFile = function () {
   return new Promise(function (resolve, reject) {
@@ -29,9 +30,9 @@ var injectRoutes = function (articles, template) {
     return [
       'Page(\'' + article.url + '\', function (req) {\n',
       '  require.ensure([\'./../posts/' + article.file + '\'], function () {\n',
-      '    var article = require(\'./../posts/' + article.file + '\');\n',
-      '    store.get().articles.set(\'current\', article);\n',
-      '    render(store.get());\n',
+      '    var content = require(\'./../posts/' + article.file + '\');\n',
+      '    store.select(\'articles\').set(\'current\', parseArticle(\'' + article.file + '\', content));\n',
+      '    render();\n',
       '  });\n',
       '});'
     ].join('');
@@ -42,15 +43,7 @@ var injectRoutes = function (articles, template) {
 // Todo: Add first parapraph from article
 var injectState = function (state, articles, template) {
   state.articles = state.articles || {};
-  state.articles.list = articles.map(function (article) {
-    var description = article.content.match(/\<p\>.*?\<\/p\>/);
-    return {
-      title: article.title,
-      published: new Date(article.year, article.month - 1, article.date).getTime(),
-      description: description ? description[0] : 'No content',
-      url: article.url
-    };
-  });
+  state.articles.list = articles;
   return template.replace('{{BLOG_STATE}}', JSON.stringify(state));
 };
 
