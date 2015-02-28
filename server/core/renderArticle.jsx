@@ -5,13 +5,11 @@ var AppWrapper = require('./../../common/AppWrapper.jsx');
 var Blog = require('./../../blog/Blog.jsx');
 var articles = require('./articles.js');
 
-module.exports = function (path) {
+module.exports = function (url) {
 
-  path = path.replace('/articles/', '');
-  path = url.parse(path).pathname;
-
+  console.log('url', url);
   var state = {};
-  var article = articles.get(path);
+  var article = articles.getByUrl(url);
   state.articles = {
     current: article
   };

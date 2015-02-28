@@ -25,11 +25,11 @@ var writeFile = function (template) {
 };
 
 var injectRoutes = function (articles, template) {
-  var routes = Object.keys(articles).map(function (article) {
+  var routes = articles.map(function (article) {
     return [
-      'Page(\'/articles/' + article + '\', function (req) {\n',
-      '  require.ensure([\'./../posts/' + article + '\'], function () {\n',
-      '    var article = require(\'./../posts/' + article + '\');\n',
+      'Page(\'' + article.url + '\', function (req) {\n',
+      '  require.ensure([\'./../posts/' + article.file + '\'], function () {\n',
+      '    var article = require(\'./../posts/' + article.file + '\');\n',
       '    store.get().articles.set(\'current\', article);\n',
       '    render(store.get());\n',
       '  });\n',
@@ -42,13 +42,21 @@ var injectRoutes = function (articles, template) {
 // Todo: Add first parapraph from article
 var injectState = function (state, articles, template) {
   state.articles = state.articles || {};
-  state.articles.list = Object.keys(articles);
+  state.articles.list = articles.map(function (article) {
+    var description = article.content.match(/\<p\>.*?\<\/p\>/);
+    return {
+      title: article.title,
+      published: new Date(article.year, article.month - 1, article.date).getTime(),
+      description: description ? description[0] : 'No content',
+      url: article.url
+    };
+  });
   return template.replace('{{BLOG_STATE}}', JSON.stringify(state));
 };
 
 var injectHotAccepts = function (articles, template) {
-  var hotAccepts = Object.keys(articles).map(function (article) {
-    return './../posts/' + article;
+  var hotAccepts = articles.map(function (article) {
+    return './../posts/' + article.file;
   });
   return template.replace('{{BLOG_HOTACCEPTS}}', JSON.stringify(hotAccepts));
 };

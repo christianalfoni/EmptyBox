@@ -13,9 +13,12 @@ var Front = React.createClass({
     };
   },
   renderArticle: function (article) {
+    console.log('article', article);
     return (
       <li>
-        <a href={'/articles/' + article}>article</a>
+        <div>{new Date(article.published).toString()}</div>
+        <div><a href={article.url}>{article.title}</a></div>
+        <div>{article.description}</div>
       </li>
     );
   },
