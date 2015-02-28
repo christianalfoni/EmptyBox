@@ -16,20 +16,30 @@ var readArticle = function (article) {
   });
 };
 
-module.exports = {
-  load: function () {
+var readArticles = function () {
+  return new Promise(function (resolve, reject) {
     fs.readdir(articlesPath, function (err, files) {
       if (err) {
         console.error('Error loading articles', err);
       }
-      Promise.all(files.map(readArticle))
-      .then(function () {
-        console.log('Read all articles', Object.keys(articles));
-      })
-      .catch(function (err) {
-        console.log('Could not read articles', err);
-      })
+      resolve(files);
     });
+  });
+};
+
+module.exports = {
+  load: function () {
+    return readArticles()
+      .then(function (files) {
+        return Promise.all(files.map(readArticle))
+          .then(function () {
+            console.log('Read all articles');
+            return articles;
+          })
+          .catch(function (err) {
+            console.log('Could not read articles', err);
+          })
+      });
   },
   get: function (name) {
     return articles[name];

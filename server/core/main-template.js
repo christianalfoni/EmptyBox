@@ -4,7 +4,7 @@ var Page = require('page');
 var AppWrapper = require('./../common/AppWrapper.jsx');
 var Blog = require('./Blog.jsx');
 
-var store = new Freezer({"articles":{"list":["test.md"]}});
+var store = new Freezer({{BLOG_STATE}});
 
 var Wrapper = new AppWrapper(store.get(), Blog);
 var render = function (storeState) {
@@ -16,18 +16,12 @@ Page('/', function () {
     render(store.get()); 
 });
 
-Page('/articles/test.md', function (req) {
-  require.ensure(['./../posts/test.md'], function () {
-    var article = require('./../posts/test.md');
-    store.get().articles.set('current', article);
-    render(store.get());
-  });
-});
+{{BLOG_ROUTES}}
 
 Page.start();
 
 if (module.hot) {
-    module.hot.accept(["./../posts/test.md"], function () {
+    module.hot.accept({{BLOG_HOTACCEPTS}}, function () {
       Page(location.pathname);
     });
 }
