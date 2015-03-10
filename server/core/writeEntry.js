@@ -31,7 +31,7 @@ var injectRoutes = function (articles, template) {
       'Page(\'' + article.url + '\', function (req) {\n',
       '  require.ensure([\'./../posts/' + article.file + '\'], function () {\n',
       '    var content = require(\'./../posts/' + article.file + '\');\n',
-      '    store.select(\'articles\').set(\'current\', parseArticle(\'' + article.file + '\', content));\n',
+      '    store.set(\'currentArticle\', parseArticle(\'' + article.file + '\', content));\n',
       '    render();\n',
       '  });\n',
       '});'
@@ -42,8 +42,7 @@ var injectRoutes = function (articles, template) {
 
 // Todo: Add first parapraph from article
 var injectState = function (state, articles, template) {
-  state.articles = state.articles || {};
-  state.articles.list = articles;
+  state.articles = articles;
   return template.replace('{{BLOG_STATE}}', JSON.stringify(state));
 };
 

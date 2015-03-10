@@ -15,6 +15,11 @@ var config = {
     path: publicPath,
     publicPath: '/public/'
   },
+  resolve: {
+    alias: {
+      'react': 'react/addons'
+    }
+  },
   module: {
     loaders: [{
       test: /\.jsx$/,

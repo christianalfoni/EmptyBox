@@ -65,7 +65,7 @@ module.exports = {
       .then(function (files) {
         return Promise.all(files.map(readArticle))
           .then(function () {
-            console.log('Read all articles');
+            console.log('Updated articles');
             sortByDate();
             return articles;
           });
@@ -78,5 +78,15 @@ module.exports = {
     return articles.filter(function (article) {
       return article.url === url;
     }).pop();
+  },
+  getAllWithoutContent: function () {
+    return articles.map(function (article) {
+      return Object.keys(article).reduce(function (articleWithoutContent, key) {
+        if (key !== 'content') {
+          articleWithoutContent[key] = article[key];
+        }
+        return articleWithoutContent;
+      }, {})
+    });
   }
 };

@@ -13,12 +13,14 @@ if (global.isProduction) {
 
 module.exports = {
   bundleDev: function () {
-    var compiler = webpack(config);
+    var compiler = webpack(config, function () {
+      console.log('Blog is ready!');
+    });
     return new WebpackDevServer(compiler, {
       contentBase: buildPath,
       hot: true,
       quiet: false,
-      noInfo: false,
+      noInfo: true,
       publicPath: '/public/',
       stats: {
         colors: true

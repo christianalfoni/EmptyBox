@@ -4,7 +4,7 @@ var fs = require('fs');
 var path = require('path');
 var Promise = require('es6-promise').Promise;
 var packageJson = require('./../../package.json');
-var renderArticle = require('./renderArticle.jsx');
+var renderBlog = require('./renderBlog.jsx');
 var loadIndex = require('./loadIndex.js');
 var articles = require('./articles.js');
 var bundler = require('./bundler.js');
@@ -61,7 +61,8 @@ module.exports = function (app) {
           return writeEntry(results[1]);
         })
         .then(function (results) {
-          index = index.replace('{{BLOG}}', 'Front page');
+          var blogHtml = renderBlog();
+          index = index.replace('{{BLOG}}', blogHtml);
           res.type('html');
           res.send(index);
         })
@@ -82,7 +83,7 @@ module.exports = function (app) {
           return writeEntry(results[1]);
         })
         .then(function () {
-          var blogHtml = renderArticle(req.path);
+          var blogHtml = renderBlog(req.path);
           index = index.replace('{{BLOG}}', blogHtml);
           res.type('html');
           res.send(index);
@@ -108,7 +109,7 @@ module.exports = function (app) {
       })
       .then(function () {
         bundler.bundleDev().listen(8080, "localhost", function () {
-          console.log('Ready to bundle blog');
+          console.log('Bundling blog, please wait...');
         });
       });
 

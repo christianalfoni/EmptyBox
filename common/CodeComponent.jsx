@@ -9,7 +9,7 @@ var CodeComponent = React.createClass({
     this.refs.code.getDOMNode().innerHTML = hljs.highlight(this.props.language, this.props.code).value;
   },
   render: function () {
-    return React.createElement('pre', null,
+    return React.createElement('pre', {key: this.props.key},
       React.createElement('code', {
           ref: 'code'
         }, this.props.code)

@@ -1,21 +1,16 @@
 var React = require('react');
 var Article = require('./../common/ArticleComponent.jsx');
-var Mixin = require('./../common/Mixin.js');
 var markdownRenderer = require('./../common/markdownRenderer.jsx');
+var store = require('./../common/store.js');
 
 var Front = React.createClass({
-  mixins: [Mixin],
-  contextTypes: {
-    articles: React.PropTypes.object.isRequired
+  mixins: [store.mixin],
+  cursors: {
+    articles: ['articles']
   },
-  getContextState: function () {
-    return {
-      articles: ['articles', 'list']
-    };
-  },
-  renderArticle: function (article) {
+  renderArticle: function (article, index) {
     return (
-      <li>
+      <li key={index}>
         <div>{new Date(article.published).toString()}</div>
         <div><a href={article.url}>{article.title}</a></div>
         {markdownRenderer(article.description)}
@@ -23,27 +18,26 @@ var Front = React.createClass({
     );
   },
   render: function () {
+    var articles = this.state.cursors.articles;
     return (
       <ul>
-        {this.state.articles.map(this.renderArticle)}
+        {articles.map(this.renderArticle)}
       </ul>
     );
   }
 });
 
 var Blog = React.createClass({
-  mixins: [Mixin],
-  getContextState: function () {
-    return {
-      article: ['articles', 'current']
-    };
+  mixins: [store.mixin],
+  cursors: {
+    article: ['currentArticle']
   },
   render: function () {
-    console.log('Rendering!');
+    var article = this.state.cursors.article;
     return (
       <div>
         <h1><a href="/">Tha blog!</a></h1>
-        {this.state.article ? <Article content={this.state.article.content}/> : <Front/>}
+        {article ? <Article content={article.content}/> : <Front/>}
       </div>
     );
   }

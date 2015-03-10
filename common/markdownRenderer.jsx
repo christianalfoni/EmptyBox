@@ -3,6 +3,7 @@ var marked = require('marked');
 var CodeComponent = require('./CodeComponent.jsx');
 var renderer = new marked.Renderer();
 var inlineIds = 0;
+var keys = 0;
 var inlines = {};
 var result = [];
 
@@ -21,13 +22,13 @@ var createBlockContent = function (content) {
 };
 
 renderer.code = function (code, language) {
-  result.push(<CodeComponent language={language} code={code}/>);
+  result.push(<CodeComponent key={keys++} language={language} code={code}/>);
 };
 
 renderer.blockquote = function (text) {
   result.pop();
   result.push(React.createElement('blockquote', null,
-    React.createElement('p', null, createBlockContent(text))
+    React.createElement('p', {key: keys++}, createBlockContent(text))
   ));
 };
 
@@ -38,32 +39,32 @@ renderer.html = function (html) {
 
 renderer.heading = function (text, level) {
   var type = 'h' + level;
-  result.push(React.createElement(type, null, createBlockContent(text)));
+  result.push(React.createElement(type, {key: keys++}, createBlockContent(text)));
 };
 
 renderer.hr = function () {
-  result.push(React.createElement('hr'));
+  result.push(React.createElement('hr', {key: keys++}));
 };
 
 renderer.list = function (body, ordered) {
-  result.push(React.createElement(ordered ? 'ol' : 'ul', null, createBlockContent(body)));
+  result.push(React.createElement(ordered ? 'ol' : 'ul', {key: keys++}, createBlockContent(body)));
 };
 
 renderer.listitem = function (text) {
   var id = inlineIds++;
-  inlines[id] = React.createElement('li', null, createBlockContent(text));
+  inlines[id] = React.createElement('li', {key: keys++}, createBlockContent(text));
   return '{{' + id + '}}';  
 };
 
 renderer.paragraph = function (text) {
   var id = inlineIds++;
-  inlines[id] = React.createElement('p', null, createBlockContent(text));
+  inlines[id] = React.createElement('p', {key: keys++}, createBlockContent(text));
   result.push(inlines[id]);
   return '{{' + id + '}}';
 };
 
 renderer.table = function (header, body) {
-  result.push(React.createElement('table', null, 
+  result.push(React.createElement('table', {key: keys++}, 
     createBlockContent(header),
     createBlockContent(body)
   ));
@@ -71,13 +72,13 @@ renderer.table = function (header, body) {
 
 renderer.tablerow = function (content) {
   var id = inlineIds++;
-  inlines[id] = React.createElement('tr', null, createBlockContent(content));
+  inlines[id] = React.createElement('tr', {key: keys++}, createBlockContent(content));
   return '{{' + id + '}}';   
 };
 
 renderer.tablecell = function (content, flags) {
   var id = inlineIds++;
-  var props =  flags.align ? {className: 'text-' + flags.align} : null;
+  var props =  flags.align ? {className: 'text-' + flags.align} : {key: keys++};
   inlines[id] = React.createElement(flags.header ? 'th' : 'td', props, createBlockContent(content));
   return '{{' + id + '}}'; 
 };
@@ -86,44 +87,45 @@ renderer.link = function (href, title, text) {
   var id = inlineIds++;
   inlines[id] = React.createElement('a', {
     href: href,
-    title: title
+    title: title,
+    key: keys++
   }, text);
   return '{{' + id + '}}';
 };
 
 renderer.strong = function (text) {
   var id = inlineIds++;
-  inlines[id] = React.createElement('strong', null, text);
+  inlines[id] = React.createElement('strong', {key: keys++}, text);
   return '{{' + id + '}}'; 
 };
 
 renderer.em = function (text) {
   var id = inlineIds++;
-  inlines[id] = React.createElement('em', null, text);
+  inlines[id] = React.createElement('em', {key: keys++}, text);
   return '{{' + id + '}}'; 
 };
 
 renderer.codespan = function (text) {
   var id = inlineIds++;
-  inlines[id] = React.createElement('code', null, text);
+  inlines[id] = React.createElement('code', {key: keys++}, text);
   return '{{' + id + '}}'; 
 };
 
 renderer.br = function (text) {
   var id = inlineIds++;
-  inlines[id] = React.createElement('br', null, text);
+  inlines[id] = React.createElement('br', {key: keys++}, text);
   return '{{' + id + '}}'; 
 };
 
 renderer.del = function (text) {
   var id = inlineIds++;
-  inlines[id] = React.createElement('del', null, text);
+  inlines[id] = React.createElement('del', {key: keys++}, text);
   return '{{' + id + '}}'; 
 };
 
 renderer.image = function (href, title, text) {
   var id = inlineIds++;
-  inlines[id] = React.createElement('img', {src: href, alt: title});
+  inlines[id] = React.createElement('img', {src: href, alt: title, key: keys++});
   return '{{' + id + '}}'; 
 };
 
@@ -131,6 +133,7 @@ renderer.image = function (href, title, text) {
 module.exports = function (content) {
   result = [];
   inlines = {};
+  keys = 0;
   marked(content, {renderer: renderer, smartypants: true});
   return result;
 };

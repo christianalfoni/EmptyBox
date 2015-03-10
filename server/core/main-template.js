@@ -1,22 +1,19 @@
+// Add BLOG default state
+global.BLOG_STATE = {{BLOG_STATE}};
+
 var React = require('react');
-var Baobab = require('baobab');
 var Page = require('page');
-var AppWrapper = require('./../common/AppWrapper.jsx');
+var store = require('./../common/store.js');
 var parseArticle = require('./../common/parseArticle');
 var Blog = require('./Blog.jsx');
 
-var store = new Baobab({{BLOG_STATE}}, {
-  shiftReferences: true
-});
-
-var Wrapper = new AppWrapper(store.get(), Blog);
 var render = function () {
-  React.render(<Wrapper store={store}/>, document.body);
+  React.render(<Blog/>, document.body);
 };
 
 Page('/', function () {
-    store.select('articles').set('current', null);
-    render(); 
+    store.set('currentArticle', null);
+    render();
 });
 
 {{BLOG_ROUTES}}

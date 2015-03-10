@@ -21,8 +21,7 @@ var config = {
   resolve: {
     alias: {
       'react/lib/ReactMount': path.resolve(node_modules_dir, 'react', 'lib', 'ReactMount'),
-      'react/addons': path.resolve(reactPath, 'react-with-addons.min.js'),
-      'react': path.resolve(reactPath, 'react.min.js')
+      'react/addons': path.resolve(reactPath, 'react.min.js')
     }
   },
   module: {
