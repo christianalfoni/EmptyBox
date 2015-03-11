@@ -1,6 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
-var blogPath = path.resolve(__dirname, 'blog');
+var corePath = path.resolve(__dirname, 'core');
 var node_modules_dir = path.resolve(__dirname, 'node_modules');
 var reactPath = path.resolve(node_modules_dir, 'react', 'dist');
 var buildPath = path.resolve(__dirname, 'build');
@@ -9,9 +9,9 @@ var config = {
   entry: [
     'webpack-dev-server/client?http://localhost:8080', 
     'webpack/hot/only-dev-server', 
-    path.resolve(blogPath, '_main.jsx')
+    path.resolve(corePath, '_main.jsx')
   ],
-  context: blogPath,
+  context: corePath,
   devtool: 'eval',
   output: {
     filename: 'blog.js',
@@ -39,6 +39,9 @@ var config = {
     }, {
       test: /\.json$/,
       loader: 'json'
+    }, {
+      test: /\.woff$/,
+      loader: 'url?limit=100000'
     }]
   },
   plugins: [new webpack.HotModuleReplacementPlugin(), new webpack.NoErrorsPlugin()]

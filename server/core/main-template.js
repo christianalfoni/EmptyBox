@@ -1,11 +1,20 @@
 // Add BLOG default state
 global.BLOG_STATE = {{BLOG_STATE}};
 
+{{BASE_CSS_IN_DEV}}
+
+// Fonts handling
+require('./_fonts.css');
+window.onload = function () {
+  document.body.className = document.body.className.replace('fonts-loading', 'fonts-loaded'); 
+};
+
+
 var React = require('react');
 var Page = require('page');
 var store = require('./../common/store.js');
 var parseArticle = require('./../common/parseArticle');
-var Blog = require('./Blog.jsx');
+var Blog = require('./../blog/Blog.jsx');
 
 var render = function () {
   React.render(<Blog/>, document.body);
@@ -13,6 +22,7 @@ var render = function () {
 
 Page('/', function () {
     store.set('currentArticle', null);
+    store.set('currentRoute', '/');
     render();
 });
 

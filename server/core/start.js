@@ -1,6 +1,6 @@
 var httpProxy = require('http-proxy');
 var express = require('express');
-var fs = require('fs');
+var compress = require('compression');
 var path = require('path');
 var Promise = require('es6-promise').Promise;
 var packageJson = require('./../../package.json');
@@ -13,6 +13,8 @@ var writeEntry = require('./writeEntry.js');
 var index = 'Index files not loaded yet';
 
 module.exports = function (app) {
+
+  app.use(compress()); 
 
   if (global.isProduction) {
 
@@ -35,7 +37,7 @@ module.exports = function (app) {
     app.use('/public', express.static(path.resolve(__dirname, '..', '..', 'public')));
 
     app.get('*', function (req, res) {
-      var blogHtml = renderArticle(req.path);
+      var blogHtml = renderBlog(req.path);
       res.type('html');
       res.send(index.replace('{{BLOG}}', blogHtml));
     });
@@ -49,6 +51,8 @@ module.exports = function (app) {
     var proxy = httpProxy.createProxyServer({
       changeOrigin: true
     });
+
+    app.use('/fonts', express.static(path.resolve(__dirname, '..', '..', 'public', 'fonts')));
 
     app.get('/', function (req, res) {
       console.log('Got request');

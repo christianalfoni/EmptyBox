@@ -1,7 +1,8 @@
 var React = require('react');
-var Article = require('./../common/ArticleComponent.jsx');
-var markdownRenderer = require('./../common/markdownRenderer.jsx');
+var Article = require('./Article.jsx');
+var markdownRenderer = require('./../common/markdownRenderer.js');
 var store = require('./../common/store.js');
+var Timer = require('./Timer.jsx');
 
 var Front = React.createClass({
   mixins: [store.mixin],
@@ -20,7 +21,7 @@ var Front = React.createClass({
   render: function () {
     var articles = this.state.cursors.articles;
     return (
-      <ul>
+      <ul className="articlesList">
         {articles.map(this.renderArticle)}
       </ul>
     );
@@ -30,14 +31,33 @@ var Front = React.createClass({
 var Blog = React.createClass({
   mixins: [store.mixin],
   cursors: {
-    article: ['currentArticle']
+    article: ['currentArticle'],
+    currentRoute: ['currentRoute']
+  },
+  renderArticle: function (article) {
+
+    return [
+      <Article key={0} article={article}/>,
+      <Timer key={1}/>
+    ];
+  },
+  getHeaderClassName: function () {
+    if (this.state.cursors.currentRoute === '/') {
+      return 'header-front';
+    } else {
+      return 'header-article';
+    }
   },
   render: function () {
     var article = this.state.cursors.article;
+    var headerClassName = this.getHeaderClassName();
+
     return (
       <div>
-        <h1><a href="/">Tha blog!</a></h1>
-        {article ? <Article content={article.content}/> : <Front/>}
+        <header className={'layout-header ' + headerClassName}>
+          <a className="header-link" href="/">{'<- Back'}</a>
+        </header>
+        {article ? this.renderArticle(article) : <Front/>}
       </div>
     );
   }

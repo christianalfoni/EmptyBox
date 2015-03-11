@@ -18,6 +18,11 @@ Inspired by the Jekyll blog service. **EmptyBox** is a boilerplate ready for pro
 4. Go to `localhost:3000`
 5. You can add new articles in the `posts/` folder. Use this convention on filename: `2015_02_28_MyArticle.md`
 
+## Loading fonts
+- Go to: [google-webfonts-helper](https://google-webfonts-helper.herokuapp.com)
+- Download fonts you want and install them in `public/fonts`
+- Insert CSS and points to `/fonts/{font_name}`
+
 ## Deploying to Heroku
 1. Create a Heroku account
 2. Add Heroku git repo as upstream to your fork

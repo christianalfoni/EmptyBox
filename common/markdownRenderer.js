@@ -1,6 +1,6 @@
 var React = require('react');
 var marked = require('marked');
-var CodeComponent = require('./CodeComponent.jsx');
+var CodeComponent = React.createFactory(require('./CodeComponent.jsx'));
 var renderer = new marked.Renderer();
 var inlineIds = 0;
 var keys = 0;
@@ -22,7 +22,7 @@ var createBlockContent = function (content) {
 };
 
 renderer.code = function (code, language) {
-  result.push(<CodeComponent key={keys++} language={language} code={code}/>);
+  result.push(CodeComponent({key: keys++, language: language, code: code}));
 };
 
 renderer.blockquote = function (text) {

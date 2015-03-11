@@ -1,0 +1,24 @@
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Lato Light'), local('Lato-Light'), url('./../fonts/lato-v11-latin-300.woff') format('woff');
+}
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Montserrat-Regular'), url('./../fonts/montserrat-v6-latin-regular.woff') format('woff');
+}
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Roboto'), local('Roboto-Regular'), url('./../fonts/roboto-v15-latin-regular.woff') format('woff');
+}
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Roboto Bold'), local('Roboto-Bold'), url('./../fonts/roboto-v15-latin-700.woff') format('woff');
+}

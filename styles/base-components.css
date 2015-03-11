@@ -1,0 +1,71 @@
+.timer {
+    position: fixed;
+    font-family: 'Roboto';
+    right: 20px;
+    top: 100px;
+    color: #DADADA;
+}
+.header-front {
+  background-color: #30A5D0;
+}
+.header-article {
+  background-color: #A35229;
+}
+.header-link {
+  text-decoration: none;
+  color: #EAEAEA;
+  font-family: 'Lato';
+  font-size: 2em;
+  line-height: 100px;
+  margin: 1em;
+  opacity: 0;
+  transform: translate3d(-25px, 0, 0);
+  -webkit-transform: translate3d(-25px, 0, 0);
+  transition: opacity 0.5s ease-in, transform 0.25s ease-in;
+  -webkit-transition: opacity 0.5s ease-in, -webkit-transform 0.25s ease-in;
+}
+.fonts-loaded .header-link {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+}
+.articleHeader-profile--container {
+    display: inline-block;
+    width: 100px;
+}
+.articleHeader-profile--image {
+    width: 100px;
+    height: 100px;
+    border-radius: 150px;
+    -webkit-border-radius: 150px;
+    -moz-border-radius: 150px;
+    background: url(https://lh4.googleusercontent.com/-C9FoJFKZg8o/ThlsBePd1zI/AAAAAAAAAMs/fM9G8ncejhw/w140-h140-p/41465_1064343913_8593_n.jpg) no-repeat;
+}
+.articleHeader-date--container {
+    float: right;
+    height: 100px;
+}
+.articleHeader-date--month {
+    float: left;
+    font-family: 'Roboto';
+    font-size: 2em;
+    color: #CACACA;
+    line-height: 100px;
+    padding-right: 20px;
+}
+.articleHeader-date--year {
+    float: left;
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 2.5em;
+    color: #EAEAEA;
+    line-height: 100px;
+}
+.articlesList {
+  opacity: 0;
+  transition: opacity 0.5s ease-in;
+  -webkit-transition: opacity 0.5s ease-in;
+}
+.fonts-loaded .articlesList {
+  opacity: 1;
+}
