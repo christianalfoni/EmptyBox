@@ -88,7 +88,8 @@ renderer.link = function (href, title, text) {
   inlines[id] = React.createElement('a', {
     href: href,
     title: title,
-    key: keys++
+    key: keys++,
+    target: 'new'
   }, text);
   return '{{' + id + '}}';
 };

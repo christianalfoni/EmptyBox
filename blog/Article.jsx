@@ -1,24 +1,6 @@
 var React = require('react');
 var markdownRenderer = require('./../common/markdownRenderer.js');
-
-var months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-];
-
-var getMonth = function (index) {
-  return months[index - 1];
-};
+var utils = require('./utils.js');
 
 module.exports = React.createClass({
   componentDidMount: function () {
@@ -39,7 +21,7 @@ module.exports = React.createClass({
           </div>
           <div className="articleHeader-date--container">
             <div className="articleHeader-date--month">
-              {getMonth(this.props.article.month)}
+              {utils.getMonth(this.props.article.month)}
             </div>
             <div className="articleHeader-date--year">
               {this.props.article.year}

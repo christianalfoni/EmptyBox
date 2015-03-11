@@ -5,19 +5,25 @@ html, body {
     font-size: 100%;
     overflow-x: hidden;
 }
+pre {
+  position: relative;
+  background-color: #F7F7F7;
+  padding: 0 2em 2em 2em;
+  border-radius: 0.5em;
+}
 pre code {
   font-family: consolas, Inconsolata;
   font-size: 1.25em;
   background-color: transparent;
   line-height: 1.25em;
-  color: #222;
+  color: #555;
 }
 code {
   font-family: consolas, Inconsolata;
   font-size: 1em;
-  background-color: #333;
+  background-color: #555;
   color: #EAEAEA;
-  padding: 4px 6px;
+  padding: 8px 15px;
   border-radius: 3px;
 }
 article {

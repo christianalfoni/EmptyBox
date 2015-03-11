@@ -3,6 +3,7 @@ var Article = require('./Article.jsx');
 var markdownRenderer = require('./../common/markdownRenderer.js');
 var store = require('./../common/store.js');
 var Timer = require('./Timer.jsx');
+var utils = require('./utils.js');
 
 var Front = React.createClass({
   mixins: [store.mixin],
@@ -11,10 +12,19 @@ var Front = React.createClass({
   },
   renderArticle: function (article, index) {
     return (
-      <li key={index}>
-        <div>{new Date(article.published).toString()}</div>
-        <div><a href={article.url}>{article.title}</a></div>
-        {markdownRenderer(article.description)}
+      <li className={'articlesList-item' + (index === 0 ? ' articlesList-item-first' : '')} key={index}>
+        <div className="articlesList-item--date">
+          <span className="articlesList-item--month">{utils.getMonth(article.month)}</span> 
+          <span className="articlesList-item--year">{article.year}</span>
+        </div>
+        <div className="articlesList-item--title"><a href={article.url}>{article.title}</a></div>
+        {index === 0 ?
+          <div className="articlesList-item--description">
+            {markdownRenderer(article.description)}
+          </div> :
+          null 
+        }
+        <div className="clear"></div>
       </li>
     );
   },
@@ -35,27 +45,18 @@ var Blog = React.createClass({
     currentRoute: ['currentRoute']
   },
   renderArticle: function (article) {
-
     return [
       <Article key={0} article={article}/>,
       <Timer key={1}/>
     ];
   },
-  getHeaderClassName: function () {
-    if (this.state.cursors.currentRoute === '/') {
-      return 'header-front';
-    } else {
-      return 'header-article';
-    }
-  },
   render: function () {
     var article = this.state.cursors.article;
-    var headerClassName = this.getHeaderClassName();
-
     return (
       <div>
-        <header className={'layout-header ' + headerClassName}>
-          <a className="header-link" href="/">{'<- Back'}</a>
+        <header className="layout-header">
+          {article ? <a className="header-link" href="/">{'<- Back'}</a> : null}
+          {!article ? <h1 className="header-title">christianalfoni</h1> : null}
         </header>
         {article ? this.renderArticle(article) : <Front/>}
       </div>

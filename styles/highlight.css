@@ -1,0 +1,13 @@
+.hljs-keyword, .hljs-literal {
+  color: #286090;
+}
+.hljs-comment {
+  color: #999;
+  font-style: italic;
+}
+.hljs-built_in {
+  color: #5CB85C;
+}
+.hljs-string {
+  color: #F0AD4E;
+}

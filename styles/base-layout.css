@@ -1,7 +1,5 @@
 .layout-header {
   height: 100px;
-  transition: background-color 0.5s ease-out;
-  -webkit-transition: background-color 0.5s ease-out;
 }
 .layout-articleHeader {
     height: 100px;

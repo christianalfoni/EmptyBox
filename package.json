@@ -5,7 +5,7 @@
   "blog": {
     "css": {
       "base": "styles/main.css",
-      "highlight": "node_modules/highlight.js/styles/magula.css"
+      "highlight": "styles/highlight.css"
     }
   },
   "main": "index.js",
