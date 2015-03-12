@@ -8,7 +8,7 @@ Inspired by the Jekyll blog service. **EmptyBox** is a boilerplate ready for pro
 - Isomorphic by default
 - Write articles in Github Markdown
 - Articles are automatically bundled with your application and lazy loaded
-- When editing markdown files and saving the application LIVE updates the article
+- When editing markdown files and saving, the application HOT LOADS the article, magic!
 - Add whatever functionality you want. Simple APIs gives you access to the articles
 
 ## Getting started
@@ -19,9 +19,19 @@ Inspired by the Jekyll blog service. **EmptyBox** is a boilerplate ready for pro
 5. You can add new articles in the `posts/` folder. Use this convention on filename: `2015_02_28_MyArticle.md`
 
 ## Loading fonts
-- Go to: [google-webfonts-helper](https://google-webfonts-helper.herokuapp.com)
-- Download fonts you want and install them in `public/fonts`
-- Insert CSS and points to `/fonts/{font_name}`
+- Go to: [google-webfonts-helper](https://google-webfonts-helper.herokuapp.com) and find the fonts you want to use
+- Identify the name and types, then update the package.json file, e.g.
+{
+  ...,
+  "blog": {
+    "fonts": {
+      "Roboto": ["regular", "700"]
+    }
+  }
+  ...
+}
+If only using the "regular"-version, set an empty array
+- Just start the blog with `npm start` and fonts are downloaded and inlined automatically
 
 ## Deploying to Heroku
 1. Create a Heroku account

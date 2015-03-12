@@ -1,18 +1,7 @@
-var fs = require('fs');
 var path = require('path');
 var packageJson = require('./../../package.json');
 var Promise = require('es6-promise').Promise;
-
-var readFile = function (path) {
-  return new Promise(function (resolve, reject) {
-    fs.readFile(path, function (err, file) {
-      if (err) {
-        return reject(err);
-      }
-      resolve(file.toString());
-    });
-  })
-};
+var utils = require('./utils.js');
 
 module.exports = function () {
 
@@ -23,11 +12,11 @@ module.exports = function () {
   var cssLayoutPath = path.resolve(__dirname, '..', '..', 'styles', 'base-layout.css');
   var cssComponentsPath = path.resolve(__dirname, '..', '..', 'styles', 'base-components.css');
   return Promise.all([
-    readFile(indexPath),
-    readFile(cssHighlightPath),
-    readFile(cssBasePath),
-    readFile(cssLayoutPath),
-    readFile(cssComponentsPath)
+    utils.readFile(indexPath),
+    utils.readFile(cssHighlightPath),
+    utils.readFile(cssBasePath),
+    utils.readFile(cssLayoutPath),
+    utils.readFile(cssComponentsPath)
   ])
   .then(function (results) {
     var index = results[0];

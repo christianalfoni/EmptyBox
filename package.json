@@ -6,6 +6,16 @@
     "css": {
       "base": "styles/main.css",
       "highlight": "styles/highlight.css"
+    },
+    "fonts": {
+      "Lato": [
+        "300"
+      ],
+      "Montserrat": [],
+      "Roboto": [
+        "regular",
+        "700"
+      ]
     }
   },
   "main": "index.js",
@@ -17,6 +27,7 @@
   "license": "MIT",
   "dependencies": {
     "baobab": "^0.3.2",
+    "base64": "^2.1.0",
     "compression": "^1.4.1",
     "css-loader": "^0.9.1",
     "es6-promise": "^2.0.1",
@@ -33,6 +44,7 @@
     "react": "^0.13.0-beta.1",
     "react-hot-loader": "^1.1.5",
     "style-loader": "^0.8.3",
+    "superagent": "^1.0.0",
     "webpack": "^1.6.0",
     "webpack-dev-server": "^1.7.0"
   }

@@ -39,9 +39,6 @@ var config = {
     }, {
       test: /\.json$/,
       loader: 'json'
-    }, {
-      test: /\.woff$/,
-      loader: 'url?limit=100000'
     }]
   },
   plugins: [new webpack.HotModuleReplacementPlugin(), new webpack.NoErrorsPlugin()]

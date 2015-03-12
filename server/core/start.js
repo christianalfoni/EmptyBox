@@ -9,6 +9,8 @@ var loadIndex = require('./loadIndex.js');
 var articles = require('./articles.js');
 var bundler = require('./bundler.js');
 var writeEntry = require('./writeEntry.js');
+var writeFonts = require('./writeFonts.js');
+var utils = require('./utils.js');
 
 var index = 'Index files not loaded yet';
 
@@ -20,7 +22,8 @@ module.exports = function (app) {
 
     Promise.all([
         loadIndex(),
-        articles.load()
+        articles.load(),
+        writeFonts()
       ])
       .then(function (results) {
         index = results[0];
@@ -55,7 +58,6 @@ module.exports = function (app) {
     app.use('/fonts', express.static(path.resolve(__dirname, '..', '..', 'public', 'fonts')));
 
     app.get('/', function (req, res) {
-      console.log('Got request');
       Promise.all([
           loadIndex(),
           articles.load()
@@ -106,7 +108,8 @@ module.exports = function (app) {
 
     Promise.all([
         loadIndex(),
-        articles.load()
+        articles.load(),
+        writeFonts()
       ])
       .then(function (results) {
         return writeEntry(results[1]);
@@ -115,6 +118,9 @@ module.exports = function (app) {
         bundler.bundleDev().listen(8080, "localhost", function () {
           console.log('Bundling blog, please wait...');
         });
+      })
+      .catch(function (err) {
+        console.log('error creating initial bundle', err, err.stack);
       });
 
     app.listen(3000, function () {

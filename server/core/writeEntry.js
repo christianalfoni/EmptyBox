@@ -1,30 +1,7 @@
-var fs = require('fs');
 var path = require('path');
-var Promise = require('es6-promise').Promise;
 var marked = require('marked');
 var articles = require('./articles.js');
-
-var readFile = function () {
-  return new Promise(function (resolve, reject) {
-    fs.readFile(path.resolve(__dirname, 'main-template.js'), function (err, file) {
-      if (err) {
-        return reject('Could not read main template', err);
-      }
-      resolve(file.toString());
-    });
-  });
-};
-
-var writeFile = function (template) {
-  return new Promise(function (resolve, reject) {
-    fs.writeFile(path.resolve(__dirname, '..', '..', 'core', '_main.jsx'), template, function (err) {
-      if (err) {
-        return reject('Could not write main file', err);
-      }
-      resolve();
-    });
-  });  
-};
+var utils = require('./utils.js');
 
 var injectRoutes = function (articles, template) {
   var routes = articles.map(function (article) {
@@ -68,13 +45,15 @@ var injectBaseCSS = function (template) {
 };
 
 module.exports = function (articles, state) {
+  var mainTemplatePath = path.resolve(__dirname, 'main-template.js');
   state = state || {};
-  return readFile()
+  return utils.readFile(mainTemplatePath)
     .then(function (template) {
+      var mainFile = path.resolve(__dirname, '..', '..', 'core', '_main.jsx');
       template = injectRoutes(articles, template);
       template = injectBaseCSS(template);
       template = injectState(state, template);
       template = injectHotAccepts(articles, template);
-      return writeFile(template);
+      return utils.writeFile(mainFile, template);
     });
 };
