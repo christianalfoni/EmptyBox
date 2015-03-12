@@ -10,6 +10,7 @@ Inspired by the Jekyll blog service. **EmptyBox** is a boilerplate ready for pro
 - Articles are automatically bundled with your application and lazy loaded
 - When editing markdown files and saving, the application HOT LOADS the article, magic!
 - Add whatever functionality you want. Simple APIs gives you access to the articles
+- Add Google Webfonts with automatic base64 inlining using package.json
 
 ## Getting started
 1. Fork the repo and clone it to your computer
