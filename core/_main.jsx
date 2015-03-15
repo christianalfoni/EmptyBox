@@ -1,16 +1,9 @@
 // Add BLOG default state
-global.BLOG_STATE = {"articles":[{"year":2015,"month":2,"date":28,"published":1425078000000,"title":"A browserify workflow part 2","description":"I wrote an article on working with React JS in a browserify workflow. Well, I got some more experience with it and here is PART2. You can grab this boilerplate at [react-app-boilerplate](https://github.com/christianalfoni/react-app-boilerplate).","file":"2015_02_28_A-browserify-workflow-part-2.md","url":"/articles/2015_02_28_A-browserify-workflow-part-2"},{"year":2014,"month":1,"date":22,"published":1390345200000,"title":"Sending json","description":"```javascript","file":"2014_01_22_Sending-json.md","url":"/articles/2014_01_22_Sending-json"}]};
+global.BLOG_STATE = {"articles":[{"year":2015,"month":2,"date":28,"published":1425078000000,"title":"A browserify workflow part 2","description":"I wrote an article on working with React JS in a browserify workflow. Well, I got some more experience with it and here is PART2. You can grab this boilerplate at [react-app-boilerplate](https://github.com/christianalfoni/react-app-boilerplate).","file":"2015_02_28_A-browserify-workflow-part-2.md","url":"/articles/2015_02_28_A-browserify-workflow-part-2"},{"year":2014,"month":8,"date":20,"published":1408485600000,"title":"React js and flux","description":"I am not going to take up your time explaining FLUX in details, that is already very well done on the [Facebook flux site](http://facebook.github.io/flux/). What I want to tell you about is why you would want to consider the flux architecture with React JS","file":"2014_08_20_React-js-and-flux.md","url":"/articles/2014_08_20_React-js-and-flux"}]};
 
 require('./../styles/base.css')
 require('./../styles/base-layout.css')
 require('./../styles/base-components.css')
-
-// Fonts handling
-require('./_fonts.css');
-window.onload = function () {
-  document.body.className = document.body.className.replace('fonts-loading', 'fonts-loaded'); 
-};
-
 
 var React = require('react');
 var Page = require('page');
@@ -34,18 +27,18 @@ Page('/articles/2015_02_28_A-browserify-workflow-part-2', function (req) {
     store.set('currentArticle', parseArticle('2015_02_28_A-browserify-workflow-part-2.md', content));
     store.set('currentRoute', '/articles/2015_02_28_A-browserify-workflow-part-2');    render();
   });
-});Page('/articles/2014_01_22_Sending-json', function (req) {
-  require.ensure(['./../posts/2014_01_22_Sending-json.md'], function () {
-    var content = require('./../posts/2014_01_22_Sending-json.md');
-    store.set('currentArticle', parseArticle('2014_01_22_Sending-json.md', content));
-    store.set('currentRoute', '/articles/2014_01_22_Sending-json');    render();
+});Page('/articles/2014_08_20_React-js-and-flux', function (req) {
+  require.ensure(['./../posts/2014_08_20_React-js-and-flux.md'], function () {
+    var content = require('./../posts/2014_08_20_React-js-and-flux.md');
+    store.set('currentArticle', parseArticle('2014_08_20_React-js-and-flux.md', content));
+    store.set('currentRoute', '/articles/2014_08_20_React-js-and-flux');    render();
   });
 });
 
 Page.start();
 
 if (module.hot) {
-    module.hot.accept(["./../posts/2015_02_28_A-browserify-workflow-part-2.md","./../posts/2014_01_22_Sending-json.md"], function () {
+    module.hot.accept(["./../posts/2015_02_28_A-browserify-workflow-part-2.md","./../posts/2014_08_20_React-js-and-flux.md"], function () {
       Page(location.pathname);
     });
 }

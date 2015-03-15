@@ -4,6 +4,7 @@ var utils = require('./utils.js');
 
 module.exports = React.createClass({
   componentDidMount: function () {
+    document.body.scrollTop = 0;
     setTimeout(function () {
       document.body.className = document.body.className + ' article-loaded';
     }, 100);

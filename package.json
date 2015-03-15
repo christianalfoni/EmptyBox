@@ -9,7 +9,9 @@
     },
     "fonts": {
       "Lato": [
-        "300"
+        "300",
+        "300italic",
+        "900"
       ],
       "Montserrat": [],
       "Roboto": [
@@ -30,6 +32,7 @@
     "base64": "^2.1.0",
     "compression": "^1.4.1",
     "css-loader": "^0.9.1",
+    "ent": "^2.2.0",
     "es6-promise": "^2.0.1",
     "express": "^4.12.0",
     "freezer-js": "^0.3.3",

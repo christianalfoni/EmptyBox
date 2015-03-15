@@ -1,5 +1,5 @@
 .clear {
-  clear: both;
+    clear: both;
 }
 .timer {
     position: fixed;
@@ -15,16 +15,6 @@
     font-size: 2em;
     line-height: 100px;
     margin: 1em;
-    opacity: 0;
-    transform: translate3d(-25px, 0, 0);
-    -webkit-transform: translate3d(-25px, 0, 0);
-    transition: opacity 0.5s ease-in, transform 0.25s ease-in;
-    -webkit-transition: opacity 0.5s ease-in, -webkit-transform 0.25s ease-in;
-}
-.fonts-loaded .header-link {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-    -webkit-transform: translate3d(0, 0, 0);
 }
 .articleHeader-profile--container {
     display: inline-block;
@@ -58,56 +48,43 @@
     color: #EAEAEA;
     line-height: 100px;
 }
-.articlesList {
-    opacity: 0;
-    transition: opacity 0.5s ease-in;
-    -webkit-transition: opacity 0.5s ease-in;
-    background-color: #FFF;
+.articlesList, .latestArticle {
     margin: 1.5em;
     padding: 0;
-    border-radius: 3px;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
     list-style: none;
+    width: 50%;
 }
-.fonts-loaded .articlesList {
-    opacity: 1;
+.latestArticle {
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: #FFF;
 }
 .articlesList-item {
-  padding: 2em;
-  border-bottom: 1px solid #DADADA;
-  font-size: 0.5em;
+    padding: 2em;
+    border-bottom: 1px solid #DADADA;
+    font-size: 0.6em;
 }
 .articlesList-item.articlesList-item-first {
-  font-size: 1em;
+    font-size: 1em;
 }
 .articlesList-item--date {
-  font-family: 'Roboto';
-  font-weight: 700;
-  padding: 0 0 1em 0;
-  float: left;
+    font-family: 'Roboto';
+    font-weight: 700;
+    padding: 0 0 1em 0;
 }
-.articlesList-item.articlesList-item-first .articlesList-item--date {
-  float: none;
+.articlesList .articlesList-item--month, .articlesList .articlesList-item--year {
+    color: #BABABA;
 }
 .articlesList-item--month {
-  font-size: 2em;
+    font-size: 2em;
 }
 .articlesList-item--year {
-  font-size: 1em;
-  font-weight: 300;
+    font-size: 1em;
+    font-weight: 300;
+    padding-left: 0.5em;
 }
 .articlesList-item--title {
-  font-size: 3em;
-  float: left;
-  margin-left: 20px;
-}
-.articlesList-item.articlesList-item-first .articlesList-item--title {
-  float: none;
-  margin-left: 0;
-}
-.articlesList-item--description {
-  
-}
-.articlesList-item.articlesList-item-first .articlesList-item--description {
-  float: none;
+    font-size: 3em;
+    margin-left: 20px;
+    margin-left: 0;
 }

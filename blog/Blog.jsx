@@ -2,7 +2,6 @@ var React = require('react');
 var Article = require('./Article.jsx');
 var markdownRenderer = require('./../common/markdownRenderer.js');
 var store = require('./../common/store.js');
-var Timer = require('./Timer.jsx');
 var utils = require('./utils.js');
 
 var Front = React.createClass({
@@ -10,30 +9,40 @@ var Front = React.createClass({
   cursors: {
     articles: ['articles']
   },
-  renderArticle: function (article, index) {
+  renderArticle: function (article) {
     return (
-      <li className={'articlesList-item' + (index === 0 ? ' articlesList-item-first' : '')} key={index}>
+      <div>
         <div className="articlesList-item--date">
           <span className="articlesList-item--month">{utils.getMonth(article.month)}</span> 
           <span className="articlesList-item--year">{article.year}</span>
         </div>
         <div className="articlesList-item--title"><a href={article.url}>{article.title}</a></div>
-        {index === 0 ?
           <div className="articlesList-item--description">
             {markdownRenderer(article.description)}
-          </div> :
-          null 
-        }
+          </div>
         <div className="clear"></div>
+      </div>
+    );
+  },
+  renderArticleItem: function (article, index) {
+    return (
+      <li className="articlesList-item" key={index}>
+        {this.renderArticle(article)}
       </li>
     );
   },
   render: function () {
-    var articles = this.state.cursors.articles;
+    var articles = this.state.cursors.articles.slice(0);
+    var latestArticle = articles.shift();
     return (
-      <ul className="articlesList">
-        {articles.map(this.renderArticle)}
-      </ul>
+      <div>
+        <div className="latestArticle articlesList-item articlesList-item-first">
+          {this.renderArticle(latestArticle)}
+        </div>
+        <ul className="articlesList">
+          {articles.map(this.renderArticleItem)}
+        </ul>
+      </div>
     );
   }
 });
@@ -45,10 +54,7 @@ var Blog = React.createClass({
     currentRoute: ['currentRoute']
   },
   renderArticle: function (article) {
-    return [
-      <Article key={0} article={article}/>,
-      <Timer key={1}/>
-    ];
+    return <Article article={article}/>
   },
   render: function () {
     var article = this.state.cursors.article;

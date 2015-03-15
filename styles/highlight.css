@@ -5,9 +5,9 @@
   color: #999;
   font-style: italic;
 }
-.hljs-built_in {
+.hljs-built_in, .hljs-title {
   color: #5CB85C;
 }
-.hljs-string {
+.hljs-string, .hljs-value {
   color: #F0AD4E;
 }

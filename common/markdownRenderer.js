@@ -1,5 +1,6 @@
 var React = require('react');
 var marked = require('marked');
+var ent = require('ent');
 var CodeComponent = React.createFactory(require('./CodeComponent.jsx'));
 var renderer = new marked.Renderer();
 var inlineIds = 0;
@@ -15,7 +16,7 @@ var createBlockContent = function (content) {
     if (inline) {
       return inlines[inline[1]];
     } else {
-      return text;
+      return ent.decode(text);
     }
   });
   return content;  
@@ -90,37 +91,37 @@ renderer.link = function (href, title, text) {
     title: title,
     key: keys++,
     target: 'new'
-  }, text);
+  }, ent.decode(text));
   return '{{' + id + '}}';
 };
 
 renderer.strong = function (text) {
   var id = inlineIds++;
-  inlines[id] = React.createElement('strong', {key: keys++}, text);
+  inlines[id] = React.createElement('strong', {key: keys++}, ent.decode(text));
   return '{{' + id + '}}'; 
 };
 
 renderer.em = function (text) {
   var id = inlineIds++;
-  inlines[id] = React.createElement('em', {key: keys++}, text);
+  inlines[id] = React.createElement('em', {key: keys++}, ent.decode(text));
   return '{{' + id + '}}'; 
 };
 
 renderer.codespan = function (text) {
   var id = inlineIds++;
-  inlines[id] = React.createElement('code', {key: keys++}, text);
+  inlines[id] = React.createElement('code', {key: keys++}, ent.decode(text));
   return '{{' + id + '}}'; 
 };
 
 renderer.br = function (text) {
   var id = inlineIds++;
-  inlines[id] = React.createElement('br', {key: keys++}, text);
+  inlines[id] = React.createElement('br', {key: keys++}, ent.decode(text));
   return '{{' + id + '}}'; 
 };
 
 renderer.del = function (text) {
   var id = inlineIds++;
-  inlines[id] = React.createElement('del', {key: keys++}, text);
+  inlines[id] = React.createElement('del', {key: keys++}, ent.decode(text));
   return '{{' + id + '}}'; 
 };
 

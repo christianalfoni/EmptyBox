@@ -4,6 +4,7 @@ var base64_encode = require('base64').encode;
 var Buffer = require('buffer').Buffer;
 var Promise = require('es6-promise').Promise;
 var path = require('path');
+var fontsString = '';
 
 var fonts = packageJson.blog.fonts;
 var fontNames = fonts ? Object.keys(fonts) : {};
@@ -66,30 +67,34 @@ var writeFontsCSS = function (variants) {
     ].join('\n');
   });
 
-  return utils.writeFile(path.resolve(__dirname, '..', '..', 'core', '_fonts.css'), css.join('\n'));
+  return css.join('\n');
 
 };
 
-module.exports = function () {
+module.exports = {
+  load: function () {
 
-  console.log('Downloading fonts');
+    if (fonts) {
 
-  if (fonts) {
-
-    var fontDescriptionRequests = fontNames.map(function (font) {
-      return utils.getJson(baseUrl.replace('{{ID}}', font.toLowerCase()));
-    });
-    Promise.all(fontDescriptionRequests)
-      .then(resolveFontVariants)
-      .then(requestFontVariants)
-      .then(convertResultsToBase64)
-      .then(writeFontsCSS)
-      .then(function () {
-        console.log('Fonts are downloaded');
-      })
-      .catch(function (err) {
-        console.log('Could not grab fonts', err, err.stack);
+      var fontDescriptionRequests = fontNames.map(function (font) {
+        return utils.getJson(baseUrl.replace('{{ID}}', font.toLowerCase()));
       });
-  }
+      Promise.all(fontDescriptionRequests)
+        .then(resolveFontVariants)
+        .then(requestFontVariants)
+        .then(convertResultsToBase64)
+        .then(writeFontsCSS)
+        .then(function (css) {
+          fontsString = css;
+          console.log('Fonts are downloaded');
+        })
+        .catch(function (err) {
+          console.log('Could not grab fonts', err, err.stack);
+        });
+    }
 
-};
+  },
+  getCSS: function () {
+    return fontsString;
+  }
+}

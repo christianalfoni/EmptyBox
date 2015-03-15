@@ -4,12 +4,16 @@ html, body {
     background-color: #EFEFEF;
     font-size: 100%;
     overflow-x: hidden;
+    color: #333;
 }
 pre {
   position: relative;
   background-color: #F7F7F7;
   padding: 0 2em 2em 2em;
   border-radius: 0.5em;
+}
+pre {
+    overflow-x: scroll;
 }
 pre code {
   font-family: consolas, Inconsolata;
@@ -43,6 +47,9 @@ h1 {
 h3 {
     font-size: 2em;
 }
+h4 {
+  font-size: 1.5em;
+}
 p, ul, ol {
     font-family: 'Lato', sans-serif;
     color: #333;
@@ -51,7 +58,13 @@ p, ul, ol {
     line-height: 1.9em;
     margin-bottom: 1.4em;
 }
+li {
+  margin-bottom: 1em;
+}
 a {
     text-decoration: none;
     color: #30A5D0;
+}
+strong {
+  font-weight: 900;
 }

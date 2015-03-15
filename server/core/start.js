@@ -9,7 +9,7 @@ var loadIndex = require('./loadIndex.js');
 var articles = require('./articles.js');
 var bundler = require('./bundler.js');
 var writeEntry = require('./writeEntry.js');
-var writeFonts = require('./writeFonts.js');
+var fonts = require('./fonts.js');
 var utils = require('./utils.js');
 
 var index = 'Index files not loaded yet';
@@ -23,7 +23,7 @@ module.exports = function (app) {
     Promise.all([
         loadIndex(),
         articles.load(),
-        writeFonts()
+        fonts.load()
       ])
       .then(function (results) {
         index = results[0];
@@ -69,6 +69,7 @@ module.exports = function (app) {
         .then(function (results) {
           var blogHtml = renderBlog();
           index = index.replace('{{BLOG}}', blogHtml);
+          index = index.replace('{{FONTS}}', fonts.getCSS());
           res.type('html');
           res.send(index);
         })
@@ -91,6 +92,7 @@ module.exports = function (app) {
         .then(function () {
           var blogHtml = renderBlog(req.path);
           index = index.replace('{{BLOG}}', blogHtml);
+          index = index.replace('{{FONTS}}', fonts.getCSS());
           res.type('html');
           res.send(index);
         })
@@ -109,7 +111,7 @@ module.exports = function (app) {
     Promise.all([
         loadIndex(),
         articles.load(),
-        writeFonts()
+        fonts.load()
       ])
       .then(function (results) {
         return writeEntry(results[1]);

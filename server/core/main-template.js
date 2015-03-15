@@ -3,13 +3,6 @@ global.BLOG_STATE = {{BLOG_STATE}};
 
 {{BASE_CSS_IN_DEV}}
 
-// Fonts handling
-require('./_fonts.css');
-window.onload = function () {
-  document.body.className = document.body.className.replace('fonts-loading', 'fonts-loaded'); 
-};
-
-
 var React = require('react');
 var Page = require('page');
 var store = require('./../common/store.js');
