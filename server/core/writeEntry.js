@@ -7,13 +7,21 @@ var injectRoutes = function (articles, template) {
   var routes = articles.map(function (article) {
     return [
       'Page(\'' + article.url + '\', function (req) {\n',
+      '  document.body.classList.add(\'article-loading\');\n',
+      '  store.set(\'loadingArticle\', \'' + article.url + '\');\n',
+      '  store.commit();\n',
       '  require.ensure([\'./../posts/' + article.file + '\'], function () {\n',
+      '    document.body.classList.remove(\'article-loading\');\n',
       '    var content = require(\'./../posts/' + article.file + '\');\n',
-      '    store.set(\'currentArticle\', parseArticle(\'' + article.file + '\', content));\n',
-      '    store.set(\'currentRoute\', \'' + article.url + '\');',
+      '    store.select(\'articles\', {file: \'' + article.file + '\'}).edit(parseArticle(\'' + article.file + '\', content));\n',
+      '    if (store.select(\'currentArticle\').get() !== \'' + article.file + '\') { document.body.scrollTop = 0; }\n',
+      '    store.set(\'currentArticle\', \'' + article.file + '\');\n',
+      '    store.set(\'currentRoute\', \'' + article.url + '\');\n',
+      '    store.set(\'loadingArticle\', null);\n',
+      '    store.commit();\n',
       '    render();\n',
       '  });\n',
-      '});'
+      '});\n'
     ].join('');
   });
   return template.replace('{{BLOG_ROUTES}}', routes.join(''));
@@ -34,7 +42,7 @@ var injectHotAccepts = function (articles, template) {
 
 var injectBaseCSS = function (template) {
   if (global.isProduction) {
-    return template;
+    return template.replace('{{BASE_CSS_IN_DEV}}', '');
   }
   var baseCSS = [
     'require(\'./../styles/base.css\')',
@@ -44,9 +52,9 @@ var injectBaseCSS = function (template) {
   return template.replace('{{BASE_CSS_IN_DEV}}', baseCSS)
 };
 
-module.exports = function (articles, state) {
+module.exports = function (articles) {
   var mainTemplatePath = path.resolve(__dirname, 'main-template.js');
-  state = state || {};
+  var state = {};
   return utils.readFile(mainTemplatePath)
     .then(function (template) {
       var mainFile = path.resolve(__dirname, '..', '..', 'core', '_main.jsx');

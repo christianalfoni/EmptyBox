@@ -1,16 +1,15 @@
 var React = require('react');
 var markdownRenderer = require('./../common/markdownRenderer.js');
 var utils = require('./utils.js');
+var Disqus = require('./../widgets/Disqus.jsx');
+var ga = require('react-google-analytics');
 
 module.exports = React.createClass({
   componentDidMount: function () {
-    document.body.scrollTop = 0;
-    setTimeout(function () {
-      document.body.className = document.body.className + ' article-loaded';
-    }, 100);
-  },
-  componentWillUnmount: function () {
-    document.body.className = document.body.className.replace(' article-loaded', '');  
+    ga('send', 'pageview', {
+      page: this.props.article.url,
+      title: this.props.article.title
+    });
   },
   render: function () {
 
@@ -33,6 +32,12 @@ module.exports = React.createClass({
         <article>
           {markdownRenderer(this.props.article.content)}
         </article>
+        <Disqus
+          shortname={'christianalfoni'}
+          identifier={this.props.article.file}
+          title={this.props.article.title}
+          url={'http://www.christianalfoni.com' + this.props.article.url}
+        />
       </div>
     );
   }

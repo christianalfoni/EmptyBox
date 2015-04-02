@@ -43,7 +43,9 @@ var model = Backbone.Model.extend({
 var View = Backbone.View.extend({
   events: {
     'click input': 'updateUser',
-    template: handlebars.compile('<input type="checkbox" {#if notify}checked{/if}/> Notify'),
+    template: handlebars.compile(
+      '<input type="checkbox" {#if notify}checked{/if}/> Notify'
+    ),
     initialize: function () {
       this.listenTo(this.model, 'change', this.render);
     },

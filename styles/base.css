@@ -5,66 +5,84 @@ html, body {
     font-size: 100%;
     overflow-x: hidden;
     color: #333;
+    font-family: 'Lato';
+    font-weight: 300;
 }
 pre {
-  position: relative;
-  background-color: #F7F7F7;
-  padding: 0 2em 2em 2em;
-  border-radius: 0.5em;
+    position: relative;
+    background-color: #F7F7F7;
+    padding: 0 2em 2em 2em;
+    border-radius: 0.5em;
 }
 pre {
     overflow-x: scroll;
 }
 pre code {
-  font-family: consolas, Inconsolata;
-  font-size: 1.25em;
-  background-color: transparent;
-  line-height: 1.25em;
-  color: #555;
+    font-family: Consolas, Inconsolata, Verdana;
+    font-size: 1.25em;
+    background-color: transparent;
+    line-height: 1.25em;
+    color: #555;
 }
 code {
-  font-family: consolas, Inconsolata;
-  font-size: 1em;
-  background-color: #555;
-  color: #EAEAEA;
-  padding: 8px 15px;
-  border-radius: 3px;
+    font-family: Consolas, Inconsolata, Verdana;
+    font-size: 1em;
+    background-color: #555;
+    color: #EAEAEA;
+    padding: 8px 15px;
+    border-radius: 3px;
 }
 article {
     padding: 2em;
     text-align: justify;
 }
 h1, h2, h3, h4 {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
+    font-weight: 700;
     color: #333;
+    margin: 2em 0 0.5em 0;
 }
 h1 {
     font-size: 4em;
     text-align: center;
     padding: 0 1em;
+    margin-top: 1em;
+}
+h2 {
+    font-size: 3em;
 }
 h3 {
-    font-size: 2em;
+    font-size: 2.5em;
 }
 h4 {
-  font-size: 1.5em;
+    font-size: 2em;
+    color: #666;
 }
 p, ul, ol {
-    font-family: 'Lato', sans-serif;
-    color: #333;
-    font-weight: 300;
-    font-size: 1.4em;
-    line-height: 1.9em;
+    font-size: 1.5em;
+    line-height: 1.8em;
     margin-bottom: 1.4em;
+    color: inherit;
+}
+ul, ol {
+    font-size: 1.4em;
+    margin-left: 1em;
+    margin-right: 1em;
+    padding-right: 40px;
 }
 li {
-  margin-bottom: 1em;
+    margin-bottom: 1em;
 }
 a {
     text-decoration: none;
     color: #30A5D0;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
 }
 strong {
-  font-weight: 900;
+    font-weight: 700;
+}
+blockquote {
+    color: #888;
+    border-left: 10px solid #F7F7F7;
+    margin-left: 1em;
+    padding-left: 1em;
 }

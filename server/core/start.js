@@ -16,9 +16,9 @@ var index = 'Index files not loaded yet';
 
 module.exports = function (app) {
 
-  app.use(compress()); 
-
   if (global.isProduction) {
+
+    app.use(compress()); 
 
     Promise.all([
         loadIndex(),
@@ -27,6 +27,7 @@ module.exports = function (app) {
       ])
       .then(function (results) {
         index = results[0];
+        index = index.replace('{{FONTS}}', fonts.getCSS());
         return writeEntry(results[1]);
       })
       .then(bundler.bundleProduction)
@@ -39,13 +40,21 @@ module.exports = function (app) {
 
     app.use('/public', express.static(path.resolve(__dirname, '..', '..', 'public')));
 
-    app.get('*', function (req, res) {
+    app.get('/', function (req, res) {
       var blogHtml = renderBlog(req.path);
       res.type('html');
-      res.send(index.replace('{{BLOG}}', blogHtml));
+      res.send(index.replace('{{BLOG}}', blogHtml).replace('{{SESSION_BLOG_STATE}}', JSON.stringify({})));  
     });
 
-    app.listen(3000, function () {
+    app.get('/articles/*', function (req, res) {
+      var blogHtml = renderBlog(req.path);
+      res.type('html');
+      res.send(index.replace('{{BLOG}}', blogHtml).replace('{{SESSION_BLOG_STATE}}', JSON.stringify({
+        currentArticle: req.params[0] + '.md'
+      })));
+    });
+
+    app.listen(8080, function () {
       console.log('Blog ready at localhost:3000');
     });
 
@@ -70,6 +79,7 @@ module.exports = function (app) {
           var blogHtml = renderBlog();
           index = index.replace('{{BLOG}}', blogHtml);
           index = index.replace('{{FONTS}}', fonts.getCSS());
+          index = index.replace('{{SESSION_BLOG_STATE}}', JSON.stringify({}));
           res.type('html');
           res.send(index);
         })
@@ -93,6 +103,7 @@ module.exports = function (app) {
           var blogHtml = renderBlog(req.path);
           index = index.replace('{{BLOG}}', blogHtml);
           index = index.replace('{{FONTS}}', fonts.getCSS());
+          index = index.replace('{{SESSION_BLOG_STATE}}', JSON.stringify({currentArticle: req.params[0] + '.md'}));
           res.type('html');
           res.send(index);
         })

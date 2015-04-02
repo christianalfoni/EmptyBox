@@ -65,7 +65,6 @@ module.exports = {
       .then(function (files) {
         return Promise.all(files.map(readArticle))
           .then(function () {
-            console.log('Updated articles');
             sortByDate();
             return articles;
           });

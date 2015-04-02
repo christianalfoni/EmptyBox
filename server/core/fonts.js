@@ -1,6 +1,5 @@
 var packageJson = require('./../../package.json');
 var utils = require('./utils.js');
-var base64_encode = require('base64').encode;
 var Buffer = require('buffer').Buffer;
 var Promise = require('es6-promise').Promise;
 var path = require('path');
@@ -79,7 +78,7 @@ module.exports = {
       var fontDescriptionRequests = fontNames.map(function (font) {
         return utils.getJson(baseUrl.replace('{{ID}}', font.toLowerCase()));
       });
-      Promise.all(fontDescriptionRequests)
+      return Promise.all(fontDescriptionRequests)
         .then(resolveFontVariants)
         .then(requestFontVariants)
         .then(convertResultsToBase64)

@@ -1,6 +1,6 @@
 {
   "name": "github-react-blog",
-  "version": "0.1.0",
+  "version": "0.1.0-11",
   "description": "A blog creator based on React",
   "blog": {
     "css": {
@@ -11,11 +11,6 @@
       "Lato": [
         "300",
         "300italic",
-        "900"
-      ],
-      "Montserrat": [],
-      "Roboto": [
-        "regular",
         "700"
       ]
     }
@@ -25,17 +20,19 @@
     "start": "node server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "subdomain": "emptybox",
+  "engines": {
+    "node": "0.10.x"
+  },
   "author": "Christian Alfoni",
   "license": "MIT",
   "dependencies": {
-    "baobab": "^0.3.2",
-    "base64": "^2.1.0",
+    "baobab": "^0.4.1",
     "compression": "^1.4.1",
     "css-loader": "^0.9.1",
     "ent": "^2.2.0",
     "es6-promise": "^2.0.1",
     "express": "^4.12.0",
-    "freezer-js": "^0.3.3",
     "highlight.js": "^8.4.0",
     "http-proxy": "^1.8.1",
     "json-loader": "^0.5.1",
@@ -45,6 +42,8 @@
     "page": "^1.6.1",
     "raw-loader": "^0.5.1",
     "react": "^0.13.0-beta.1",
+    "react-disqus-thread": "^0.1.0",
+    "react-google-analytics": "^0.2.0",
     "react-hot-loader": "^1.1.5",
     "style-loader": "^0.8.3",
     "superagent": "^1.0.0",

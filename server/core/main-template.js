@@ -1,6 +1,10 @@
 // Add BLOG default state
 global.BLOG_STATE = {{BLOG_STATE}};
 
+Object.keys(global.SESSION_BLOG_STATE).forEach(function (key) {
+  global.BLOG_STATE[key] = global.SESSION_BLOG_STATE[key];
+});
+
 {{BASE_CSS_IN_DEV}}
 
 var React = require('react');

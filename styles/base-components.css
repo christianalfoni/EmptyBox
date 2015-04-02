@@ -1,17 +1,10 @@
 .clear {
     clear: both;
 }
-.timer {
-    position: fixed;
-    font-family: 'Roboto';
-    right: 20px;
-    top: 100px;
-    color: #DADADA;
-}
 .header-link {
     text-decoration: none;
     color: inherit;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     font-size: 2em;
     line-height: 100px;
     margin: 1em;
@@ -34,7 +27,6 @@
 }
 .articleHeader-date--month {
     float: left;
-    font-family: 'Roboto';
     font-size: 2em;
     color: #CACACA;
     line-height: 100px;
@@ -42,7 +34,6 @@
 }
 .articleHeader-date--year {
     float: left;
-    font-family: 'Roboto';
     font-weight: 700;
     font-size: 2.5em;
     color: #EAEAEA;
@@ -68,7 +59,6 @@
     font-size: 1em;
 }
 .articlesList-item--date {
-    font-family: 'Roboto';
     font-weight: 700;
     padding: 0 0 1em 0;
 }
@@ -79,7 +69,7 @@
     font-size: 2em;
 }
 .articlesList-item--year {
-    font-size: 1em;
+    font-size: 1.5em;
     font-weight: 300;
     padding-left: 0.5em;
 }
@@ -87,4 +77,9 @@
     font-size: 3em;
     margin-left: 20px;
     margin-left: 0;
+    color: #CACACA;
+    line-height: 1.5em;
+}
+.articlesList-item--description p {
+  margin: 1em 0 0 0;
 }
