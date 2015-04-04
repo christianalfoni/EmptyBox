@@ -7,9 +7,11 @@ var inlineIds = 0;
 var keys = 0;
 var inlines = {};
 var result = [];
+var toc = [];
 
 // Converts inline IDs to actual elements
 var createBlockContent = function (content) {
+
   var textWithInlines = content.split(/(\{\{.*?\}\})/);
   content = textWithInlines.map(function (text) {
     var inline = text.match(/\{\{(.*)\}\}/);
@@ -38,9 +40,41 @@ renderer.html = function (html) {
   return html;
 };
 
+var getTocPosition = function (toc, level) {
+  var currentLevel = toc.children;
+  while (true) {
+    if (!currentLevel.length || currentLevel[currentLevel.length - 1].level === level) {
+      return currentLevel;
+    } else {
+      currentLevel = currentLevel[currentLevel.length - 1].children;
+    }
+  }
+};
 renderer.heading = function (text, level) {
   var type = 'h' + level;
-  result.push(React.createElement(type, {key: keys++}, createBlockContent(text)));
+  var id = text.replace(/\s/g, '-').toLowerCase();
+  var lastToc = toc[toc.length -1];
+  if (!lastToc || lastToc.level > level) {
+    toc.push({
+      id: id,
+      title: text,
+      level: level,
+      children: []
+    });
+  } else {
+    var tocPosition = getTocPosition(lastToc, level);
+    tocPosition.push({
+      id: id,
+      title: text,
+      level: level,
+      children: []
+    });
+  }
+  result.push(React.createElement(type, {
+    key: keys++,
+    id: id
+  }, 
+    createBlockContent(text)));
 };
 
 renderer.hr = function () {
@@ -134,8 +168,12 @@ renderer.image = function (href, title, text) {
 
 module.exports = function (content) {
   result = [];
+  toc = [];
   inlines = {};
   keys = 0;
   marked(content, {renderer: renderer, smartypants: true});
-  return result;
+  return {
+    tree: result,
+    toc: toc
+  };
 };

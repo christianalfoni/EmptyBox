@@ -1,6 +1,6 @@
 {
-  "name": "github-react-blog",
-  "version": "0.1.0-11",
+  "name": "christianalfoni",
+  "version": "0.1.0-14",
   "description": "A blog creator based on React",
   "blog": {
     "css": {
@@ -33,7 +33,7 @@
     "ent": "^2.2.0",
     "es6-promise": "^2.0.1",
     "express": "^4.12.0",
-    "highlight.js": "^8.4.0",
+    "highlight.js": "^8.5.0",
     "http-proxy": "^1.8.1",
     "json-loader": "^0.5.1",
     "jsx-loader": "^0.12.2",

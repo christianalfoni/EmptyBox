@@ -15,6 +15,7 @@ pre {
     border-radius: 0.5em;
 }
 pre {
+  margin-top: 0;
     overflow-x: scroll;
 }
 pre code {
@@ -39,7 +40,7 @@ article {
 h1, h2, h3, h4 {
     font-weight: 700;
     color: #333;
-    margin: 2em 0 0.5em 0;
+    margin: 1.5em 0 0.5em 0;
 }
 h1 {
     font-size: 4em;

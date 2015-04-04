@@ -90,13 +90,32 @@ With a reactive pattern we would not require **module B** in **module A**, we wo
 ### So what is this article about?
 As mentioned I was very inspired by the [CycleJS project](https://github.com/staltz/cycle). It is a very exciting new take on application development, but it is currently very verbose and hard to grasp the concepts. It uses [RxJS](https://github.com/Reactive-Extensions/RxJS), which requires heavy investment from someone who has not done reactive programming before. So I decided to create a similar project depending on [BaconJS](https://baconjs.github.io), which is a lot easier to understand. This is the concept:
 
-- The **View** is a function that will have the models and controllers injected. The returned value from a view is a stream of virtual DOM structures, using [virtual-dom](https://github.com/Matt-Esch/virtual-dom)
+- The **View** is a function that will have the models and controllers injected. The returned value from a view is a stream of virtual DOM trees, using [virtual-dom](https://github.com/Matt-Esch/virtual-dom)
 - The **Controller** is a stream that can have values pushed on to it. It being events from a click, changes in an input, route change, ajax response etc. To change a model you have to "order a change" on a controller stream
 - The **Model** feeds on the "orders" from the controllers and produces state to be consumed by your views
 
-A very good analogy for this pattern is a conveyor belt. Imagine a **model** and a **controller** injected into your view as conveyor belts. The model conveyor belt goes in the direction of the view and the controller conveyor belt goes in the opposite direction. When a view places a new box with some content on a controller conveyor belt it is carried into the model. Inside the model there are multiple stations using the content of a box to create a new box, carrying it a long to the next station until it reaches the end of the conveyor belt, as state, in your views. This is the "one way flow" we know from FLUX, but the state layer (model) is reactive and functional all the way through.
+A very good analogy for this pattern is a conveyor belt. Imagine a **model** and a **controller** injected into your view as conveyor belts. The model conveyor belt goes in the direction of the view and the controller conveyor belt goes in the opposite direction. When a view places a new box with some content on a controller conveyor belt it is carried into the model. Inside the model there are multiple stations using the content of a box to create a new box, carrying it a long to the next station until it reaches the end of the conveyor belt, as state in your views. This is the "one way flow" we know from FLUX, but the state layer (model) is reactive and functional all the way through. Let me visualize this:
 
-This is a simplistic view on it, as multiple models can hook on to the same controller etc., but I think the analogy will suffice as a mental image going further into this article.
+```javascript
+
+  /----------|=======|--------------------------\               
+  |          | Model | state ->                 |
+  |    /-----|=======|---------------------\    |
+  |    |                                   |    |
+  |    |                                   |    |
+  |    |                                   |    |
+  |    |                                   |    |
+  |    |                                   |    |
+  |    \-|============|                  ==========
+  |      | Controller | <- interactions <|  VIEW  | 
+  \------|============|                  ==========
+                                         |        |
+                                         | vTrees |
+                                         |        |
+                                          renderer
+```
+
+You might argue the name **controller**, but I think of it as "the entry point to request state change". Much like a router. Anyways, this is a simplistic view on it, as multiple models can hook on to the same controller etc., but I think the analogy will suffice as a mental image going further into this article.
 
 ### The API
 I am calling the Reactive MVC library **"R"**. Let us just get straight into the code:
@@ -125,7 +144,7 @@ module.exports = {
   changeTitle: Controller()
 };
 ```
-So creating a controller is pretty much just about defining them. Under the hood a controller is a wrapped **BaconJS Bus**. It is a stream ready to have values pushed to it and the wrapper just binds the `push()` method to the bus itself. This makes it easier to push values from *onClick* callbacks etc. from your views. It also has a `bindPush(arg)` method which allows you to bind a value to be pushed when for example a click occurs.
+So creating a controller is pretty much just about defining them. Under the hood a controller is a wrapped **BaconJS Bus**. It is a stream ready to have values pushed to it and the wrapper just binds the `push()` method to the bus itself and makes it asynchronous. This makes it easier to push values from *keydown* callbacks etc. in your views. It also has a `bindPush(arg)` method which allows you to bind a value to be pushed when for example a click occurs.
 
 *models.js*
 ```javascript
@@ -135,15 +154,16 @@ import controllers from './controllers.js';
 var title = controllers.changeTitle
   .map(function (event) {
     return event.keyCode === 13 ? '' : event.target.value;
-  });
+  })
+  .startWith('');
 
 module.exports = {
-  title: title.toProperty().startWith('')
+  title: title
 };
 ```
 So now we see **Functional Reactive Programming** in action. Whenever the *changeTitle* controller has a new "box on its conveyor belt" it will go through the "map station". This "station" opens up the box, finds an event and based on it being an ENTER press or not, it pushes a new box on to the new "title conveyor belt". The content of this box is either an empty string or the value of the event target.
 
-When exporting our "title"-model we convert the title, which is a stream, to a property. This basically means that we have a "box" ready at the end of the "title conveyor belt" for anyone using it, and by using `startWith('')` we put an empty string into that initial "box".
+We also give the stream an initial value so that the view has a value to work with when it is rendered.
 
 *App.js*
 ```javascript
@@ -159,21 +179,21 @@ var App = View(function (props, models, controllers) {
 
 module.exports = App;
 ```
-First of all we import the View and also the DOM from **R**. The reason we import DOM is to allow JSX syntax. We define a view by using a function. This function has three arguments. The first argument, *props*, are any properties passed to the view from an other view. This is a familiar concept from React JS. The second argument are all the models injected into *Render*, and the third being the injected controllers.
+First of all we import the View and also DOM from **R**. The reason we import DOM is to allow JSX syntax. We define a view by using a function. This function has three arguments. The first argument, *props*, are any properties passed to the view from an other view. This is a familiar concept from React JS. The second argument are all the models injected into *Render*, and the third being the injected controllers.
 
 The view has to return a stream (conveyor belt) that moves "boxes" containing DOM representations. It does that by hooking "model conveyor belts" to its own "map station". So changes to models goes into the "map station", and out comes a new DOM representation. In this case we only hook a single model, but we will see later how we can hook multiple models.
 
 ### Summarizing our app
 Okay, so this was of course a very simple application. Its only functionality is emptying the input when hitting enter. Its hard to see benefits with such a simple example, but let me point out:
 
-- The view is very dumb. It has no logic for changing state. It only pushes changes to the controllers and produces a new DOM representation when receiving changes from the models
+- The view is dumb and stateless. It has no logic for changing state. It only pushes changes to the controllers and produces a new DOM representation when receiving changes from the models
 - The view does not depend on collections or models, they are injected into the views when rendered
 - The controllers knows nothing about the models, they just expose a set of interactions in your application and models can hook on to those to produce state
 
 Let us look at more complex state handling to see how easily we can scale the application.
 
 ### Creating mutations
-You need to mutate the state of your application. With **Functional Reactive Programming** you have to think about this differently. For example a list of titles can be mutated in many different ways, it being adding title, removing a title etc. So what is this list? If we think about our title above, the title is an output of changes to the *changeTitle* controller, that happens to start with the value of empty string. If we think about our list, it will an output of mutations to the list, that happens to start with the value of an empty array. Lets look at the code:
+You need to mutate the state of your application. With **Functional Reactive Programming** you have to think about this differently. For example a list of titles can be mutated in many different ways, it being adding a title, removing a title etc. So what is this list of titles? If we think about our title above, the title is an output based on events pushed to the *changeTitle* controller. If we think about our list, it will be an output based on mutations to an array. Lets look at the code:
 
 *models.js*
 ```javascript
@@ -183,9 +203,11 @@ import controllers from './controllers.js';
 var title = controllers.changeTitle
   .map(function (event) {
     return event.keyCode === 13 ? '' : event.target.value;
-  });
+  })
+  .startWith('');
 
-// First we create a stream of mutations
+// First we create a stream of a function that will
+// add a new title to the titles array
 var addTitle = controllers.changeTitle
 
   // We only want to add a title if we press ENTER and
@@ -204,26 +226,26 @@ var addTitle = controllers.changeTitle
     };
   });
 
-// Titles is an ouput of mutations
+// Titles is an ouput based on mutations
 var titles = addTitle
 
   // Scan is like "reduce". We start out with an empty titles array,
   // and every time a new mutation arrives from "addTitle",
   // we run that mutation passing in the current titles array. What differs is
   // that the returned value from the mutation will become the new titles
-  // value
+  // value, which is used on next arrival of "addTitle"
   .scan([], function (titles, mutation) {
     return mutation(titles);
   });
 
 module.exports = {
-  title: title.toProperty().startWith(''),
-  titles: titles.toProperty().startWith([])
+  title: title,
+  titles: titles
 };
 ```
-Okay, so things look a bit crazy at first sight. But I will explain and hopefully it makes sense. First of all we had to figure out "What is a list of titles?". A list of titles starts out with an empty array and that array changes whenever a mutation is performed on it. So first of all we created our first mutation, *addTitle*. Whenever you hit ENTER in the input and there is content, a new mutation function is created. Our titles will react when this mutation arrives and passes in the current array to the mutation function and the new value of titles is the mutated array. We then expose this titles array as a property and put an empty array ready for consumption. 
+Okay, so things look a bit crazy at first sight. But I will explain and hopefully it makes sense. First of all we had to figure out "What is a list of titles?". A list of titles starts out with an empty array and that array changes whenever a mutation is performed on it. So first of all we created our first mutation, *addTitle*. Whenever you hit ENTER in the input and there is content, a new mutation function is created. Our titles will react when this mutation arrives and passes in the current array to the mutation function and the new value of titles is the mutated array.  
 
-So why is this better? Well, if you think about how you would solve this with traditional progamming style? You would probably dive into our existing *title* code, create the array as a side effect making all of this harder to test. If you look closely at our functions they are completely pure and very easy to test. A sidenote here is that it is easier to handle immutable data structures, as the array returned from our mutation function could have been a new array.
+So why is this better? Well, if you think about how you would solve this with traditional progamming style you would probably dive into our existing *title* code, create the array as a side effect making all of this harder to test. If you look closely at our functions they are completely pure and very easy to test. A sidenote here is that it is easier to handle immutable data structures also, as the array returned from our mutation function could have been a new array.
 
 ### Make it testable
 Though the functions we created are pure, they are not really testable yet. We have to put them into their own module, making them exposed for testing purposes. This also cleans up the models code:
@@ -238,7 +260,7 @@ module.exports = {
   enterAndHasValue: function (event) {
     return event.keyCode === 13 && !!event.target.value;
   },
-  addTitleMutation: function (event) {
+  createAddTitleMutation: function (event) {
     return function (titles) {
       titles.push(event.target.value);
       return titles;
@@ -256,23 +278,24 @@ import controllers from './controllers.js';
 import {
   emptyOnEnter,
   enterAndHasValue,
-  addTitleMutation,
+  createAddTitleMutation,
   mutate
 } from './helpers';
 
 var title = controllers.changeTitle
-  .map(emptyOnEnter);
+  .map(emptyOnEnter)
+  .startWith('');
 
 var addTitle = controllers.changeTitle
   .filter(enterAndHasValue)
-  .map(addTitleMutation);
+  .map(createAddTitleMutation);
 
 var titles = addTitle
   .scan([], mutate);
 
 module.exports = {
-  title: title.toProperty().startWith(''),
-  titles: titles.toProperty().startWith([])
+  title: title,
+  titles: titles
 };
 ```
 Now you start to see how clean and decoupled our code becomes. You can easily reuse existing functions and they are very easy to test. You also see how generic they actually are. You could easily rename these functions, maybe make factories out of them, reusing them across all your models.
@@ -299,7 +322,7 @@ var App = View(function (props, models, controllers) {
     .map(function (data) {
       return (
         <div>
-          <input value={data.title} onChange={controllers.changeTitle.push}/>
+          <input value={data.title} ev-change={controllers.changeTitle.push}/>
           <ul>
             {data.titles.map(renderTitle)}
           </ul>
@@ -310,7 +333,7 @@ var App = View(function (props, models, controllers) {
 
 module.exports = App;
 ```
-**BaconJS** has a method called `combineTempate()`. This method takes an object with keys and values, where the values are streams. I think the example is self explainatory :-)
+**BaconJS** has a method called `combineTempate()`. This method takes an object with keys and values, where the values are streams. I think the example is self explainatory :-) It is also worth mentioning that the *View* in **R** uses *requestAnimationFrame*. So if there are multiple model changes on the same tick, it will only render once on the next animation frame.
 
 ### Adding more mutations
 You might be eager to check out how we would handle ajax, ajax errors and states like *isSaving*. Hang on, we will check that very soon. But let us first create a new mutation that removes a clicked title from the titles array.
@@ -338,7 +361,7 @@ import Bacon from 'baconjs';
 var App = View(function (props, models, controllers) {
 
   function renderTitle(title, index) {
-    return <li onClick={controllers.removeTitle.push.bindPush(index)}>{title}</li>;
+    return <li ev-click={controllers.removeTitle.bindPush(index)}>{title}</li>;
   }
 
   return Bacon.combineTemplate({
@@ -348,7 +371,7 @@ var App = View(function (props, models, controllers) {
     .map(function (data) {
       return (
         <div>
-          <input value={data.title} onChange={controllers.changeTitle.push}/>
+          <input value={data.title} ev-change={controllers.changeTitle.push}/>
           <ul>
             {data.titles.map(renderTitle)}
           </ul>
@@ -369,9 +392,9 @@ Now lets get to the fun part, adding a new remove mutator and hook it on our *ti
 module.exports = {
   emptyOnEnter: function (event) { ... },
   enterAndHasValue: function (event) { ... },
-  addTitleMutation: function (event) { ... },
+  createAddTitleMutation: function (event) { ... },
   mutate: function (value, mutation) { ... },
-  removeTitleMutation: function (index) {
+  createRemoveTitleMutation: function (index) {
     return function (titles) {
       titles.splice(index, 1);
       return titles;
@@ -387,22 +410,23 @@ import Bacon from 'baconjs';
 import {
   emptyOnEnter,
   enterAndHasValue,
-  addTitleMutation,
+  createAddTitleMutation,
   mutate,
-  removeTitleMutation
+  createRemoveTitleMutation
 } from './helpers';
 
 var title = controllers.changeTitle
-  .map(emptyOnEnter);
+  .map(emptyOnEnter)
+  .startWith('');
 
 var addTitle = controllers.changeTitle
   .filter(enterAndHasValue)
-  .map(addTitleMutation);
+  .map(createAddTitleMutation);
 
 // We create a new stream of mutations to remove
 // a title
 var removeTitle = controllers.removeTitle
-  .map(removeTitleMutation);
+  .map(createRemoveTitleMutation);
 
 // We merge our two mutation streams
 var titles = Bacon
@@ -410,8 +434,8 @@ var titles = Bacon
   .scan([], mutate);
 
 module.exports = {
-  title: title.toProperty().startWith(''),
-  titles: titles.toProperty().startWith([])
+  title: title,
+  titles: titles
 };
 ```
 Thats it! The new code did not mess around with some defined array anywhere. It just creates a mutation that we hook on to our titles stream which runs the mutations. If we named our new function "removeByIndex" it is generic enough to be used anywhere. In fact we could make all our helpers completely generic. Now we see DRY code taken to a whole new level.
@@ -427,9 +451,9 @@ import {Bacon} from 'R';
 import {
   emptyOnEnter,
   enterAndHasValue,
-  addTitleMutation,
+  createAddTitleMutation,
   mutate,
-  removeTitleMutation,
+  createRemoveTitleMutation,
   getTargetValue,
   returnTrue,
   returnFalse,
@@ -437,7 +461,8 @@ import {
 } from './helpers';
 
 var title = controllers.changeTitle
-  .map(emptyOnEnter);
+  .map(emptyOnEnter)
+  .startWith('');
 
 // We create a new stream with new titles
 var newTitle = controllers.changeTitle
@@ -453,15 +478,16 @@ var saveTitleRequest = newTitle
   });
 
 // In this scenario a promise rejection passes
-// the index of the title that failed
+// the index of the title that failed. As you can see
+// we reuse the "createRemoveTitleMutation" function
 var removeTitleOnError = saveTitleRequest
-  .mapError(removeTitleMutation);
+  .mapError(createRemoveTitleMutation);
 
 var addTitle = newTitle
-  .map(addTitleMutation);
+  .map(createAddTitleMutation);
 
 var removeTitle = controllers.removeTitle
-  .map(removeTitleMutation);
+  .map(createRemoveTitleMutation);
 
 // We add our extra onError mutation
 var titles = Bacon
@@ -471,19 +497,21 @@ var titles = Bacon
 // We merge two streams where the first stream returns
 // true whenever we add a new title and the other returns
 // false whenever the request is done, it failing or not
-var isSaving = Bacon.mergeAll(
-  newTitle.map(returnTrue),
-  saveTitleRequest.map(returnFalse)
-);
+var isSaving = Bacon
+  .mergeAll(
+    newTitle.map(returnTrue),
+    saveTitleRequest.map(returnFalse)
+  )
+  .startWith(false);
 
 module.exports = {
-  title: title.toProperty().startWith(''),
-  titles: titles.toProperty().startWith([]),
-  isSaving: isSaving.toProperty().startWith(false)
+  title: title,
+  titles: titles,
+  isSaving: isSaving
 };
 ```
 
 ### Summary
-I hope this has peeked your interest and that I managed to explain the concepts in a way that makes sense when building applications. ["R"]() is not a production ready library, it was built to write this article and try to make **Functional Reactive Programming** more approachable for building applications. Please give me some feedback and play around with the demo included in the [repo](), it would be great to work more on this :-)
+I hope this has peeked your interest and that I managed to explain the concepts in a way that makes sense when building applications. ["R"](https://github.com/christianalfoni/R) is not a production ready library, it was built to write this article and try to make **Functional Reactive Programming** more approachable for building applications. Please give me some feedback and play around with the demo included in the [repo](https://github.com/christianalfoni/R), it would be great to work more on this :-)
 
-Thanks for taking the time to read through this!
+Thanks for taking the time to read the article!

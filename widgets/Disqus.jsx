@@ -87,7 +87,21 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function () {
-    this.addDisqusScript();
+    if (typeof DISQUS === 'undefined') {
+     this.addDisqusScript();
+    } else {
+      DISQUS.reset({
+        reload: true
+        /*
+        config: function () {  
+          this.page.shortname = props.shortname
+          this.page.identifier = props.identifier;
+          this.page.title = props.title;  
+          this.page.url = props.url;
+        }
+        */
+      })
+    }
   },
 
   componentWillUnmount: function () {

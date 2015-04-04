@@ -24,7 +24,7 @@ var Front = React.createClass({
           {isLoadingArticle ? article.title : <a href={article.url}>{article.title}</a>}
         </div>
         <div className="articlesList-item--description">
-          {markdownRenderer(article.description)}
+          {markdownRenderer(article.description).tree}
         </div>
         <div className="clear"></div>
       </div>
@@ -63,6 +63,16 @@ var Blog = React.createClass({
   renderArticle: function (article) {
     return <Article article={article}/>
   },
+  renderHeader: function () {
+    return (
+      <div className="header-title">
+        <h1 className="header-title--maintitle"><a href="/">christianalfoni</a></h1>
+        <h4 className="header-title--subtitle">
+          Built with <a href="https://github.com/christianalfoni/EmptyBox" target="new"> EmptyBox</a>
+        </h4>
+      </div>
+    );
+  },
   render: function () {
     var article = this.state.cursors.articles.filter(function (article) {
       return article.file === this.state.cursors.currentArticle; 
@@ -70,8 +80,7 @@ var Blog = React.createClass({
     return (
       <div>
         <header className="layout-header">
-          {article ? <a className="header-link" href="/">{'<- Back'}</a> : null}
-          {!article ? <h1 className="header-title">christianalfoni</h1> : null}
+          {this.renderHeader()}
         </header>
         {article && article.content ? this.renderArticle(article) : <Front/>}
         <ga.Initializer/>

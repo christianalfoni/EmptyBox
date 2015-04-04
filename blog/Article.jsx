@@ -2,6 +2,9 @@ var React = require('react');
 var markdownRenderer = require('./../common/markdownRenderer.js');
 var utils = require('./utils.js');
 var Disqus = require('./../widgets/Disqus.jsx');
+var TOC = require('./../widgets/TOC.jsx');
+var ScrollSpy = require('./../widgets/ScrollSpy.jsx');
+var Timer = require('./../widgets/Timer.jsx');
 var ga = require('react-google-analytics');
 
 module.exports = React.createClass({
@@ -12,7 +15,7 @@ module.exports = React.createClass({
     });
   },
   render: function () {
-
+    var renderedArticle = markdownRenderer(this.props.article.content);
     return (
       <div className="layout-article">
         <div className="layout-articleHeader">
@@ -30,8 +33,12 @@ module.exports = React.createClass({
         </div>
         <hr className="layout-article--divider"/>
         <article>
-          {markdownRenderer(this.props.article.content)}
+          {renderedArticle.tree}
         </article>
+        <ScrollSpy active={230}>
+          <Timer content={this.props.article.content}/>
+          <TOC data={renderedArticle.toc}/>
+        </ScrollSpy>
         <Disqus
           shortname={'christianalfoni'}
           identifier={this.props.article.file}
