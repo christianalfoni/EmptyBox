@@ -1,6 +1,30 @@
 .clear {
     clear: both;
 }
+.text-small {
+  font-size: 1em;
+  color: #999;
+}
+.profile-picture {
+  float: left;
+  width: 75px;
+  height: 75px;
+  background: url(https://lh6.googleusercontent.com/-Am9E8NwuXuA/UuFhsL06WPI/AAAAAAAAAUo/etKU6VGmdW4/s250-no/me.jpg) no-repeat;
+  background-size: 150px;
+  background-position: -40px -30px;
+  border-radius: 50%;
+  margin: 0.5em 1em 0 0;
+}
+.header-sidebar {
+  font-size: 2em;
+  margin: 0 0 0.5em 0;
+  color: #CACACA;
+}
+.header-sidebar-small {
+  font-size: 1em;
+  color: #AAA;
+  margin: 0 0 -0.5em 0;
+}
 .header-title {
   width: 600px;
   margin: 0 auto;
@@ -64,10 +88,10 @@
     line-height: 100px;
 }
 .articlesList, .latestArticle {
-    margin: 1.5em;
     padding: 0;
     list-style: none;
-    width: 50%;
+    width: 100%;
+    box-sizing: border-box;
 }
 .latestArticle {
     border-radius: 3px;
@@ -122,28 +146,65 @@
     margin-bottom: 0.25em;
 }
 .emptybox-scrollspy {
-  position: absolute;
-  left: 1060px;
-  top: 0;
+  position: relative;
   width: 400px;
+    top: 20px;
+  text-align:left;
 }
 .emptybox-scrollspy-active {
   position: fixed;
-  top: 0px;
-  left: 1084px;
+  top: 20px;
   width: 400px;
+  text-align:left;
+}
+@media screen and (max-width: 1400px) {
+  .emptybox-scrollspy {
+    display: none;
+  }
+}
+@media screen and (min-width: 1400px) {
+  .emptybox-scrollspy-active {
+
+  }
 }
 .emptybox-timer {
   display: inline-block;
   font-size: 1em;
   border: 3px solid #CACACA;
-  width: 40px;
+  width: 50px;
   height: 50px;
-  line-height: 20px;
+  line-height: 22px;
   border-radius: 5px;
   color: #CACACA;
-  padding-top: 10px;
+  padding: 10px 5px 0 5px;
+  vertical-align: top;
+  margin: 0;
+  font-weight: 300;
 }
 .emptybox-timer div {
   font-size: 1.5em;
+  font-weight: 700;
+}
+.emptybox-twitter {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 5px;
+  background: url(http://www.whentotweet.com/static/tweet.png);
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: center 20%;
+  border: 3px solid #999;
+  display: inline-block;
+  vertical-align: top;
+  opacity: 0.5;
+  text-align: center;
+  line-height: 75px;
+  color: #999;
+}
+.emptybox-twitter:hover {
+  opacity: 1;
+  border: 3px solid #30A5D0;
+  color: #30A5D0;
 }

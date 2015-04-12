@@ -1,6 +1,6 @@
 {
   "name": "christianalfoni",
-  "version": "0.1.0-14",
+  "version": "0.1.0-25",
   "description": "A blog creator based on React",
   "blog": {
     "css": {
@@ -20,7 +20,11 @@
     "start": "node server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "subdomain": "emptybox",
+  "domains": [
+    "www.christianalfoni.com",
+    "christianalfoni.com"
+  ],
+  "subdomain": "christianalfoni",
   "engines": {
     "node": "0.10.x"
   },
