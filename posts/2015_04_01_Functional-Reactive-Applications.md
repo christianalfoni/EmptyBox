@@ -92,7 +92,7 @@ moduleA.on('change', function (dataFromModuleA) {
 > You did not have to change existing code or tests and there is no side effect in module A
 
 ### So what is this article about?
-As mentioned I was very inspired by the [CycleJS project](https://github.com/staltz/cycle). It is a very exciting new take on application development, but in its current form it is quite verbose and it is hard to grasp the concepts. It uses [RxJS](https://github.com/Reactive-Extensions/RxJS), which requires heavy investment from someone who has not done reactive programming before. So I decided to create a similar project where it does not matter what **FRP** library you use. **R** just provides a view concept that you can inject observables into and out comes DOM, using the [virtual-dom project](https://github.com/Matt-Esch/virtual-dom). This is much inspired by React JS itself.
+As mentioned I was very inspired by the [CycleJS project](https://github.com/staltz/cycle). It is a very exciting new take on application development, but in its current form it is quite verbose and it is hard to grasp the concepts. It uses [RxJS](https://github.com/Reactive-Extensions/RxJS), which requires heavy investment from someone who has not done reactive programming before. So I decided to create a similar project where it does not matter what **FRP** library you use. The library is called **R** and just provides a view concept that you can inject observables into and out comes DOM, using the [virtual-dom project](https://github.com/Matt-Esch/virtual-dom). This is much inspired by React JS itself.
 
 But of course, you need more than a "view" to build an application, so I will introduce these examples as a typical FLUX pattern. **Store**, **Component** and **Actions**.
 
@@ -122,7 +122,7 @@ So to give you an analogy for the data flow, think conveyor belts. Imagine **Sto
 ```
 
 ### The API
-I am calling the library **R**. I have chosen to show the examples using [BaconJS](https://baconjs.github.io) as I believe it to be easier to understand. Beware that BaconJS does *not* depend on jQuery, though it focuses heavily on its compatability with it! But now, let us get into some code:
+I have chosen to show the examples using [BaconJS](https://baconjs.github.io) as I believe it to be easier to understand. Beware that BaconJS does *not* depend on jQuery, though it focuses heavily on its compatability with it! But now, let us get into some code:
 
 *main.js*
 ```javascript
@@ -145,6 +145,7 @@ Lets take a look at the actions:
 
 *actions.js*
 ```javascript
+
 import Bacon from 'baconjs';
 module.exports = {
   changeTitle: new Bacon.Bus()
@@ -225,10 +226,15 @@ var title = actions.changeTitle
 // We create an observable for all new titles
 var newTitle = actions.changeTitle
 
-  // We only want to add a title if we press ENTER and
-  // there actually is a value in the input
+  // We only want to pass a long events if we press 
+  // ENTER and there actually is a value in the input
   .filter(function (event) {
     return event.keyCode === 13 && !!event.target.value;
+  })
+
+  // We return the input value
+  .map(function (event) {
+    return event.target.value;
   });
 
 // We create an observable that produces functions
@@ -264,7 +270,7 @@ module.exports = {
 ```
 Okay, so things look a bit crazy at first sight, but please hang on. It does feel weird not explicitly defining an array of titles, but understanding why this is, is what I believe to be the big "aha" moment. So let us work our way to that moment. 
 
-First of all we need an observable that can produce an array of titles, but we also need to hook in multiple observables that will do different mutations to the array. This is a great job for **reduce**. Reduce is a method that takes an initial value, our array, and a function that will run whenever the observables that is hooked on to it passes in a new value. So what we do in this example is hooking on an observable called *addTitle* that will pass functions which our reduce reacts to. When an *addTitleMutation* is received it will be run and the current array of titles is passed. The returned value from the function, which is the array of titles, will now become the current value of **reduce** and it will now become the value of the titles observable.
+First of all we need an observable that can produce an array of titles, but we also need to hook in multiple observables that will do different mutations to the array. This is a great job for **scan** (reduce). Scan is a method that takes an initial value, our array, and a function that will run whenever the observables that is hooked on to it passes in a new value. So what we do in this example is hooking on an observable called *addTitle* that will pass functions which our scan reacts to. When an *addTitleMutation* is received it will be run and the current array of titles is passed. The returned value from the function, which is the array of titles, will now become the current value of **scan** and it will now become the value of the titles observable.
 
 So why is this better? Well, if you think about how you would solve this with traditional progamming style you would probably dive into our existing *title* code, create the array as a side effect making all of this harder to test. If you look closely at our functions they are completely pure and very easy to test. A sidenote here is that it is easier to handle immutable data structures also, as the array returned from our mutation function could have been a completely new array.
 
@@ -289,6 +295,9 @@ module.exports = {
   },
   mutate: function (value, mutation) {
     return mutation(value);
+  },
+  getTargetValue: function (event) {
+    return event.target.value;
   }
 };
 ```
@@ -300,15 +309,17 @@ import {
   emptyOnEnter,
   enterAndHasValue,
   createAddTitleMutation,
-  mutate
+  mutate,
+  getTargetValue
 } from './helpers';
 
 var title = actions.changeTitle
   .map(emptyOnEnter)
   .startWith('');
 
-var newTitle = title
-  .filter(enterAndHasValue);
+var newTitle = actions.changeTitle
+  .filter(enterAndHasValue)
+  .map(getTargetValue);
 
 var addTitle = newTitle
   .map(createAddTitleMutation);
@@ -424,6 +435,7 @@ module.exports = {
   enterAndHasValue: function (event) { ... },
   createAddTitleMutation: function (event) { ... },
   mutate: function (value, mutation) { ... },
+  getTargetValue: function (event) { ... },
   createRemoveTitleMutation: function (index) {
     return function (titles) {
       titles.splice(index, 1);
@@ -442,6 +454,7 @@ import {
   enterAndHasValue,
   createAddTitleMutation,
   mutate,
+  getTargetValue,
   createRemoveTitleMutation
 } from './helpers';
 
@@ -449,8 +462,9 @@ var title = actions.changeTitle
   .map(emptyOnEnter)
   .startWith('');
 
-var newTitle = title
-  .filter(enterAndHasValue);
+var newTitle = actions.changeTitle
+  .filter(enterAndHasValue)
+  .map(getTargetValue);
 
 var addTitle = newTitle
   .map(createAddTitleMutation);
@@ -485,8 +499,8 @@ import {
   enterAndHasValue,
   createAddTitleMutation,
   mutate,
-  createRemoveTitleMutation,
   getTargetValue,
+  createRemoveTitleMutation,
   returnTrue,
   returnFalse,
   saveTitleToServer
