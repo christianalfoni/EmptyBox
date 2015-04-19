@@ -23,7 +23,7 @@ Before we get started I think it is good to get an overview of the directory we 
 - /public
 - /public/index.html
 - /server
-- /server/bundler.js - Our workflow code
+- /server/bundle.js - Our workflow code
 - server.js - Express and proxies
 - webpack.config.js
 - webpack.production.config.js
@@ -35,13 +35,13 @@ First of all lets set up a basic configuration file for our project using NPM. I
 
 ```javascript
 
-...
 {
+  ...
   "scripts": {
     "start": "node server"
-  }
-},
-...
+  },
+  ...
+}
 ```
 
 This just tells NPM what command to run when we type `npm start` in our terminal. This will also be used by for example Nodejitsu or Heroku to run the application.
@@ -125,7 +125,7 @@ var config = {
     filename: 'bundle.js',
 
     // Everything related to Webpack should go through a build path,
-    // localhost:3000/build
+    // localhost:3000/build. That makes proxying easier to handle
     publicPath: 'build/'
   },
   module: {
@@ -179,7 +179,8 @@ module.exports = function () {
   var compiler = Webpack(webpackConfig, function () {
 
     // Due to a bug with the style-loader we have to "touch" a file
-    // to force a rebundle. Kudos to my colleague Stephan for this one
+    // to force a rebundle after the initial one. Kudos to my colleague 
+    // Stephan for this one
     fs.writeFileSync(mainPath, fs.readFileSync(mainPath).toString());
     console.log('Project is ready!');
 
@@ -192,7 +193,7 @@ module.exports = function () {
     // http://localhost:3000/build -> http://localhost:8080/build
     publicPath: '/build',
 
-    // Configure hot refresh/replacement
+    // Configure hot replacement
     hot: true, 
 
     // The rest is terminal configurations
@@ -250,6 +251,13 @@ if (!isProduction) {
 
 }
 
+// It is important to catch any errors from the proxy or the
+// server will crash. An example of this is connecting to the
+// server when webpack is bundling
+proxy.on('error', function(e) {
+  console.log('Could not connect to proxy, please try again...');
+});
+
 app.listen(port, function () {
   console.log('Server running on port ' + port);
 });
@@ -260,7 +268,7 @@ app.listen(port, function () {
 Okay, now we have the actual workflow going. Just run `npm start` and you got automatic refresh, hot loading styles, source mapping and everything else you would want to add to Webpack. You are now also free to add any other public files or API endpoints to your express server. This is really great for prototyping.
 
 ## Adding other endpoints
-As part of your prototype you might want to work with a real database, or maybe you already have an API that you want to use. I will give you an example of wiring up [Firebase](https://www.firebase.com/). We will not be setting up Firebase with websockets etc., we will use the traditional REST like endpoints as that is most likely what you will be using in the production version on the application. That said it is no problem for *http-proxy* to proxy websocket requests and messages.
+As part of your prototype you might want to work with a real database, or maybe you already have an API that you want to use. I will give you an example of wiring up [Firebase](https://www.firebase.com/). We will not be setting up Firebase with websockets etc., we will use the traditional REST like endpoints as that is most likely what you will be using in the production version of the application. That said it is no problem for *http-proxy* to proxy websocket requests and messages.
 
 Suppose you have set up your firebase at *glowing-carpet-4534.firebaseio.com*, let us create an endpoint for your application and proxy that.
 
@@ -304,6 +312,10 @@ if (!isProduction) {
 
 }
 
+proxy.on('error', function(e) {
+  console.log('Could not connect to proxy, please try again...');
+});
+
 app.listen(port, function () {
   console.log('Server running on port ' + port);
 });
@@ -316,7 +328,11 @@ Before we actually deploy any code we want to produce a production bundle of the
 
 `webpack -p --config webpack.production.config.js`
 
-It is very important that the environment variable *NODE_ENV* is set to *production*. This will probably be set by default on the service your application runs, but you might have to set it up manually.
+It is very important that the environment variable *NODE_ENV* is set to *production* or you inline it with the command like this:
+
+`NODE_ENV=production webpack -p --config webpack.production.config.js`
+
+What you decide to do depends on the service running the command.
 
 Now lets take a look at the configuration file.
 
@@ -331,7 +347,7 @@ var mainPath = path.resolve(__dirname, 'app', 'main.js');
 
 var config = {
   
-  // We change to normal source mapping, if you need them
+  // We change to normal source mapping
   devtool: 'source-map',
   entry: mainPath,
   output: {
@@ -357,17 +373,17 @@ If you want to test this you can run:
 
 `NODE_ENV=production webpack -p --config webpack.production.config.js` 
 
-You will see a *bundle.js* file appear in the *public/build* directory, and optionally a *bundle.js.map* file. But we are not going to be running this locally, let us get this running in the cloud.
+You will see a *bundle.js* file appear in the *public/build* directory, and a *bundle.js.map* file. But we are not going to be running this locally, let us get this running in the cloud.
 
 ## Continuous deployment
 So ideally you want your application or prototype to find its place in the cloud. This will let your users access your application, but also if you are just creating a prototype it will allow colleagues and maybe other people interested in the project to try things out as you iterate. This makes it a lot easier to give feedback and it will be easier for you to make changes as you go.
 
-We are going to look at two different solutions amongst many others, [Nodejitsu](https://www.nodejitsu.com/) and [Heroku](https://www.heroku.com/). I will not go into deep details in this article. Hopefully it is enough to get you going. Now, Nodejitsu is moving to GoDaddy and is currently not available for new accounts, but the two services has different approaches and its the approaches we are interested in.
+We are going to look at two different solutions amongst many others, [Nodejitsu](https://www.nodejitsu.com/) and [Heroku](https://www.heroku.com/). I will not go into deep details in this article, but hopefully it is enough to get you going. Now, Nodejitsu is moving to GoDaddy and is currently not available for new accounts, but the two services has different approaches and its the approaches we are interested in.
 
 ### Nodejitsu
 With Nodejitsu you have a CLI tool for deploying the application. The CLI tool actually bundles up the application and moves it to the Nodejitsu servers as a *snapshot*. This is great, because we can use a build service to run tests, prepare the application for production and run the CLI tool whenever we push to the application repo. [Codeship](https://codeship.com) is one of these services and it works very well. You hook your repo to Codeship in one end and your Nodejitsu account on the other end. In between you run your tests, run the deploy command above and Codeship automatically updates the application on Nodejitsu if everything worked out okay.
 
-All your really have to do is inserting this command into the *Setup Commands*:
+All you really have to do is inserting this command into the *Setup Commands*:
 
 `NODE_ENV=production webpack -p --config webpack.production.config.js`
 
@@ -376,7 +392,7 @@ Here we specifically set the environment variable. The reason is that we want Co
 ### Heroku
 Heroku works a bit differently. It does not wrap up your application using a CLI tool so using a service like Codeship does not really make sense, because you have to run everything inside Heroku anyway. You might consider running your tests on Codeship though, but the production bundle has to be created on Heroku.
 
-When you have your Heroku account up and running with a repo attached to an app make sure you add a *NODE_ENV* variable and a *production* value in the Heroku App configuration. To make Heroku run our production bundle command we have to create our own script and run it as a NPM *postinstall* script. Let us configure that part first in our package.json file:
+When you have your Heroku account up and running with a repo attached to an app, make sure you add a *NODE_ENV* variable and a *production* value in the Heroku App configuration. To make Heroku run our production bundle command we have to create our own script and run it as a NPM *postinstall* script. Let us configure that part first in our package.json file:
 
 *package.json*
 ```javascript
@@ -412,7 +428,7 @@ if (process.env.NODE_ENV === 'production') {
 And thats it. Whenever you push to the repo Heroku will install the dependencies and then run this deploy script before running `npm start`.
 
 ## Handling dependencies
-Depending on what solution you choose the production environment might need different dependencies. So instead of listing what you need in these two examples, let me explain how it works.
+Depending on what solution you choose the production environment might need different dependencies. So instead of listing what you need in the two examples introduced, let me explain how it works.
 
 When you save a dependency to your *package.json* file using for example: `npm install underscore --save` that dependency will always be installed when `npm install` runs, regardless of the environment. If you save a dependency using: `npm install webpack --save-dev` that dependency will not be installed in an environment where *NODE_ENV* is *production*. So what you want is to only `--save` dependencies that you need in production, and `--save-dev` all other dependencies.
 

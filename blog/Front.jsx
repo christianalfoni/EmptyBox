@@ -51,7 +51,7 @@ var Front = React.createClass({
           <h2 className="header-sidebar">Who is Christian Alfoni?</h2>
                       <div className="profile-picture"></div>
           <p className="text-small">
-            Got into programming about 5 years ago and completely fell in love with. The productivity
+            Got into programming about 5 years ago and completely fell in love with it. The productivity
             you have working with the web platform is incredible. Going from idea to production can be
             done in a matter of hours. The momentum of new standards, new practices, ideas and solutions
             also keeps me on my toes, as there is always something new to dive into. The greatest thing about
