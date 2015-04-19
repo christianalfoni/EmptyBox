@@ -18,24 +18,27 @@ pre {
   margin-top: 0;
     overflow-x: scroll;
 }
+code {
+    position: relative;
+    font-family: Consolas, Inconsolata, Verdana;
+    font-size: 0.75em;
+    background-color: #555;
+    color: #EAEAEA;
+    padding: 6px 15px;
+    top: -2px;
+    border-radius: 3px;
+    white-space: nowrap;
+}
 pre code {
     font-family: Consolas, Inconsolata, Verdana;
     font-size: 1.25em;
     background-color: transparent;
     line-height: 1.25em;
     color: #555;
-}
-code {
-    font-family: Consolas, Inconsolata, Verdana;
-    font-size: 1em;
-    background-color: #555;
-    color: #EAEAEA;
-    padding: 8px 15px;
-    border-radius: 3px;
+    white-space: pre;
 }
 article {
     padding: 2em;
-    text-align: justify;
 }
 h1, h2, h3, h4 {
     font-weight: 700;
