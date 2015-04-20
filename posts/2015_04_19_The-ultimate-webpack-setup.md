@@ -126,7 +126,7 @@ var config = {
 
     // Everything related to Webpack should go through a build path,
     // localhost:3000/build. That makes proxying easier to handle
-    publicPath: 'build/'
+    publicPath: '/build/'
   },
   module: {
 
@@ -191,7 +191,7 @@ module.exports = function () {
     // We need to tell Webpack to serve our bundled application
     // from the build path. When proxying:
     // http://localhost:3000/build -> http://localhost:8080/build
-    publicPath: '/build',
+    publicPath: '/build/',
 
     // Configure hot replacement
     hot: true, 
