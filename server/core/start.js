@@ -77,6 +77,7 @@ module.exports = function (app) {
         })
         .then(function (results) {
           var blogHtml = renderBlog();
+          index = index.replace('{{BLOG_TITLE}}', packageJson.name);
           index = index.replace('{{BLOG}}', blogHtml);
           index = index.replace('{{FONTS}}', fonts.getCSS());
           index = index.replace('{{SESSION_BLOG_STATE}}', JSON.stringify({}));
@@ -101,6 +102,8 @@ module.exports = function (app) {
         })
         .then(function () {
           var blogHtml = renderBlog(req.path);
+          var article = articles.getByUrl(req.path);
+          index = index.replace('{{BLOG_TITLE}}', packageJson.name + ' - ' + article.title);
           index = index.replace('{{BLOG}}', blogHtml);
           index = index.replace('{{FONTS}}', fonts.getCSS());
           index = index.replace('{{SESSION_BLOG_STATE}}', JSON.stringify({currentArticle: req.params[0] + '.md'}));

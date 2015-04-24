@@ -21,7 +21,6 @@ module.exports = function () {
   .then(function (results) {
     var index = results[0];
     var baseCSS = results[1] + '\n' + results[2] + '\n' + results[3] + '\n' + results[4];
-    index = index.replace('{{BLOG_TITLE}}', packageJson.name);
     index = index.replace('{{BASE_CSS}}', baseCSS);
     return index;
   })

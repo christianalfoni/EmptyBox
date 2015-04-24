@@ -373,7 +373,7 @@ If you want to test this you can run:
 
 `NODE_ENV=production webpack -p --config webpack.production.config.js` 
 
-You will see a *bundle.js* file appear in the *public/build* directory, and a *bundle.js.map* file. But we are not going to be running this locally, let us get this running in the cloud.
+You will see a *bundle.js* file appear in the *public/build* directory, and a *bundle.js.map* file. But we are not going to be running this locally, let us get this running in the cloud. **Make sure you delete the public/build folder, as express will serve these files instead of webpack-dev-server**.
 
 ## Continuous deployment
 So ideally you want your application or prototype to find its place in the cloud. This will let your users access your application, but also if you are just creating a prototype it will allow colleagues and maybe other people interested in the project to try things out as you iterate. This makes it a lot easier to give feedback and it will be easier for you to make changes as you go.
@@ -383,7 +383,7 @@ We are going to look at two different solutions amongst many others, [Nodejitsu]
 ### Nodejitsu
 With Nodejitsu you have a CLI tool for deploying the application. The CLI tool actually bundles up the application and moves it to the Nodejitsu servers as a *snapshot*. This is great, because we can use a build service to run tests, prepare the application for production and run the CLI tool whenever we push to the application repo. [Codeship](https://codeship.com) is one of these services and it works very well. You hook your repo to Codeship in one end and your Nodejitsu account on the other end. In between you run your tests, run the deploy command above and Codeship automatically updates the application on Nodejitsu if everything worked out okay.
 
-All you really have to do is inserting this command into the *Setup Commands*:
+All youx really have to do is inserting this command into the *Setup Commands*:
 
 `NODE_ENV=production webpack -p --config webpack.production.config.js`
 
