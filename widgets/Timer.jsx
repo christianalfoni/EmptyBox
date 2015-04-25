@@ -16,7 +16,8 @@ var Timer = React.createClass({
     var total = parseInt(this.props.content.length / this.charactersPrMinute);
     var prPixel = total / this.height;
     var scrolled = prPixel * document.body.scrollTop;
-    return total - Math.floor(scrolled);
+    var time = total - Math.floor(scrolled);
+    return  total > 0 ? total : 0;
   },
   componentDidMount: function () {
     window.addEventListener('scroll', this.timeLeft);

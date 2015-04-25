@@ -16,7 +16,7 @@ pre {
 }
 pre {
   margin-top: 0;
-    overflow-x: scroll;
+  overflow-x: auto;
 }
 code {
     position: relative;
@@ -52,14 +52,15 @@ h1 {
     margin-top: 1em;
 }
 h2 {
-    font-size: 3em;
-}
-h3 {
     font-size: 2.5em;
 }
-h4 {
+h3 {
     font-size: 2em;
     color: #666;
+}
+h4 {
+    font-size: 1.5em;
+    color: #444;
 }
 p, ul, ol {
     font-size: 1.5em;
