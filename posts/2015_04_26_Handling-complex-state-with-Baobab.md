@@ -42,7 +42,7 @@ let Baobab = new Baobab({
 });
 ```
 
-Let us imagine we have a list of projects. They are displayed in a table. When the user clicks one of the projects a modal should appear with the possibility to change the data of the project. So let us imagine that now. The user clicks the first project an triggers an action:
+Let us imagine we have a list of projects. They are displayed in a table. When the user clicks one of the projects a modal should appear with the possibility to change the data of the project. So let us imagine that now. The user clicks the first project and triggers an action:
 
 ```javascript
 
@@ -209,7 +209,7 @@ let Header = React.createClass({
    where you would probably pass down different trees based on the user
    requesting a resource */
 
-React.render(<App tree={tree}/>, document.body);
+React.render(<App tree={tree}/>, document.getElementById('app'));
 ```
 
 But now, let us look at the one major API addition to Baobab.
@@ -248,7 +248,7 @@ let tree = new Baobab({
       title: 'bar'
     }
   },
-  selectedProjectId: null
+  selectedProjectId: '0'
 }, {
   facets: {
     selectedProject: selectedProject
@@ -257,7 +257,7 @@ let tree = new Baobab({
 
 export default tree;
 ```
-So this is quite self explainatory I think. We first define our facet. It is just an object with two properties. The **cursors** property brings in the state you need to create a new state output. In this case we want to know about **selectedProjectId** and **projects**. This also ensures any changes to these two cursors will update the facet. The **get** method is the second property and that is where you produce the state you want this facet to return. In this case we just want to grab the project projects map by using the ID in **selectedProjectId**. In the previous examples the projects were an array, but by using a map lookups are a lot easier and more performant.
+So this is quite self explainatory I think. We first define our facet. It is just an object with two properties. The **cursors** property brings in the state you need to create a new state output. In this case we want to know about **selectedProjectId** and **projects**. This also ensures any changes to these two cursors will update the facet. The **get** method is the second property and that is where you produce the state you want this facet to return. In this case we just want to grab the project from the projects map by using the ID in **selectedProjectId**. In the previous examples the projects were an array, but by using a map lookups are a lot easier and more performant.
 
 Lets make use of our facet:
 
@@ -393,9 +393,9 @@ let actions = {
 
 export default actions;
 ```
-And thats it. We now have pretty complex state handling and everything will just update automatically when anything changes. Either it being in the state defining what to display in the UI or the state containing the source data.
+And that's it. We now have pretty complex state handling and everything will just update automatically when anything changes. Either it being in the state defining what to display in the UI or the state containing the source data.
 
-We are starting to see a pattern emerge here. We start to see a more clear separation of state. Our **projects** state is more a data source than state used in the UI. It is very typical that you want to keep downloaded data in the client for optimisation reason. That way the next time you want to use the data you do not need a roundtrip to the server.
+We are starting to see a pattern emerge here. We start to see a more clear separation of state. Our **projects** state is more a data source than state used in the UI. It is very typical that you want to keep downloaded data in the client for optimization reason. That way the next time you want to use the data you do not need a roundtrip to the server.
 
 ### Solving reference within reference
 In this last example I will just show the code for the tree, as I hope you are getting the feel for how it is used in a component and changed using an action. Lets imagine our projects are created by users. The projects only store the ID of the user on an **authorId** property.
@@ -678,7 +678,9 @@ So this is whats happening:
 This is really some of the most complex state handling you meet in applications, especially where the data is in a relational database. I think facets gives you that perfect balance of freedom to compose the state exactly how you need it, but still has a very strong concept of where to put it. I think we have to realize that handling state is not about creating one simple abstraction like "Models" and "Collections". We need something a lot more flexible and lower level so that we can create a custom abstraction that suits the project. Facets does exactly that.
 
 ## Going ES6 and ES7
-One last thing I want to share with you is how the **baobab-react** project allows you to use ES6 classes and ES7 decorators to allow your components to grab state. You of course need to use a transpiler for this, where I highly recommend [Babel](https://babeljs.io/). React, Babel and Webpack are close friends. You can read more about setting that up in my previous article [The ultimate webpack setup](http://christianalfoni.com/articles/2015_04_19_The-ultimate-webpack-setup). Back to our syntax:
+One last thing I want to share with you is how the **baobab-react** project allows you to use ES6 classes and ES7 decorators to allow your components to grab state. You of course need to use a transpiler for this, where I highly recommend [Babel](https://babeljs.io/). React, Babel and Webpack are close friends. You can read more about setting that up in my previous article [The ultimate webpack setup](http://christianalfoni.com/articles/2015_04_19_The-ultimate-webpack-setup).
+
+Note that with classes and decorators the state is not exposed on the components **state** object, but the **props** object. This is due to implementation details. Personally I think it is better as it indicates external state, not internal component state.
 
 ### ES6 classes
 *App.js*
@@ -717,7 +719,7 @@ class Projects extends Component {
   render() {
     return (
       <ul>
-        {this.state.projects.map(this.renderProject)}
+        {this.props.projects.map(this.renderProject)}
       </ul>
     );
   }
@@ -773,7 +775,7 @@ class Projects extends Component {
   render() {
     return (
       <ul>
-        {this.state.projects.map(this.renderProject)}
+        {this.props.projects.map(this.renderProject)}
       </ul>
     );
   }
