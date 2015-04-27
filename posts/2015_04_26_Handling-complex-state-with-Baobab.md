@@ -785,8 +785,8 @@ export default Projects;
 ```
 
 ## Summary
-I hope this gave you some good insight into how Baobab keeps evolving to handle application state. What makes Baobab really great is that it is "low level". It does not create abstractions that assumes anything about how you want to structure your state or how your data is structured on the server. This is something you need to create an abstraction for yourself as it differs just as much as user interfaces.
+I hope this gave you some good insight into how Baobab keeps evolving to handle application state. What makes Baobab really great is that it is "low level" compared to other solutions. It does not create abstractions that assumes anything about how you want to structure your state or how your data is structured on the server. This is something you need to create an abstraction for yourself as it differs just as much as user interfaces.
 
 Facets is a brand new thing and there will probably be many strategies taking advantage of it. I just wanted show you my thoughts on how you can use them.
 
-[Baobab](https://github.com/Yomguithereal/baobab) v1.0 is relased, though [Baobab-React](https://github.com/Yomguithereal/baobab-react) is not available on npm just yet. Please check out the repo for more information and please share your ideas and thoughts on using facets to handle the state complexity of your application.
+[Baobab](https://github.com/Yomguithereal/baobab) v1.0 is relased and [Baobab-React](https://github.com/Yomguithereal/baobab-react) is also released. Please check out the repo for more information and please share your ideas and thoughts on using facets to handle the state complexity of your application.
