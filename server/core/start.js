@@ -42,16 +42,23 @@ module.exports = function (app) {
 
     app.get('/', function (req, res) {
       var blogHtml = renderBlog(req.path);
+      var html = index.replace('{{BLOG_TITLE}}', packageJson.name);
+      html = html.replace('{{BLOG}}', blogHtml);
+      html = html.replace('{{SESSION_BLOG_STATE}}', JSON.stringify({}));
       res.type('html');
-      res.send(index.replace('{{BLOG}}', blogHtml).replace('{{SESSION_BLOG_STATE}}', JSON.stringify({})));  
+      res.send(html);  
     });
 
     app.get('/articles/*', function (req, res) {
       var blogHtml = renderBlog(req.path);
-      res.type('html');
-      res.send(index.replace('{{BLOG}}', blogHtml).replace('{{SESSION_BLOG_STATE}}', JSON.stringify({
+      var article = articles.getByUrl(req.path);
+      var html = index.replace('{{BLOG_TITLE}}', packageJson.name + ' - ' + article.title);
+      html = html.replace('{{BLOG}}', blogHtml);
+      html = html.replace('{{SESSION_BLOG_STATE}}', JSON.stringify({
         currentArticle: req.params[0] + '.md'
-      })));
+      }));
+      res.type('html');
+      res.send(html);
     });
 
     app.listen(8080, function () {

@@ -1,4 +1,4 @@
-# Handling complex state with Baobab (PREVIEW)
+# Handling complex state with Baobab
 
 So Baobab is here in version 1.0. Let us quickly recap why Baobab is such a great tool for your application and then we will see what version 1.0 addresses in regards of complex state handling. I encourage you to read the [initial article on Baobab](http://christianalfoni.com/articles/2015_02_06_Plant-a-Baobab-tree-in-your-flux-application) first as it introduces why you would consider Baobab at all.
 

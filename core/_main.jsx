@@ -5,9 +5,7 @@ Object.keys(global.SESSION_BLOG_STATE).forEach(function (key) {
   global.BLOG_STATE[key] = global.SESSION_BLOG_STATE[key];
 });
 
-require('./../styles/base.css')
-require('./../styles/base-layout.css')
-require('./../styles/base-components.css')
+
 
 var React = require('react');
 var Page = require('page');
