@@ -176,14 +176,20 @@ module.exports = function () {
   
   // First we fire up Webpack an pass in the configuration we
   // created
-  var compiler = Webpack(webpackConfig, function () {
+  var bundleStart = null;
+  var compiler = Webpack(webpackConfig);
 
-    // Due to a bug with the style-loader we have to "touch" a file
-    // to force a rebundle after the initial one. Kudos to my colleague 
-    // Stephan for this one
-    fs.writeFileSync(mainPath, fs.readFileSync(mainPath).toString());
-    console.log('Project is ready!');
+  // We give notice in the terminal when it starts bundling and
+  // set the time it started
+  compiler.plugin('compile', function() {
+    console.log('Bundling...');
+    bundleStart = Date.now();
+  });
 
+  // We also give notice when it is done compiling, including the
+  // time it took. Nice to have
+  compiler.plugin('done', function() {
+    console.log('Bundled in ' + (Date.now() - bundleStart) + 'ms!');
   });
 
   var bundler = new WebpackDevServer(compiler, {
@@ -204,7 +210,8 @@ module.exports = function () {
     }
   });
 
-  // We fire up the development server
+  // We fire up the development server and give notice in the terminal
+  // that we are starting the initial bundle
   bundler.listen(8080, 'localhost', function () {
     console.log('Bundling project, please wait...');
   });
@@ -212,7 +219,6 @@ module.exports = function () {
 };
 
 ```
-The style-loader bug has an issue set up at [the style-loader repo](https://github.com/webpack/style-loader/issues/47). It would be great if you gave the issue a comment, get it prioritized :-)
 
 Finally we have to set up a proxy between our express server and the webpack-dev-server:
 

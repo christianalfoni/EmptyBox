@@ -27,7 +27,7 @@ First of all we have to get a notion of what we are trying to solve. Even though
 ### Direct reference
 ```javascript
 
-let Baobab = new Baobab({
+let tree = new Baobab({
 
   projects: [{
     id: 0, 
@@ -65,7 +65,7 @@ So the only way to really fix this is to create a clone.
 
 ```javascript
 
-let Baobab = new Baobab({
+let tree = new Baobab({
 
   projects: [{
     id: 0, 
@@ -91,7 +91,7 @@ In the example above we selected one single project. But what if you downloaded 
 
 ```javascript
 
-let Baobab = new Baobab({
+let tree = new Baobab({
 
   projects: [{
     id: 0, 
@@ -119,7 +119,7 @@ Very typically in relational databases everything is referenced with an ID. So l
 
 ```javascript
 
-let Baobab = new Baobab({
+let tree = new Baobab({
 
   comments: [{
     id: 0, 
