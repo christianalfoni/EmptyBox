@@ -512,7 +512,8 @@ And let us define the facet:
 *facets/ProjectsList.js*
 ```javascript
 
-import loaders from './../loaders.js';
+import projectLoader from './../loaders/project.js';
+import userLoader from './../loaders/user.js';
 
 let ProjectsList = {
   cursors: {
@@ -527,14 +528,14 @@ let ProjectsList = {
       if (project) {
         project = Object.create(project);
       } else {
-        return loaders.project(id);
+        return projectLoader(id);
       }
 
       let author = state.users[project.authorId];
       if (author) {
         project.author = author; 
       } else {
-        project.author = loaders.user(project.author);
+        project.author = userLoader(project.author);
       }
 
       return project;
@@ -552,49 +553,66 @@ Okay, so what are we doing here? Lets go through that step by step before lookin
 
 So what are these loaders actually doing? Lets look at an example:
 
-*loaders.js*
+*loaders/project.js*
 ```javascript
 
-import tree from './tree.js';
+import tree from './../tree.js';
 import ajax from 'ajax'; // Some ajax lib
+import batchCalls from 'batchcalls';
 
-let loaders = {
-  project(id) {
-  
-    /* First we define at what path in our state tree the project should
-       be available. Then we check if there is some data there already 
-       or prepare a new object */
+/* We are using the tiny "batchcalls" lib which just accumulates
+ synchronous calls done to the function. So for example a list
+ of 10 projects would cause one request for those 10 projects.
+ Note that also Baobab batches changes to the tree so we are only
+ causing one request to the server and one update to the facet */
 
-    let path = ['projects', id];
-    let project = tree.get(path) || {};
+let getAndSetProject = batchCalls(function (ids, paths) {
 
-    /* We now attach the id and a UI property we call $isLoading. It is
-       prefixed with $ to indicate that this is only a client property.
-       We do not insert this into the state tree as it is temporary facet
-       data */
-
-    project.id = id;
-    project.$isLoading = true;
-
-    /* Now we try to grab the project from the server and update the
-       project in the state tree on either success or error response */
-
-    ajax.get('/projects/' + project.id)
-      .success(function (project) {
-        tree.set(path, project);
-      })
-      .error(function (error) {
-        project.$isLoading = false;
-        project.$error = error;
-        tree.set(path, project);
+  ajax.get('/projects/?ids=' + ids.join(','))
+    .success(function (projects) {
+      ids.forEach(function (id, index) {
+        tree.set(paths[index], projects[id]);
       });
+    })
+    .error(function (error) {
+      ids.forEach(function (id, index) {
+        tree.set(paths[index], {
+          id: id,
+          $error: error
+        });
+      });
+    });
 
-    return project;
+});
+
+export default function (id) {
+
+  /* First we define at what path in our state tree the project should
+     be available. Then we check if there is some data there already 
+     or prepare a new object */
+
+  let path = ['projects', id];
+  let project = tree.get(path) || {};
+
+  /* We now attach the id and a UI property we call $isLoading. It is
+     prefixed with $ to indicate that this is only a client property.
+     We do not insert this into the state tree as it is temporary facet
+     data */
+
+  project.id = id;
+  project.$isLoading = true;
+
+  /* Now we try to grab the project from the server and update the
+     project in the state tree on either success or error response */
+
+  getAndSetProject(project.id, path);
+
+  /* We also return the temporary representation of the project that
+     the facet can use to indicate that it is loading */
+
+  return project;
     
-  }
 };
-
-export default loaders;
 ```
 
 So what does this give us? Well, lets first create a component using the facet and then we will summarize.
