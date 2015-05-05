@@ -13,6 +13,10 @@ So let us get started with creating our setup. If you want to follow a long on y
 
 `svn export https://github.com/christianalfoni/webpack-express-boilerplate/trunk ./dir`
 
+or
+
+`git clone https://github.com/christianalfoni/webpack-express-boilerplate.git`
+
 ## File structure
 Before we get started I think it is good to get an overview of the directory we are going to work with:
 
