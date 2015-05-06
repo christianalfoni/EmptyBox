@@ -565,7 +565,7 @@ import batchCalls from 'batchcalls';
  Note that also Baobab batches changes to the tree so we are only
  causing one request to the server and one update to the facet */
 
-let getAndSetProject = batchCalls(function (ids, paths) {
+let getAndSetProject = batchCalls(function (ids, paths, tree) {
 
   ajax.get('/projects/?ids=' + ids.join(','))
     .success(function (projects) {
@@ -604,7 +604,7 @@ export default function (id, tree) {
   /* Now we try to grab the project from the server and update the
      project in the state tree on either success or error response */
 
-  getAndSetProject(project.id, path);
+  getAndSetProject(project.id, path, tree);
 
   /* We also return the temporary representation of the project that
      the facet can use to indicate that it is loading */
