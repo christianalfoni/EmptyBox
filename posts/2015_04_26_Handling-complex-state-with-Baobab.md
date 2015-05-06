@@ -528,14 +528,14 @@ let ProjectsList = {
       if (project) {
         project = Object.create(project);
       } else {
-        return projectLoader(id);
+        return projectLoader(id, this);
       }
 
       let author = state.users[project.authorId];
       if (author) {
         project.author = author; 
       } else {
-        project.author = userLoader(project.author);
+        project.author = userLoader(project.author, this);
       }
 
       return project;
@@ -548,7 +548,7 @@ export default ProjectsList;
 Okay, so what are we doing here? Lets go through that step by step before looking at the loaders:
 
 1. First we try to get the project from our **projects** map
-2. If the project exists we hook it as a prototype on a new object to avoid mutation. If it does not exist we pass the id to a loader and return what the loader returns
+2. If the project exists we hook it as a prototype on a new object to avoid mutation. If it does not exist we pass the id to a loader. The **get** method runs in the context of the tree, so we pass the tree also to the loader. This allows the facet to be reused on different trees. Then we return what the loader returns
 3. If the project exists we try to grab the author from the **users** map, but if it does not exist we pass the author id to a user loader and put whatever it returns as the author
 
 So what are these loaders actually doing? Lets look at an example:
@@ -556,7 +556,6 @@ So what are these loaders actually doing? Lets look at an example:
 *loaders/project.js*
 ```javascript
 
-import tree from './../tree.js';
 import ajax from 'ajax'; // Some ajax lib
 import batchCalls from 'batchcalls';
 
@@ -585,7 +584,7 @@ let getAndSetProject = batchCalls(function (ids, paths) {
 
 });
 
-export default function (id) {
+export default function (id, tree) {
 
   /* First we define at what path in our state tree the project should
      be available. Then we check if there is some data there already 
