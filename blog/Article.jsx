@@ -6,6 +6,7 @@ var TOC = require('./../widgets/TOC.jsx');
 var ScrollSpy = require('./../widgets/ScrollSpy.jsx');
 var TwitterShare = require('./../widgets/TwitterShare.jsx');
 var Timer = require('./../widgets/Timer.jsx');
+var Rss = require('./../widgets/Rss.jsx');
 var ga = require('react-google-analytics');
 
 module.exports = React.createClass({
@@ -42,8 +43,7 @@ module.exports = React.createClass({
               shortname={'christianalfoni'}
               identifier={this.props.article.file}
               title={this.props.article.title}
-              url={'http://www.christianalfoni.com' + this.props.article.url}
-            />
+              url={'http://www.christianalfoni.com' + this.props.article.url}/>
           </div>
         </div>
         <div className="layout-column4">
@@ -51,8 +51,8 @@ module.exports = React.createClass({
             <Timer content={this.props.article.content}/>
             <TwitterShare 
               url={'http://www.christianalfoni.com' + this.props.article.url} 
-              user="christianalfoni"
-            />
+              user="christianalfoni"/>
+            <Rss url="http://www.christianalfoni.com/rss"/>
             <TOC data={renderedArticle.toc}/>
           </ScrollSpy>
         </div>
