@@ -3,6 +3,7 @@ var express = require('express');
 var compress = require('compression');
 var path = require('path');
 var Promise = require('es6-promise').Promise;
+var rss = require('./rss.js');
 var packageJson = require('./../../package.json');
 var renderBlog = require('./renderBlog.jsx');
 var loadIndex = require('./loadIndex.js');
@@ -60,6 +61,8 @@ module.exports = function (app) {
       res.type('html');
       res.send(html);
     });
+
+    app.get('/rss', rss);
 
     app.listen(8080, function () {
       console.log('Blog ready at localhost:3000');
@@ -122,6 +125,8 @@ module.exports = function (app) {
         });
 
     });
+
+    app.get('/rss', rss);
 
     app.all('*', function (req, res) {
       proxy.web(req, res, {
