@@ -1,4 +1,4 @@
-module.exports = function (file, content) {
+module.exports = function (file, content, isDraft) {
 
   var articleDetails = file.split('_');
   var year = articleDetails[0];
@@ -17,6 +17,7 @@ module.exports = function (file, content) {
     date: Number(date),
     published: new Date(year, month - 1, date).getTime(),
     title: title,
+    isDraft: !!isDraft,
     content: content,
     description: description,
     file: file,

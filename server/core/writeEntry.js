@@ -5,14 +5,16 @@ var utils = require('./utils.js');
 
 var injectRoutes = function (articles, template) {
   var routes = articles.map(function (article) {
+    
+    var dir = (article.isDraft ? 'drafts' : 'posts');
     return [
       'Page(\'' + article.url + '\', function (req) {\n',
       '  document.body.classList.add(\'article-loading\');\n',
       '  store.set(\'loadingArticle\', \'' + article.url + '\');\n',
       '  store.commit();\n',
-      '  require.ensure([\'./../posts/' + article.file + '\'], function () {\n',
+      '  require.ensure([\'./../' + dir + '/' + article.file + '\'], function () {\n',
       '    document.body.classList.remove(\'article-loading\');\n',
-      '    var content = require(\'./../posts/' + article.file + '\');\n',
+      '    var content = require(\'./../' + dir + '/' + article.file + '\');\n',
       '    store.select(\'articles\', {file: \'' + article.file + '\'}).edit(parseArticle(\'' + article.file + '\', content));\n',
       '    if (store.select(\'currentArticle\').get() !== \'' + article.file + '\') { document.body.scrollTop = 0; }\n',
       '    store.set(\'currentArticle\', \'' + article.file + '\');\n',
@@ -35,7 +37,7 @@ var injectState = function (state, template) {
 
 var injectHotAccepts = function (articles, template) {
   var hotAccepts = articles.map(function (article) {
-    return './../posts/' + article.file;
+    return './../' + (article.isDraft ? 'drafts' : 'posts') + '/' + article.file;
   });
   return template.replace('{{BLOG_HOTACCEPTS}}', JSON.stringify(hotAccepts));
 };
