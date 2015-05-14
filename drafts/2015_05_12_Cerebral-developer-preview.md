@@ -222,7 +222,7 @@ let updateTodo = function (cerebral, updatedTodo) {
 ```
 And the last action now grabs the todo from the cerebral and uses it as a path to merge in the updated properties. What to notice here is that the `updateTodo()` method is quite generic. There might be other signals that also requires updating of a todo. You can use the same function for that. Also notice that synchronous functions are pure functions. That makes them very easy to test. Just pass an instance of a Cerebral whan calling them and verify that they make the changes and/or returns the value you expect.
 
-### Facets
+### Map
 A different challenge with handling complex state is relational data. A typical example of this is that you load lots of data records, but only want to show some of them. You need one state for keeping the records and an other to indicate which ones to display. The best way to do this is using the id of the data record as a reference. But how do you expose the source data using this reference? Enough theory, lets see some code.
 
 ```javascript
@@ -246,25 +246,27 @@ let populateProjectRows = function (cerebral) {
 
 cerebral.signal('projectsTableOpened', populateProjectRows);
 ```
-Our component will use the `projectRows` state, but it is filled up with ids, we want it to be filled up with projects. This is where facets comes to the rescue.
+Our component will use the `projectRows` state, but it is filled up with ids, we want it to be filled up with projects. This is where map comes to the rescue.
 
 ```javascript
 
-cerebral.facet('projectRows', ['projects'], function (cerebral, ids) {
+cerebral.map('projectRows', ['projects'], function (cerebral, ids) {
   let projects = cerebral.get('projects');
   return ids.map(function (id) {
     return projects[id];
   });
 });
 ```
-A facet transforms a path in the cerebral. It does not transform its input, but it transforms its output. The first argument is the path you want to change the output of. The second argument is any depending paths. As stated above, if anything changes on the source data we want it to be updated. The last argument is the function that runs when there is a change to the projects or the projectRows array. Any components using this state will of course also update.
+Cerebral is able to map a state value to a new value when the value itself or its dependant state values has a change. This is similar to "functional reactive programming", but I will not go all FRP on you, you will feel right at home. On a sidenote I think FRP is where we are headed as web developers, but it requires a lot of effort both in changing the way we think about programming and learning new tools. Cerebral introduces FRP like concepts without bending your mind and requiring you to learn a huge API.
+
+So the map method maps a state value to a new value. The first argument is the path you want to map. The second argument is any depending paths. As stated above, if anything changes on the source data we want it to be updated. The last argument is the function that runs when there is a change to the projects or the projectRows array. Any components using this state will of course also update.
 
 ### Even more complex state
-So lets take this a step further. What if the projects has an authorId that references a specific user? Maybe we can use our facet to merge in that information?
+So lets take this a step further. What if the projects has an authorId that references a specific user? Maybe we can use our map to merge in that information?
 
 ```javascript
 
-cerebral.facet('projectRows', ['projects', 'users'], function (cerebral, ids) {
+cerebral.map('projectRows', ['projects', 'users'], function (cerebral, ids) {
   let projects = cerebral.get('projects');
   let users = cerebral.get('users');
   return ids.map(function (id) {
@@ -279,7 +281,7 @@ But we can make this even more complex. What if the user is not in the client? L
 
 ```javascript
 
-cerebral.facet('projectRows', ['projects', 'users'], function (cerebral, ids) {
+cerebral.map('projectRows', ['projects', 'users'], function (cerebral, ids) {
 
   let projects = cerebral.get('projects');
   let users = cerebral.get('users');
@@ -309,10 +311,10 @@ cerebral.facet('projectRows', ['projects', 'users'], function (cerebral, ids) {
 ```
 I think this is one of the more complex situations of state handling we can meet as developers. Lets just go through that step by step:
 
-1. The facet extracts the current projects and users
+1. The map callback extracts the current projects and users
 2. It prepares an array where missing author ids can be listed
-3. When an author is not found the facet puts a temporary object to indicate the state of that data. Then it pushes the *authorId* to the missing authors array
-4. When the projectRows are ready the facet checks if there are any missing authors and passes those on a signal that will most certainly do an ajax request fetching the users and inserting them into the *users* map. This will in turn run the facet again and now the data is available
+3. When an author is not found the map callback puts a temporary object to indicate the state of that data. Then it pushes the *authorId* to the missing authors array
+4. When the projectRows are ready the map callback checks if there are any missing authors and passes those on a signal that will most certainly do an ajax request fetching the users and inserting them into the *users* map. This will in turn run the map callback again and now the data is available
 
 ## Summary
 I hope I did an okay introduction to what Cerebral is able to do. The project is currently not running on any applications in production, but I was hoping you would want to try it out, give feedback and help me bring it to a stable release. I think we are just scratching the surface of what we are able to do when the framework has complete control of the state flow. I can not wait to see what new ideas might show up using Cerebrals ability to retrace its steps!
