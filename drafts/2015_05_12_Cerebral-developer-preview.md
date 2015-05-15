@@ -11,7 +11,7 @@ Cerebral is a framework. I call it a framework because it has the bare necessiti
 
 > If your application was a person, Cerebral would be the brain and the nervous system of that person
 
-I want to give you an analogy for building web applications. Think of your application as different people having different responsibilities. Maybe you have one person responsible for a form, an other for the main menu and a third person is responsible for a list. This translates to **views** in an application. So a **view** is basically a person with a brain (the state) and a nervous system (events), and the body would be the UI. The user interacts with the **view** in different ways and events are processed to change state which in turn changes the UI. We can go all the way back to [Backbone]() for this type of behaviour.
+I want to give you an analogy for building web applications. Think of your application as different people having different responsibilities. Maybe you have one person responsible for a form, an other for the main menu and a third person is responsible for a list. This translates to **views** in an application. So a **view** is basically a person with a brain (the state) and a nervous system (events), and the body would be the UI. The user interacts with the **view** in different ways and events are processed to change state which in turn changes the UI. We can go all the way back to [Backbone](http://www.backbonejs.org) for this type of behaviour.
 
 Though this seems like a good way to manage interaction and state, it does have its challenges. Imagine you are part of a development team of 5 people. It is very difficult to keep everyone in complete sync as interactions most often is "one to one". You might say something to one team member and later you realize that other team members should also be notified... but that is probably after something went wrong. This is the exact same problem with having multiple persons with their own brain and nervous system representing your application, or in web application terms, multiple views with their own state and event processing. You quickly loose control of communicating between them.
 
@@ -222,7 +222,7 @@ let updateTodo = function (cerebral, updatedTodo) {
 ```
 And the last action now grabs the todo from the cerebral and uses it as a path to merge in the updated properties. What to notice here is that the `updateTodo()` method is quite generic. There might be other signals that also requires updating of a todo. You can use the same function for that. Also notice that synchronous functions are pure functions. That makes them very easy to test. Just pass an instance of a Cerebral whan calling them and verify that they make the changes and/or returns the value you expect.
 
-### Map
+### Composing state
 A different challenge with handling complex state is relational data. A typical example of this is that you load lots of data records, but only want to show some of them. You need one state for keeping the records and an other to indicate which ones to display. The best way to do this is using the id of the data record as a reference. But how do you expose the source data using this reference? Enough theory, lets see some code.
 
 ```javascript
@@ -246,75 +246,94 @@ let populateProjectRows = function (cerebral) {
 
 cerebral.signal('projectsTableOpened', populateProjectRows);
 ```
-Our component will use the `projectRows` state, but it is filled up with ids, we want it to be filled up with projects. This is where map comes to the rescue.
+Our component will use the `projectRows` state, but it is filled up with ids, we want it to be filled up with projects. Lets go back to the cerebral and change our definition of `projectRows`.
 
 ```javascript
 
-cerebral.map('projectRows', ['projects'], function (cerebral, ids) {
-  let projects = cerebral.get('projects');
-  return ids.map(function (id) {
-    return projects[id];
-  });
+let projectRows = function () {
+  return {
+    value: [],
+    deps: ['projects'],
+    get(cerebral, deps, ids) {
+      return ids.map(function (id) {
+        return deps.projects[id];
+      });
+    }
+  };
+};
+
+let cerebral = Cerebral({
+  projects: {},
+  projectRows: projectRows
 });
 ```
-Cerebral is able to map a state value to a new value when the value itself or its dependant state values has a change. This is similar to "functional reactive programming", but I will not go all FRP on you, you will feel right at home. On a sidenote I think FRP is where we are headed as web developers, but it requires a lot of effort both in changing the way we think about programming and learning new tools. Cerebral introduces FRP like concepts without bending your mind and requiring you to learn a huge API.
-
-So the map method maps a state value to a new value. The first argument is the path you want to map. The second argument is any depending paths. As stated above, if anything changes on the source data we want it to be updated. The last argument is the function that runs when there is a change to the projects or the projectRows array. Any components using this state will of course also update.
+Cerebral is able to map a state value to a new value when its own or dependant state values change. You define this behaviour by returning an object. The object needs a **value** property which will be the initial value of the state. The **deps** property lets you point to other paths in the cerebral. Any changes on those paths will remap the state value using the last property, **get**. The first argument received in the **get()** method is the cerebral instance. You can use this to grab other state values and trigger signals. The second argument is the values of the depending state. As stated above, if anything changes on the source data we want it to be updated. The last argument is the value of the state itself, in this case an array.
 
 ### Even more complex state
 So lets take this a step further. What if the projects has an authorId that references a specific user? Maybe we can use our map to merge in that information?
 
 ```javascript
 
-cerebral.map('projectRows', ['projects', 'users'], function (cerebral, ids) {
-  let projects = cerebral.get('projects');
-  let users = cerebral.get('users');
-  return ids.map(function (id) {
-    let project = projects[id].toJS(); // Lets us mutate the project
-    project.author = users[project.authorId];
-    return project;
-  });
-});
+let projectRows = function () {
+  return {
+    value: [],
+    deps: ['projects', 'users'],
+    get(cerebral, deps, ids) {
+
+      return ids.map(function (id) {
+        let project = deps.projects[id].toJS(); // Lets us mutate the project
+        project.author = deps.users[project.authorId];
+        return project;
+      });
+
+    }
+  };
+};
 ```
 
 But we can make this even more complex. What if the user is not in the client? Lets take a look at what we can do about that.
 
 ```javascript
 
-cerebral.map('projectRows', ['projects', 'users'], function (cerebral, ids) {
+let projectRows = function () {
+  return {
+    value: [],
+    deps: ['projects', 'users'],
+    get(cerebral, deps, ids) {
 
-  let projects = cerebral.get('projects');
-  let users = cerebral.get('users');
-  let missingAuthors = [];
-  let projectRows = ids.map(function (id) {
-    
-    let project = projects[id].toJS();
-    project.author = users[project.authorId];
-    
-    if (!project.author) {
-      project.author = {
-        $isLoading: true
-      };
-      missingAuthors.push(project.authorId);
+      let missingAuthors = [];
+      let projectRows = ids.map(function (id) {
+        
+        let project = deps.projects[id].toJS();
+        project.author = deps.users[project.authorId];
+        
+        if (!project.author) {
+          project.author = {
+            $isLoading: true
+          };
+          missingAuthors.push(project.authorId);
+        }
+        
+        return project;
+      });
+
+      if (missingAuthors.length) {
+        cerebral.signals.missingAuthors(missingAuthors);
+      }
+
+      return projectRows;
+
     }
-    
-    return project;
-  });
-
-  if (missingAuthors.length) {
-    cerebral.signals.missingAuthors(missingAuthors);
-  }
-
-  return projectRows;
-
-});
+  };
+};
 ```
+
 I think this is one of the more complex situations of state handling we can meet as developers. Lets just go through that step by step:
 
-1. The map callback extracts the current projects and users
+1. The *get* method has access to the projects and users on the deps object
 2. It prepares an array where missing author ids can be listed
-3. When an author is not found the map callback puts a temporary object to indicate the state of that data. Then it pushes the *authorId* to the missing authors array
-4. When the projectRows are ready the map callback checks if there are any missing authors and passes those on a signal that will most certainly do an ajax request fetching the users and inserting them into the *users* map. This will in turn run the map callback again and now the data is available
+3. When an author is not found a temporary object is created to indicate the state of that data. Then the id of the author is pushed into the missing authors array
+4. When the projectRows are created the *get* method checks if there are any missing authors and passes those on a signal that will most certainly do an ajax request fetching the users and inserting them into the *users* map. This will in turn run the *get* method again and now the data is available
 
 ## Summary
 I hope I did an okay introduction to what Cerebral is able to do. The project is currently not running on any applications in production, but I was hoping you would want to try it out, give feedback and help me bring it to a stable release. I think we are just scratching the surface of what we are able to do when the framework has complete control of the state flow. I can not wait to see what new ideas might show up using Cerebrals ability to retrace its steps!
