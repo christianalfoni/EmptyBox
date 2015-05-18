@@ -65,6 +65,12 @@ var Front = React.createClass({
           </p>
           <h2 className="header-sidebar">Projects</h2>
           <h3 className="header-sidebar-small">
+            <a href="https://github.com/christianalfoni/cerebral" target="new">Cerebral</a>
+          </h3>
+          <p className="text-small">
+            An intelligent React framework with a revolutionary workflow.
+          </p>
+          <h3 className="header-sidebar-small">
             <a href="https://github.com/christianalfoni/EmptyBox" target="new">EmptyBox</a>
           </h3>
           <p className="text-small">

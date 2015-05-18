@@ -17,6 +17,8 @@ var index = 'Index files not loaded yet';
 
 module.exports = function (app) {
 
+  app.use('/images', express.static(path.resolve(__dirname, '..', '..', 'images')));
+
   if (global.isProduction) {
 
     app.use(compress()); 

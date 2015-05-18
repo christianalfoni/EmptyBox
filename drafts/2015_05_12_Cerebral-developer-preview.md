@@ -13,6 +13,8 @@ Cerebral is a framework. I call it a framework because it has the bare necessiti
 
 I want to give you an analogy for building web applications. Think of your application as different people having different responsibilities. Maybe you have one person responsible for a form, an other for the main menu and a third person is responsible for a list. This translates to **views** in an application. So a **view** is basically a person with a brain (the state) and a nervous system (events), and the body would be the UI. The user interacts with the **view** in different ways and events are processed to change state which in turn changes the UI. We can go all the way back to [Backbone](http://www.backbonejs.org) for this type of behaviour.
 
+![People](/images/people.png)
+
 Though this seems like a good way to manage interaction and state, it does have its challenges. Imagine you are part of a development team of 5 people. It is very difficult to keep everyone in complete sync as interactions most often is "one to one". You might say something to one team member and later you realize that other team members should also be notified... but that is probably after something went wrong. This is the exact same problem with having multiple persons with their own brain and nervous system representing your application, or in web application terms, multiple views with their own state and event processing. You quickly loose control of communicating between them.
 
 When FLUX and React came a long it basically said; *it is too complicated to have multiple persons representing your application, it should be one person, with one brain and one nervous system*. This translates to the brain being your stores and actions being your nervous system. Indeed it is a lot easier to keep control of everything when there is only one person to blame, but the challenge with FLUX though is that this one person responsible for your application has a split personality. It is a single brain indeed, but that brain is divided into different sections... different stores. And these stores face similar problems as they depend on each other and requires complex logic to share and update state.
@@ -26,9 +28,9 @@ Cerebral has an implementation called **signals**. A signal is just like an impu
 ### What makes Cerebral so special
 When writing a Cerebral app you should ideally not have any state at all in your components. Everything should be defined in **the cerebral**. This keeps Cerebral in complete control of your application state flow and this is an extremely powerful concept. First of all you get a strong concept of how to mutate state. Cerebral will actualy throw an error if you try to mutate state outside a signal. You also have a strong concept of where to define the state, as a single object passed to the cerebral instance. 
 
-Second Cerebral is able to analyze the state flow and exposes an API to use that information. An example of using this information is the **Cerebral Debugger**. When developing an application with Cerebral you are able to use a debugger that displays signals sent and mutations performed. But not only that, you can remember! Using a slider you are able to move back in time, always seeing what signal and mutations caused the current state. That is extremely powerful stuff. You can imagine this information could be used for a lot of different things. Like user support, user tracking, notifications etc. It will be exciting to see what developers come up with!
+Second Cerebral is able to analyze the state flow and exposes an API to use that information. An example of using this information is the **Cerebral Debugger**. When developing an application with Cerebral you are able to use a debugger that displays signals sent and mutations performed. But not only that, you can remember! Using a slider you are able to move back in time, always seeing what signal and mutations caused the current state. That is extremely powerful stuff. You can imagine this information could be used for a lot of different things. Like user support, user tracking, notifications etc. It will be exciting to see what developers come up with! Take a look at the following video to see how the debugger works: [Cerebral - The debugger](https://www.youtube.com/watch?v=Fo86aiBoomE).
 
-A last thing to mention is that a signal runs between animation frames and automatically measures the time it takes to run all the mutations. It also measures the time it takes for your components to retrieve these state updates as an "update" event is triggered synchronously at the end of all signals. This is displayed in the debugger and makes it easy to get a grip on how your application performs.
+A last thing to mention is that a signal runs between animation frames and automatically measures the time it takes to run all the mutations. It also measures the time it takes for your components to retrieve these state updates as an "update" event is triggered synchronously at the end of all signals. This is displayed in the debugger and makes it easy to get a grip on how your application performs. It is more predictable and performant to trigger an "update" event at the end of a signal rather than manually do so for each mutation, which is common in traditional FLUX architecture.
 
 ## Lets get into some code
 All examples will be in ES6 syntax. Lets quickly review the files we are going to work in.
@@ -142,7 +144,7 @@ let setInputValue = function (cerebral, value) {
 
 export default setInputValue;
 ```
-Cerebral has many different mehtods for mutating state, *set, push, concat, splice, merge, unset, pop* etc. The first argument of a mutation is always the path to the value you want to mutate. In the example above we use a string as we are changing the top level of the cerebral. For nested values you use an array. You can also pass retrieved state values as path to the mutation.
+Cerebral has many different methods for mutating state. **set, push, concat, splice, merge, unset, pop** etc. The first argument of a mutation is always the path to the value you want to mutate. In the example above we use a string as we are changing the top level of the cerebral. For nested values you use an array. You can also pass retrieved state values as path to the mutation.
 
 *actions/addListItem.js*
 ```javascript
@@ -155,6 +157,8 @@ let addListItem = function (cerebral) {
 export default addListItem;
 ```
 You get state from the cerebral using the `.get()` method. This takes a path, either a string or an array. As stated earlier these values are immutable, but you can easily make a mutable copy by running a `.toJS()` method on them.
+
+You can also watch an introduction video of this, which shows the workflow using the debugger: [Cerebral - Building your first app](https://www.youtube.com/watch?v=ZG1omJek6SY).
 
 ## Complex state handling
 So far Cerebral does not really bring much to the table other than a fancy debugger. Where it really starts to shine though is getting into complex state handling and asynchronous state handling.
@@ -174,16 +178,16 @@ And now let us create the actions.
 
 let addTodo = function (cerebral, title) {
   let todo = {
-    ref: cerebral.ref(),
+    $ref: cerebral.ref(),
+    $isSaving: true,
     title: title,
-    completed: false,
-    $isSaving: true
+    completed: false
   };
   cerebral.push('todos', todo);
   return todo;
 };
 ```
-We create the todo object and give it a cerebral reference. These references are used to lookup objects in the cerebral instance whenever needed. We also add a `$isSaving` property to the todo. This is a convention I personally like and is not specific to Cerebral. All `$` properties are client side properties used to indicate the state of an object. It is very handy indeed. Finally we push the todo into the cerebral and then return it for the next action.
+We create the todo object and give it a cerebral reference. These references are used to lookup objects in the cerebral instance whenever needed. We also add a `$isSaving` property to the todo. This is a convention that fits well with Cerebral. All `$` properties are client side properties used to indicate the state of an object or its client reference. It is very handy indeed. Finally we push the todo into the cerebral and then return an object for the next action.
 
 ```javascript
 
@@ -196,13 +200,13 @@ let saveTodo = function (cerebral, todo) {
   })
   .then(function () {
     return {
-      ref: todo.ref,
+      $ref: todo.$ref,
       $isSaving: false
     };
   })
   .catch(function (error) {
     return {
-      ref: todo.ref,
+      $ref: $todo.ref,
       $isSaving: false,
       $error: error
     };
@@ -216,7 +220,7 @@ But what about the debugger? It would not be a very good experience if you retra
 ```javascript
 
 let updateTodo = function (cerebral, updatedTodo) {
-  let todo = cerebral.getByRef('todos', updatedTodo.ref);
+  let todo = cerebral.getByRef('todos', updatedTodo.$ref);
   cerebral.merge(todo, updatedTodo);
 };
 ```

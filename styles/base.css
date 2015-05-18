@@ -8,6 +8,9 @@ html, body {
     font-family: 'Lato';
     font-weight: 300;
 }
+img {
+  width: 100%;
+}
 pre {
     position: relative;
     background-color: #F7F7F7;
