@@ -325,7 +325,7 @@ let projectRows = function () {
       });
 
       if (missingAuthors.length) {
-        cerebral.signals.missingAuthors(missingAuthors);
+        cerebral.signals.missingAuthorsIdentified(missingAuthors);
       }
 
       return projectRows;
@@ -341,6 +341,8 @@ I think this is one of the more complex situations of state handling we can meet
 2. It prepares an array where missing author ids can be listed
 3. When an author is not found a temporary object is created to indicate the state of that data. Then the id of the author is pushed into the missing authors array
 4. When the projectRows are created the *get* method checks if there are any missing authors and passes those on a signal that will most certainly do an ajax request fetching the users and inserting them into the *users* map. This will in turn run the *get* method again and now the data is available
+
+You can see a video on implementing this [right here](https://www.youtube.com/watch?v=xx7Y2MkYgUA).
 
 ## Summary
 I hope this article gave you insight into what Cerebral is all about. The project is currently not running on any applications in production, but I was hoping you would want to try it out, give feedback and help me bring it to a stable release. I think we are just scratching the surface of what we are able to do when the framework has complete control of the state flow. It is pretty amazing to use the debugger when developing because you avoid retracing your steps all the time, and as your application grows you always have a good overview of how the state flows. I can not wait to see what new ideas might show up using Cerebrals ability to understand the state flow!
