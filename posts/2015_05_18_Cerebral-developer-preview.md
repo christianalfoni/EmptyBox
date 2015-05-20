@@ -164,7 +164,49 @@ You get state from the cerebral using the `.get()` method. This takes a path, ei
 You can also watch an introduction video of this, which shows the workflow using the debugger: [Cerebral - Building your first app](https://www.youtube.com/watch?v=ZG1omJek6SY).
 
 ## Complex state handling
-So far Cerebral does not really bring much to the table other than a fancy debugger. Where it really starts to shine though is getting into complex state handling and asynchronous state handling.
+So far Cerebral does not really bring much to the table other than a fancy debugger. Where it really starts to shine though is getting into complex state handling and asynchronous state handling. But let us try to answer a basic question first. How should you store your data? In an array? Or as a key/value map? They both have their benefits in regards to data access and traversal. In Cerebral the choice is made for you. You use a key/value map to store source data. For example some todos would be stored like this:
+
+```javascript
+
+let cerebral = Cerebral({
+  todos: {
+    'cerebral_ref_1': {
+      id: 'todo_1',
+      title: 'My todo',
+      completed: false
+    },
+    'cerebral_ref_2': {
+      id: 'todo_2',
+      title: 'My other todo',
+      completed: true
+    }
+  }
+});
+```
+
+And if you want to display a list of todos you would add an array for that:
+
+```javascript
+
+let cerebral = Cerebral({
+  todos: {...},
+  displayedTodos: []
+});
+```
+
+The reason you separate the two is scalability. Now you can safely store as many todos as you want into the map and the array can reference those todos to display a subset or just a single one of them:
+
+```javascript
+
+let cerebral = Cerebral({
+  todos: {...},
+  displayedTodos: [
+    'cerebral_ref_1'
+  ]
+});
+```
+
+We will soon get back to how you will use this reference to actually display the source data, but for now get comfortable with the idea of source data as key/value map and arrays or plain string values to reference the source data.
 
 ### Asynchronous actions
 One of the more difficult concepts to handle is asynchronous code. When Facebook intitially put FLUX into the wild there was a lot of discussions on where to put asynchronous code. In Cerebral you are not able to change state unless it is synchronously done from an action. So how do you change state with asynchronous code?
@@ -173,64 +215,84 @@ Let us imagine that the input value is the title of a todo and we want to send t
 
 ```javascript
 
-cerebral.signal('inputValueSubmitted', addTodo, saveTodo, updateTodo);
+cerebral.signal('inputValueSubmitted', addTodo, saveTodo, updateTodoWithResult);
 ```
 And now let us create the actions.
 
 ```javascript
 
 let addTodo = function (cerebral, title) {
+  let ref = cerebral.ref.create();
   let todo = {
-    $ref: cerebral.ref(),
     $isSaving: true,
     title: title,
     completed: false
   };
-  cerebral.push('todos', todo);
-  return todo;
+  cerebral.set(['todos', ref], todo);
+  return ref;
 };
 ```
-We create the todo object and give it a cerebral reference. These references are used to lookup objects in the cerebral instance whenever needed. We also add a `$isSaving` property to the todo. This is a convention that fits well with Cerebral. All `$` properties are client side properties used to indicate the state of an object or its client reference. It is very handy indeed. Finally we push the todo into the cerebral and then return an object for the next action.
+First of all we create a cerebral reference. Then we create the todo with a `$isSaving` property. This is a convention that fits well with Cerebral. All `$` properties are client side properties used to indicate the state of an object. It is very handy indeed. Finally we set the todo to our todos key/value map and then return the reference for the next action to take over.
 
 ```javascript
 
 import ajax from 'ajax';
 
-let saveTodo = function (cerebral, todo) {
+let saveTodo = function (cerebral, ref) {
+
+  let todo = cerebral.get('todos', ref);
+  
   return ajax.post('/todos', {
     title: todo.title,
     completed: todo.completed
   })
-  .then(function () {
+  .success(function (id) {
+    cerebral.ref.update(ref, id);
     return {
-      $ref: todo.$ref,
-      $isSaving: false
+      ref: ref,
+      id: id
     };
   })
-  .catch(function (error) {
+  .error(function (error) {
     return {
-      $ref: $todo.ref,
-      $isSaving: false,
-      $error: error
+      ref: ref
+      error: error
     };
   });
 };
 ```
-The first thing to notice here is that this imagined ajax library returns a **promise**. This is what indicates that an action is asynchronous. If a promise is returned it will wait for it to fulfill before it runs the next action in the signal. The resolved value will be passed as an argument. In this case we return an object with new/changed properties that we can merge.
+We can now use the returned reference to grab the todo from the cerebral and do a post to the server.
+The first thing to notice here is that this imagined ajax library returns a **promise**. This is what indicates that an action is asynchronous. If a promise is returned it will wait for it to fulfill before it runs the next action in the signal. The resolved value will be passed as an argument to the next action. 
+
+When the server responds with an id we update the reference used on that todo. This will basically just link the reference to the id, allowing you to use either to grab the other. We will soon see the benefit of this. If an error is returned we simply return the reference and the error.
 
 But what about the debugger? It would not be a very good experience if you retraced your steps and these async actions would trigger new server requests. Well, they don't. Cerebral does not only remember the signals and mutations done, but also values returned from asynchronous actions. This means that when you look at previous state in the debugger it will all happen synchronously.
 
 ```javascript
 
-let updateTodo = function (cerebral, updatedTodo) {
-  let todo = cerebral.getByRef('todos', updatedTodo.$ref);
-  cerebral.merge(todo, updatedTodo);
+let updateTodoWithResult = function (cerebral, result) {
+  let todo = cerebral.get('todos', result.ref);
+  if (result.id) {
+    cerebral.merge(todo, {
+      id: result.id,
+      $isSaving: false
+    });
+  } else {
+    cerebral.merge(todo, {
+      $error: result.error,
+      $isSaving: false
+    });
+  }
 };
 ```
-And the last action now grabs the todo from the cerebral and uses it as a path to merge in the updated properties. What to notice here is that the `updateTodo()` method is quite generic. There might be other signals that also requires updating of a todo. You can use the same function for that. Also notice that synchronous functions are pure functions. That makes them very easy to test. Just pass an instance of a Cerebral whan calling them and verify that they make the changes and/or returns the value you expect.
+And the last action now grabs the todo from the cerebral and uses it as a path to merge in the id or the error, and also the $isSaving property set to false. 
+
+So now you see that Cerebral handles asynchronous actions simply using a promise. Cerebral does not allow any mutations from asynchronous actions, you have to return a result that a synchronous action can process when it is done. This is one of the core concepts that lets Cerebral keep control of your state. As a plus your code is less error prone, easier to test and easier to read.
+
+Notice that synchronous functions are pure functions. That makes them very easy to test. Just pass an instance of a Cerebral whan calling them and verify that they make the changes and/or returns the value you expect.
 
 ### Composing state
-A different challenge with handling complex state is relational data. A typical example of this is that you load lots of data records, but only want to show some of them. You need one state for keeping the records and an other to indicate which ones to display. The best way to do this is using the id of the data record as a reference. But how do you expose the source data using this reference? Enough theory, lets see some code.
+A different challenge with handling complex state is relational data. A typical example of this is that you load lots of data records, but only want to show some of them. You need one state for keeping the records and an other to indicate which ones to display. As we already have talked about Cerebral has conventions that lets you easily handle this.
 
 ```javascript
 
@@ -239,21 +301,51 @@ let cerebral = Cerebral({
   projectRows: []
 });
 ```
-So let us imagine that we have 100 projects in our projects map. The key of the project is its id. Now we want to show only 10 of them, but if anything changes in the projects map we want those changes also to show on the projects in the projectRows list. Let us first create a signal and an action that will populate the projectRows list.
+So first of all we need to grab ourselves some projects. Let us look at two actions handling that:
+
+```javascript
+
+let getProjects = function () {
+  return ajax.get('/projects')
+    .success(function (projects) {
+      return projects;
+    });
+};
+```
+It simply grabs the projects and returns them. They are an array, which is quite typical for a backend response. Now lets look at the action that puts these projects into the cerebral:
+
+```javascript
+
+let mergeProjects = function (cerebral, projects) {
+
+  let projectsMap = projects.reduce(function (allProjects, project) {
+
+    let ref = cerebral.ref.create(project.id);
+    allProjects[ref] = project;
+    return allProjects;
+
+  }, {});
+  
+  cerebral.merge('projects', projectsMap);
+};
+```
+Our action simply converts the array to a key/value map where it uses a Cerebral reference as a key. Notice that we pass in the id of the project when we create the reference. This lets Cerebral link the reference to the id and you are able to grab one when you have the other. We will shortly see its usefulness. Last we merge in this new map with the existing projects.
+
+Now let us just grab a subset of these projects and fill up the array, using a signal calling an action:
 
 ```javascript
 
 let populateProjectRows = function (cerebral) {
   let projects = cerebral.get('projects');
-  projects = Object.keys(projects).filter(function (key, index) {
+  let tenFirstProjectRefs = Object.keys(projects).filter(function (key, index) {
     return index < 10;
   });
-  cerebral.set('projectRows', projects);
+  cerebral.set('projectRows', tenFirstProjectRefs);
 };
 
 cerebral.signal('projectsTableOpened', populateProjectRows);
 ```
-Our component will use the `projectRows` state, but it is filled up with ids, we want it to be filled up with projects. Lets go back to the cerebral and change our definition of `projectRows`.
+Now our component is able to use the `projectRows` state, but it is currently filled up with cerebral references. We have to do something about that, so let us go back to our cerebral:
 
 ```javascript
 
@@ -261,9 +353,9 @@ let projectRows = function () {
   return {
     value: [],
     deps: ['projects'],
-    get(cerebral, deps, ids) {
-      return ids.map(function (id) {
-        return deps.projects[id];
+    get(cerebral, deps, refs) {
+      return refs.map(function (ref) {
+        return deps.projects[ref];
       });
     }
   };
@@ -274,7 +366,7 @@ let cerebral = Cerebral({
   projectRows: projectRows
 });
 ```
-Cerebral is able to map a state value to a new value when its own or dependant state values change. You define this behaviour by returning an object. The object needs a **value** property which will be the initial value of the state. The **deps** property lets you point to other paths in the cerebral. Any changes on those paths will remap the state value using the last property, **get**. The first argument received in the **get()** method is the cerebral instance. You can use this to grab other state values and trigger signals. The second argument is the values of the depending state. As stated above, if anything changes on the source data we want it to be updated. The last argument is the value of the state itself, in this case an array.
+Cerebral is able to map a state value to a new value when its own or dependant state values change. You define this behaviour by returning an object from a function. The object needs a **value** property which will be the initial value of the state. The **deps** property lets you point to other paths in the cerebral. Any changes on those paths will remap the state value using the last property, the method **get**. The first argument received in the **get()** method is the cerebral instance. You can use this to grab other state values and trigger signals. The second argument is the values of the depending state. As stated above, if anything changes on the source data we want it to be updated. The last argument is the value of the state itself, in this case an array.
 
 ### Even more complex state
 So lets take this a step further. What if the projects has an authorId that references a specific user? Maybe we can use our map to merge in that information?
@@ -285,11 +377,12 @@ let projectRows = function () {
   return {
     value: [],
     deps: ['projects', 'users'],
-    get(cerebral, deps, ids) {
+    get(cerebral, deps, refs) {
 
-      return ids.map(function (id) {
-        let project = deps.projects[id].toJS(); // Lets us mutate the project
-        project.author = deps.users[project.authorId];
+      return refs.map(function (ref) {
+        let project = deps.projects[ref].toJS(); // Lets us mutate the project
+        let authorRef = cerebral.ref.get(project.authorId);
+        project.author = deps.users[authorRef];
         return project;
       });
 
@@ -298,7 +391,9 @@ let projectRows = function () {
 };
 ```
 
-But we can make this even more complex. What if the user is not in the client? Lets take a look at what we can do about that.
+Now you see why a Cerebral benefits from giving you references. Even though we have a key/value map of users that does not depend on ids, allowing for optimistic updates, we can still do a plain lookup using the id. 
+
+But let us make this even more complex. What if the user is not in the client? Lets take a look at what we can do about that.
 
 ```javascript
 
@@ -312,9 +407,11 @@ let projectRows = function () {
       let projectRows = ids.map(function (id) {
         
         let project = deps.projects[id].toJS();
-        project.author = deps.users[project.authorId];
+        let authorRef = cerebral.ref.get(project.authorId);
         
-        if (!project.author) {
+        if (authorRef) {
+          project.author = deps.users[authorRef];
+        } else {
           project.author = {
             $isLoading: true
           };
