@@ -2,6 +2,7 @@ var httpProxy = require('http-proxy');
 var express = require('express');
 var compress = require('compression');
 var path = require('path');
+var forceDomain = require('forcedomain');
 var Promise = require('es6-promise').Promise;
 var rss = require('./rss.js');
 var packageJson = require('./../../package.json');
@@ -15,44 +16,49 @@ var utils = require('./utils.js');
 
 var index = 'Index files not loaded yet';
 
-module.exports = function (app) {
+module.exports = function(app) {
 
   app.use('/images', express.static(path.resolve(__dirname, '..', '..', 'images')));
+  app.use('/todomvc', express.static(path.resolve(__dirname, '..', '..', 'cerebral_todomvc')));
 
   if (global.isProduction) {
 
-    app.use(compress()); 
+    app.use(forceDomain({
+      hostname: 'www.christianalfoni.com'
+    }));
+
+    app.use(compress());
 
     Promise.all([
         loadIndex(),
         articles.load(),
         fonts.load()
       ])
-      .then(function (results) {
+      .then(function(results) {
         index = results[0];
         index = index.replace('{{FONTS}}', fonts.getCSS());
         return writeEntry(results[1]);
       })
       .then(bundler.bundleProduction)
-      .then(function () {
+      .then(function() {
         console.log('Production bundle is ready');
       })
-      .catch(function (err) {
+      .catch(function(err) {
         console.error('Something wrong happened when bundling for production', err);
       });
 
     app.use('/public', express.static(path.resolve(__dirname, '..', '..', 'public')));
 
-    app.get('/', function (req, res) {
+    app.get('/', function(req, res) {
       var blogHtml = renderBlog(req.path);
       var html = index.replace('{{BLOG_TITLE}}', packageJson.name);
       html = html.replace('{{BLOG}}', blogHtml);
       html = html.replace('{{SESSION_BLOG_STATE}}', JSON.stringify({}));
       res.type('html');
-      res.send(html);  
+      res.send(html);
     });
 
-    app.get('/articles/*', function (req, res) {
+    app.get('/articles/*', function(req, res) {
       var blogHtml = renderBlog(req.path);
       var article = articles.getByUrl(req.path);
       var html = index.replace('{{BLOG_TITLE}}', packageJson.name + ' - ' + article.title);
@@ -66,7 +72,7 @@ module.exports = function (app) {
 
     app.get('/rss', rss);
 
-    app.listen(8080, function () {
+    app.listen(8080, function() {
       console.log('Blog ready at localhost:3000');
     });
 
@@ -78,16 +84,16 @@ module.exports = function (app) {
 
     app.use('/fonts', express.static(path.resolve(__dirname, '..', '..', 'public', 'fonts')));
 
-    app.get('/', function (req, res) {
+    app.get('/', function(req, res) {
       Promise.all([
           loadIndex(),
           articles.load()
         ])
-        .then(function (results) {
+        .then(function(results) {
           index = results[0];
           return writeEntry(results[1]);
         })
-        .then(function (results) {
+        .then(function(results) {
           var blogHtml = renderBlog();
           index = index.replace('{{BLOG_TITLE}}', packageJson.name);
           index = index.replace('{{BLOG}}', blogHtml);
@@ -96,33 +102,35 @@ module.exports = function (app) {
           res.type('html');
           res.send(index);
         })
-        .catch(function (err) {
+        .catch(function(err) {
           console.error('Could not load index', err.stack);
         });
 
     });
 
-    app.get('/articles/*', function (req, res) {
+    app.get('/articles/*', function(req, res) {
 
       Promise.all([
           loadIndex(),
           articles.load()
         ])
-        .then(function (results) {
+        .then(function(results) {
           index = results[0];
           return writeEntry(results[1]);
         })
-        .then(function () {
+        .then(function() {
           var blogHtml = renderBlog(req.path);
           var article = articles.getByUrl(req.path);
           index = index.replace('{{BLOG_TITLE}}', packageJson.name + ' - ' + article.title);
           index = index.replace('{{BLOG}}', blogHtml);
           index = index.replace('{{FONTS}}', fonts.getCSS());
-          index = index.replace('{{SESSION_BLOG_STATE}}', JSON.stringify({currentArticle: req.params[0] + '.md'}));
+          index = index.replace('{{SESSION_BLOG_STATE}}', JSON.stringify({
+            currentArticle: req.params[0] + '.md'
+          }));
           res.type('html');
           res.send(index);
         })
-        .catch(function (err) {
+        .catch(function(err) {
           console.error('Could not load index', err.stack);
         });
 
@@ -130,7 +138,7 @@ module.exports = function (app) {
 
     app.get('/rss', rss);
 
-    app.all('*', function (req, res) {
+    app.all('*', function(req, res) {
       proxy.web(req, res, {
         target: 'http://localhost:8080/'
       });
@@ -141,19 +149,19 @@ module.exports = function (app) {
         articles.load(),
         fonts.load()
       ])
-      .then(function (results) {
+      .then(function(results) {
         return writeEntry(results[1]);
       })
-      .then(function () {
-        bundler.bundleDev().listen(8080, "localhost", function () {
+      .then(function() {
+        bundler.bundleDev().listen(8080, "localhost", function() {
           console.log('Bundling blog, please wait...');
         });
       })
-      .catch(function (err) {
+      .catch(function(err) {
         console.log('error creating initial bundle', err, err.stack);
       });
 
-    app.listen(3000, function () {
+    app.listen(3000, function() {
       console.log('Blog ready at localhost:3000');
     });
 
