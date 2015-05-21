@@ -247,7 +247,6 @@ let saveTodo = function (cerebral, ref) {
     completed: todo.completed
   })
   .success(function (id) {
-    cerebral.ref.update(ref, id);
     return {
       ref: ref,
       id: id
@@ -262,9 +261,7 @@ let saveTodo = function (cerebral, ref) {
 };
 ```
 We can now use the returned reference to grab the todo from the cerebral and do a post to the server.
-The first thing to notice here is that this imagined ajax library returns a **promise**. This is what indicates that an action is asynchronous. If a promise is returned it will wait for it to fulfill before it runs the next action in the signal. The resolved value will be passed as an argument to the next action. 
-
-When the server responds with an id we update the reference used on that todo. This will basically just link the reference to the id, allowing you to use either to grab the other. We will soon see the benefit of this. If an error is returned we simply return the reference and the error.
+The first thing to notice here is that this imagined ajax library returns a **promise**. This is what indicates that an action is asynchronous. If a promise is returned it will wait for it to fulfill before it runs the next action in the signal. The resolved value will be passed as an argument to the next action. That will be either the id and the ref, or the error and the ref on an error response.
 
 But what about the debugger? It would not be a very good experience if you retraced your steps and these async actions would trigger new server requests. Well, they don't. Cerebral does not only remember the signals and mutations done, but also values returned from asynchronous actions. This means that when you look at previous state in the debugger it will all happen synchronously.
 
@@ -273,6 +270,7 @@ But what about the debugger? It would not be a very good experience if you retra
 let updateTodoWithResult = function (cerebral, result) {
   let todo = cerebral.get('todos', result.ref);
   if (result.id) {
+    cerebral.ref.update(ref, id);
     cerebral.merge(todo, {
       id: result.id,
       $isSaving: false
@@ -285,7 +283,7 @@ let updateTodoWithResult = function (cerebral, result) {
   }
 };
 ```
-And the last action now grabs the todo from the cerebral and uses it as a path to merge in the id or the error, and also the $isSaving property set to false. 
+And the last action now grabs the todo from the cerebral and uses it as a path to merge in the id or the error, and also the $isSaving property set to false. As you might notice we also update our reference with the id received. This will basically just link the reference to the id, allowing you to use either to grab the other. We will soon see the benefit of this. If an error is returned we simply return the reference and the error.
 
 So now you see that Cerebral handles asynchronous actions simply using a promise. Cerebral does not allow any mutations from asynchronous actions, you have to return a result that a synchronous action can process when it is done. This is one of the core concepts that lets Cerebral keep control of your state. As a plus your code is less error prone, easier to test and easier to read.
 
