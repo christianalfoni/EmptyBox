@@ -427,12 +427,12 @@ let mergeTodos = function (cerebral, todos) {
   let missingUsers = [];
   let todosMap = todos.reduce(function (allTodos, todo) {
 
-    let ref = cerebral.ref.create() .id);
-    let authorRef = cerebral.ref.get() .authorId);
-    allTodos[ref] = ) ;
+    let ref = cerebral.ref.create(todo.id);
+    let authorRef = cerebral.ref.get(todo.authorId);
+    allTodos[ref] = todo;
 
     if (!authorRef) {
-      missingUsers.push() .authorId);
+      missingUsers.push(todo.authorId);
     }
 
     return allTodos;
