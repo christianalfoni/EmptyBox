@@ -306,7 +306,7 @@ let saveTodo = function (cerebral, ref) {
 ```
 We can now use the returned reference to grab the todo from the cerebral and do a post to the server. The first thing to notice here is that our action returns a **Promise**. This is what indicates that an action is asynchronous. If a promise is returned it will wait for it to fulfill before it runs the next action in the signal. The resolved value will be passed as an argument to the next action. That will be either the id and the ref, or the error and the ref on an error response.
 
-As you can see there are no state changes at all here. An asynchronous action is only able to grab state from the cerebral, not do changes to it. It depends on a synchronous action after it do changes with whatever is returned from the asynchronous action.
+As you can see there are no state changes at all here. An asynchronous action is only able to grab state from the cerebral, not do changes to it. It depends on a synchronous action after it to do changes with whatever is returned from the asynchronous action.
 
 But what about the debugger? It would not be a very good experience if you retraced your steps and these async actions would trigger new server requests. Well, they don't. Cerebral does not only remember the signals and mutations done, but also values returned from asynchronous actions. This means that when you look at previous state in the debugger it will all happen synchronously.
 
