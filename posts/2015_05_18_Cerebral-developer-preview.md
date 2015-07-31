@@ -219,68 +219,68 @@ In the above code we are inserting references in the `displayedTodos` state, but
 
 ```javascript
 
-let projectRows = function () {
+let displayedTodos = function () {
   return {
     initialState: [],
-    lookupState: ['projects'],
+    lookupState: ['todos'],
     get(cerebral, lookupState, refs) {
       return refs.map(function (ref) {
-        return lookupState.projects[ref];
+        return lookupState.todos[ref];
       });
     }
   };
 };
 
 let cerebral = Cerebral({
-  projects: {},
-  projectRows: projectRows
+  todos: {},
+  displayedTodos: displayedTodos
 });
 ```
-So our cerebral can also have a function as state. This function can return an object describing the behaviour of the state. First of all it needs an initial state, in this case an empty array. The lookupState property lists what other state it will do lookups into. You can use an array or key/path to define this. The last property is a method that composes the output when grabbing `projectRows`. What we do here is simply map over the references put into the array and return the actual project by doing a lookup into the projects map. The great thing about this is that if anything changes in the projects this `get()` method will run again and updates itself. You do not have to worry about keeping state in sync, it happens automatically.
+So our cerebral can also have a function as state. This function can return an object describing the behaviour of the state. First of all it needs an initial state, in this case an empty array. The lookupState property lists what other state it will do lookups into. You can use an array or key/path to define this. The last property is a method that composes the output when grabbing `displayedTodos`. What we do here is simply map over the references put into the array and return the actual todo by doing a lookup into the todos map. The great thing about this is that if anything changes in the todos this `get()` method will run again and updates itself. You do not have to worry about keeping state in sync, it happens automatically.
 
 ### Optimistic updates
-As stated above you will use Cerebral references to do lookups in your cerebral. This allows you to do optimistic updates very easily. Imagine we want to add a new project using a `projectSubmitted` signal.
+As stated above you will use Cerebral references to do lookups in your cerebral. This allows you to do optimistic updates very easily. Imagine we want to add a new todo using a `todoSubmitted` signal.
 
 ```javascript
 
-cerebral.signal('projectSubmitted', addProject, saveProject, updateProjectWithResult);
+cerebral.signal('todoSubmitted', addTodo, saveTodo, setTodoSaveResult);
 ```
 And now let us create the first action.
 
 ```javascript
 
-let addProject = function (cerebral, title) {
+let addTodo = function (cerebral, title) {
   let ref = cerebral.ref.create();
-  let project = {
+  let todo = {
     $isSaving: true,
-    title: projectData
+    title: title
   };
-  cerebral.set(['projects', ref], project);
-  cerebral.unshift(['projectRows'], ref);
+  cerebral.set(['todos', ref], todo);
+  cerebral.unshift(['displayedTodos'], ref);
   return ref;
 };
 ```
 
-What we do here is create a Cerebral reference and add it to our project. We also add an `$isSaving` property to inidicate the state of this particular data. Before returning the reference we created we insert the project optimistically into our projects map and add the reference to the projectRows array. Our state mapping will now trigger and also display this new optimistic project.
+What we do here is create a Cerebral reference. We also add an `$isSaving` property to our todo to inidicate the state of this particular data. Before returning the reference we created we insert the todo optimistically into our todos map and add the reference to the displayedTodos array. Our state mapping will now trigger and also display this new optimistic todo.
 
-Again, the reason we do this is because our `projects` state might have lots of projects, but we only display a subset of them using references.
+Again, the reason we do this is because our `todos` state might have lots of todos, but we only display a subset of them using references.
 
 ### Asynchronous actions
-The next natural step is to save this project to the server and update it with either an ID or maybe an error occured. When Facebook intitially put FLUX into the wild there was a lot of discussions on where to put asynchronous code. In Cerebral you are not able to change state unless it is synchronously done from an action. So how do you change state with asynchronous code?
+The next natural step is to save this todo to the server and update it with either an ID or maybe an error occured. When Facebook intitially put FLUX into the wild there was a lot of discussions on where to put asynchronous code. In Cerebral you are not able to change state unless it is synchronously done from an action. So how do you change state with asynchronous code?
 
-First we create our `saveProject` action.
+First we create our `saveTodo` action.
 
 ```javascript
 
 import request from 'superagent';
 
-let saveProject = function (cerebral, ref) {
+let saveTodo = function (cerebral, ref) {
   return new Promise(function (resolve, reject) {
 
-    let project = cerebral.get('projects', ref);
+    let todo = cerebral.get('todos', ref);
 
-    request('/projects').post({
-      title: project.title
+    request('/todos').post({
+      title: todo.title
     }).end(function (err, result) {
       
       if (err) {
@@ -304,30 +304,29 @@ let saveProject = function (cerebral, ref) {
   });
 };
 ```
-We can now use the returned reference to grab the project from the cerebral and do a post to the server.
-The first thing to notice here is that our action returns a **Promise**. This is what indicates that an action is asynchronous. If a promise is returned it will wait for it to fulfill before it runs the next action in the signal. The resolved value will be passed as an argument to the next action. That will be either the id and the ref, or the error and the ref on an error response.
+We can now use the returned reference to grab the todo from the cerebral and do a post to the server. The first thing to notice here is that our action returns a **Promise**. This is what indicates that an action is asynchronous. If a promise is returned it will wait for it to fulfill before it runs the next action in the signal. The resolved value will be passed as an argument to the next action. That will be either the id and the ref, or the error and the ref on an error response.
 
-As you can see there are no state changes at all here. An asynchronous action is only able to grab state from the cerebral, not do changes to it. It depends on a synchronous action after it do changes with whatever is returned from the asynchronous action.
+As you can see there are no state changes at all here. An asynchronous action is only able to grab state from the cerebral, not do changes to it. It depends on a synchronous action after it to do changes with whatever is returned from the asynchronous action.
 
 But what about the debugger? It would not be a very good experience if you retraced your steps and these async actions would trigger new server requests. Well, they don't. Cerebral does not only remember the signals and mutations done, but also values returned from asynchronous actions. This means that when you look at previous state in the debugger it will all happen synchronously.
 
 ```javascript
 
-let updateProjectWithResult = function (cerebral, result) {
+let setTodoSaveResult = function (cerebral, result) {
 
-  let project = cerebral.get('projects', result.ref);
+  let todo = cerebral.get('todos', result.ref);
 
   if (result.id) {
 
     cerebral.ref.update(result.ref, result.id);
-    cerebral.merge(project, {
+    cerebral.merge(todo, {
       id: result.id,
       $isSaving: false
     });
 
   } else {
 
-    cerebral.merge(project, {
+    cerebral.merge(todo, {
       $error: result.error,
       $isSaving: false
     });
@@ -335,28 +334,28 @@ let updateProjectWithResult = function (cerebral, result) {
   }
 };
 ```
-And the last action now grabs the project from the cerebral and uses it as a path to merge in the id or the error, and also the $isSaving property set to false. If we do get an id from the server we will also link that to the reference. This means that when you later pass the id to some action to identify the project you can use `cerebral.ref.get(project.id)` to grab the reference to that project.
+And the last action now grabs the todo from the cerebral and uses it as a path to merge in the id or the error, and also the $isSaving property set to false. If we do get an id from the server we will also link that to the reference. This means that when you later pass the id to some action to identify the todo you can use `cerebral.ref.get(todo.id)` to grab the reference to that todo.
 
 So now you see that Cerebral handles asynchronous actions simply using a promise. Cerebral does not allow any mutations from asynchronous actions, you have to return a result that a synchronous action can process when it is done. This is one of the core concepts that lets Cerebral keep control of your state. As a plus your code is less error prone, easier to test and easier to read.
 
 Notice that synchronous functions are pure functions. That makes them very easy to test. Just pass an instance of a Cerebral whan calling them and verify that they make the changes and/or returns the value you expect.
 
 ### Relational state
-So lets take this a step further. What if the projects has an authorId that references a specific user? Maybe we can use our map to merge in that information? We certainly can, but we have a problem. If we now use Cerebral references to allow for optimistic updates, the reference the project has  will not work as it is a plain id, `authorId`. We briefly touched on the solution above, but let us download some projects and users and see this in detail.
+So lets take this a step further. What if the todos has an authorId that references a specific user? Maybe we can use our map to merge in that information? We certainly can, but we have a problem. If we now use Cerebral references to allow for optimistic updates, the reference pointing to the user, `authorId`, will not work because it is just a plain ID. We briefly touched on the solution above, but let us download some todos and users and see this in detail.
 
 The signal.
 ```javascript
 
-cerebral.signal('projectsOpened', getProjects, mergeProjects);
+cerebral.signal('todosOpened', getTodos, mergeTodos);
 ```
 
-The first action grabbing the projects.
+The first action grabbing the todos.
 ```javascript
 
-let getProjects = function (cerebral) {
+let getTodos = function (cerebral) {
   return new Promise(function (resolve, reject) {
     
-    request('/projects').end(function (err, result) {
+    request('/todos').end(function (err, result) {
       
       if (err) {
         reject(err);
@@ -370,39 +369,39 @@ let getProjects = function (cerebral) {
 
 };
 ```
-And after that we run an action actually putting the projects into the cerebral.
+And after that we run an action actually putting the todos into the cerebral.
 ```javascript
 
-let mergeProjects = function (cerebral, projects) {
+let mergeTodos = function (cerebral, todos) {
 
-  let projectsMap = projects.reduce(function (allProjects, project) {
+  let todosMap = todos.reduce(function (allTodos, todo) {
 
-    let ref = cerebral.ref.create(project.id);
-    allProjects[ref] = project;
-    return allProjects;
+    let ref = cerebral.ref.create(todo.id);
+    allTodos[ref] = todo;
+    return allTodos;
 
   }, {});
   
-  cerebral.merge('projects', projectsMap);
+  cerebral.merge('todos', todosMap);
 };
 ```
-Typically when you get data from a backend it is in an array. In this example we convert that array to a map where the key is a new Cerebral reference, just like we did when adding a new project. The difference here though is that we pass in the ID of the project when creating the reference. This will create a link between them. We do the exact same thing with the users. So now we have a map with some projects referencing users using an `authorId` property and a map of users where the key is a Cerebral reference that is linked to its ID.
+Typically when you get data from a backend it is in an array. In this example we convert that array to a map where the key is a new Cerebral reference, just like we did when adding a new todo. The difference here though is that we pass in the ID of the todo when creating the reference. This will create a link between them. We do the exact same thing as above with the users. So now we have a map with some todos where the key is a Cerebral reference linked to its ID, allowing for optimistic updates and relational lookup. Each todo has an `authorId` property with the id of a user. We also have a map of users where the key is a Cerebral reference that is linked to its ID, again allowing for optimistic updates and relational lookup.
 
-Lets get back to our `projectRows` to see what we are now able to do.
+Lets get back to our `displayedTodos` to see what we are now able to do.
 
 ```javascript
 
-let projectRows = function () {
+let displayedTodos = function () {
   return {
     initialState: [],
-    lookupState: ['projects', 'users'],
+    lookupState: ['todos', 'users'],
     get(cerebral, lookupState, refs) {
 
       return refs.map(function (ref) {
-        let project = lookupState.projects[ref].toJS(); // Lets us mutate the project
-        let authorRef = cerebral.ref.get(project.authorId);
-        project.author = lookupState.users[authorRef];
-        return project;
+        let todo = lookupState.todos[ref].toJS(); // Lets us mutate the todo
+        let authorRef = cerebral.ref.get(todo.authorId);
+        todo.author = lookupState.users[authorRef];
+        return todo;
       });
 
     }
@@ -410,43 +409,43 @@ let projectRows = function () {
 };
 ```
 
-Now you see why a Cerebral benefits from giving you references. Even though we have a key/value map of users that does not depend on ids, allowing for optimistic updates, we can still do a plain lookup using the id.
+Now you see why a Cerebral benefits from giving you references. Even though we have a key/value map of users that is set using Cerebral references, we can still do a plain lookup using the id.
 
-But let us make this even more complex. What if the user is not in the client? We can extend our actions to do even more work. Lets take a look at a signal that automatically grabs missing users based on the projects loaded:
+But let us make this even more complex. What if the user is not in the client? We can extend our actions to do even more work. Lets take a look at a signal that automatically grabs missing users based on the todo loaded:
 
 ```javascript
 
-cerebral.signal('projectsOpened', getProjects, mergeProjects, getMissingUsers, mergeUsers);
+cerebral.signal('todosOpened', getTodos, mergeTodos, getMissingUsers, mergeUsers);
 ```
 
-First we need to update our mergeProjects action to return missing users.
+First we need to update our mergeTodos action to return missing users.
 ```javascript
 
-let mergeProjects = function (cerebral, projects) {
+let mergeTodos = function (cerebral, todos) {
 
   let users = cerebral.get('users');
   let missingUsers = [];
-  let projectsMap = projects.reduce(function (allProjects, project) {
+  let todosMap = todos.reduce(function (allTodos, todo) {
 
-    let ref = cerebral.ref.create(project.id);
-    let authorRef = cerebral.ref.get(project.authorId);
-    allProjects[ref] = project;
+    let ref = cerebral.ref.create(todo.id);
+    let authorRef = cerebral.ref.get(todo.authorId);
+    allTodos[ref] = todo;
 
     if (!authorRef) {
-      missingUsers.push(project.authorId);
+      missingUsers.push(todo.authorId);
     }
 
-    return allProjects;
+    return allTodos;
 
   }, {});
   
-  cerebral.merge('projects', projectsMap);
+  cerebral.merge('todos', todosMap);
 
   return missingUsers;
 };
 ```
 
-So now our mergeProjects action will return an array of missing users. Let us create the getMissingUsers action.
+So now our mergeTodos action will return an array of missing users. Let us create the getMissingUsers action.
 ```javascript
 
 let getMissingUsers = function (cerebral, ids) {
@@ -494,28 +493,28 @@ let mergeUsers = function (cerebral, users) {
 
 };
 ```
-And here we do pretty much the same thing as we did with our projects. We convert to a map, create references and merge in with existing users. And now finally we we can do some more mapping.
+And here we do pretty much the same thing as we did with our todos. We convert to a map, create references and merge in with existing users. And now finally we we can do some more mapping.
 
 ```javascript
 
-let projectRows = function () {
+let displayedTodos = function () {
   return {
     initialState: [],
-    lookupState: ['projects', 'users'],
-    get(cerebral, lookupState, ids) {
+    lookupState: ['todos', 'users'],
+    get(cerebral, lookupState, refs) {
 
-      let projectRows = ids.map(function (id) {
+      let displayedTodos = refs.map(function (ref) {
         
-        let project = lookupState.projects[id].toJS();
-        let authorRef = cerebral.ref.get(project.authorId);
-        project.author = lookupState.users[authorRef] || {
+        let todo = lookupState.todos[ref].toJS();
+        let authorRef = cerebral.ref.get(todo.authorId);
+        todo.author = lookupState.users[authorRef] || {
           $isLoading: true
         };
-        return project;
+        return todo;
 
       });
 
-      return projectRows;
+      return displayedTodos;
 
     }
   };
@@ -527,10 +526,10 @@ This is a really complex state handling situation, but as you can see Cerebral h
 We can easily see how that state flows looking at our signal.
 ```javascript
 
-cerebral.signal('projectsOpened', getProjects, mergeProjects, getMissingUsers, mergeUsers);
+cerebral.signal('todosOpened', getTodos, mergeTodos, getMissingUsers, mergeUsers);
 ```
 
-The good thing here is that all these actions are reusable and can be composed in other signals as well. When the signal is running it will run the **projectsRow** mapping when there is a change to any of its lookupState. So it will run on *mergeProjects* and *mergeUsers*. The first time we do not have the user so the mapping will return an author with a *$isLoading* state. The next time the user exists and we map the user out on an *author* property.
+The good thing here is that all these actions are reusable and can be composed in other signals as well. When the signal is running it will run the **displayedTodos** mapping when there is a change to any of its lookupState. So it will run on *mergeTodos* and *mergeUsers*. The first time we do not have the user so the mapping will return an author with a *$isLoading* state. The next time the user exists and we map the user out on an *author* property.
 
 You can see a video on implementing this [right here](https://www.youtube.com/watch?v=6W0S2p01Paw).
 
