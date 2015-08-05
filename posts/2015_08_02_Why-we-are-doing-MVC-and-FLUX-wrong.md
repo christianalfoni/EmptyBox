@@ -42,10 +42,10 @@ The problem with traditional MVC though is that when the application state chang
 ## When we moved to the frontend
 When MVC was implemented for the Frontend it was to fix this very thing. Allow changes to state to be reflected in the UI instantly. It gives a much better user experience. But in this process the strict and predictable flow with traditional MVC was broken and there are mainly four reasons for that:
 
-1. The router and the controller was considered the same thing
-2. The **view** layer had direct access to the **model** layer
-3. The **model** layer was not conceptually treated as one storage
-4. We stored application state inside our **view** layer
+1. The router and the controller is considered the same thing
+2. The **view** layer has direct access to the **model** layer
+3. The **model** layer is not conceptually treated as one storage
+4. We store application state inside our **view** layer
 
 These four statements might not make much sense right now, but let us dive into them and take a closer look. Then we are going to look at how we can bring back this strict and predictable architecture, and see what really great benefits it gives us!
 
@@ -99,7 +99,7 @@ This creates complexity as we now have two ways of defining the flow of our appl
 But this added complexity is not the only problem.
 
 ### No concept of a single state store
-As you can see in the example above we have a **usermodel**. This a typical abstraction in many frameworks. There are two problems with this kind of abstraction.
+As you can see in the example above we have a **usermodel**. This is a typical abstraction in many frameworks. There are two problems with this kind of abstraction.
 
 First of all it is represented as a decoupled entity from the rest of your application state. State changes are no longer a request made to a single database endpoint, like in traditional MVC, it is requests to many different models. This makes it a lot harder to reason about how everything in your application is connected. So in addition to the **view** layer not depending on a single controller, like stated above, it does not depend on a single state store either. Our simple flow definition has now been converted to something like this.
 
@@ -158,7 +158,13 @@ Let us try to visualize this a bit:
 
 |------|  request   |------------|  request   |-------|
 |      | ---------> |            | ---------> |       |
-| VIEW |  response  | CONTROLLER |  response  | MODEL |
+| VIEW |  response  |            |  response  |       |
+|      | <--------- |            | <--------- |       |
+|------|            |            |            |       |
+                    | CONTROLLER |            | MODEL |
+|------|  request   |            |  request   |       |
+|      | ---------> |            | ---------> |       |
+| VIEW |  response  |            |  response  |       |
 |      | <--------- |            | <--------- |       |
 |------|            |------------|            |-------|
 ```
@@ -185,7 +191,7 @@ Let us try to visualize this a bit:
    | |--------------------<<<<-------------------|        |
    |----------------------<<<<----------------------------|
 ```
-But where does the router fit in? The really good thing about this architecture is that the **controller** layer has nothing to do with the router. The bad thing is that the most popular router with FLUX is the [react-router](https://github.com/rackt/react-router). I do not mean to badmouth a really great job creating the project and supporting the React/Flux community, I just say that conceptually it is not compatible with what we are trying to achieve. The reason is that the React Router takes direct control of the **view** layer, it does not honor the simple flow we want to achieve. Any state change, including what views to display, should be based on application state in the **model** layer and the only way to achieve change is through the **controller** layer.
+But where does the router fit in? The really good thing about this architecture is that the **controller** layer has nothing to do with the router. The bad thing is that the most popular router with FLUX is the [react-router](https://github.com/rackt/react-router). I do not mean to badmouth a really great job creating the project and supporting the React/Flux community, I just say that conceptually it is not compatible with what we are trying to achieve. The reason is that the React Router takes direct control of the **view** layer, it does not honor the simple flow with traditional MVC. Any state change, including what views to display, should be based on application state in the **model** layer and the only way to achieve change is through the **controller** layer.
 
 ## Fixing the problem
 So what we have to fix is the following:
@@ -232,24 +238,24 @@ So the views does not have any access to the **model** layer at all. They can on
 |      | < - - - -  |            | <----- |       |
 |------|            |------------|        |-------|
 ```
-Using Cerebral the **view** layer can signal a change, it being a button clicked, input changed, form submitted or whatever else. Then the controller has a set of middleware it will run, getting data from the server and doing changes to the **model** layer. When it is done it will trigger an event which the **view** layer can listen to and extract any state it needs. This is where we really want to differentiate from traditional MVC. Instead of using the response from a request to update our views, the **view** layer reacts whenever the controller is done running the request, then extract the new state.
+Using Cerebral the **view** layer can signal a change, it being a button clicked, input changed, form submitted or whatever else. Then the controller has a set of middleware it will run, getting data from the server and doing changes to the **model** layer. When it is done it will trigger an event which the **view** layer can listen to and extract any state it needs. This is where we really want to differentiate from traditional MVC. Instead of using the response from a request to update our views, the **view** layer reacts whenever the controller is done running a request. Then the view extracts the new state and updates itself.
 
 ### Just do the routing
 Now that we have a general controller for our application we can hook on a router as if it was a view, and we can keep hooking on multiple views. They will all work with the same controller and the same model.
 
 ```js
 
-|--------|   signal   |------------|   change   |-------|
-|        | ---------> |            | ---------> |       |
-| ROUTER |    event   |            |   extract  |       |
-|        | < - - - -  |            | <--------- |       |
-|--------|            |            |            |       |
-                      | CONTROLLER |            | MODEL |
-|------|   signal     |            |   change   |       |
-|      | -----------> |            | ---------> |       |
-| VIEW |    event     |            |   extract  |       |
-|      | < - - - - -  |            | <--------- |       |
-|------|              |------------|            |-------|
+|--------|   signal   |------------|  set   |-------|
+|        | ---------> |            | -----> |       |
+| ROUTER |    event   |            |   get  |       |
+|        | < - - - -  |            | <----- |       |
+|--------|            |            |        |       |
+                      | CONTROLLER |        | MODEL |
+|------|   signal     |            |  set   |       |
+|      | -----------> |            | -----> |       |
+| VIEW |    event     |            |   get  |       |
+|      | < - - - - -  |            | <----- |       |
+|------|              |------------|        |-------|
 ```
 
 ## So what benefits do I really get?
