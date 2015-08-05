@@ -14,7 +14,7 @@ var Front = React.createClass({
     return (
       <div>
         <div className="articlesList-item--date">
-          <span className="articlesList-item--month">{utils.getMonth(article.month)} {article.date}.</span> 
+          <span className="articlesList-item--month">{utils.getMonth(article.month)} {article.date}.</span>
           <span className="articlesList-item--year">{article.year}</span>
         </div>
         <div className="articlesList-item--title">
@@ -68,13 +68,13 @@ var Front = React.createClass({
             <a href="https://github.com/christianalfoni/cerebral" target="new">Cerebral</a>
           </h3>
           <p className="text-small">
-            An intelligent React framework with a revolutionary workflow.
+            An state controller with its own debugger
           </p>
           <h3 className="header-sidebar-small">
             <a href="https://github.com/christianalfoni/EmptyBox" target="new">EmptyBox</a>
           </h3>
           <p className="text-small">
-            This blog is built with EmptyBox. It is an isomorphic hackable blog project based on 
+            This blog is built with EmptyBox. It is an isomorphic hackable blog project based on
             React JS.
           </p>
           <h3 className="header-sidebar-small">
@@ -89,14 +89,14 @@ var Front = React.createClass({
           </h3>
           <p className="text-small">
             A "teach to code" service that will be used as a prototype for a new exciting
-            project I will be working on with the Norwegian organization 
+            project I will be working on with the Norwegian organization
             <a href="http://www.kidsakoder.no/"> "Lær kidsa koding"</a>.
           </p>
           <h3 className="header-sidebar-small">
             <a href="https://github.com/christianalfoni/react-webpack-cookbook/wiki" target="new">Webpack React Cookbook</a>
           </h3>
           <p className="text-small">
-            Working on a project to explain the amazing features of Webpack and React JS. 
+            Working on a project to explain the amazing features of Webpack and React JS.
           </p>
           <h2 className="header-sidebar">Tools</h2>
           <h3 className="header-sidebar-small">
