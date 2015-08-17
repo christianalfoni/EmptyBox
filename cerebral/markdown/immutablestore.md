@@ -1,6 +1,7 @@
-**Repo:** [cerebral-immutable-store](https://github.com/christianalfoni/cerebral-immutable-store)
+**Repo**: [cerebral-immutable-store](https://github.com/christianalfoni/cerebral-immutable-store) - @christianalfoni
 
-**Install:** `npm install cerebral-immutable-store`
+`npm install cerebral-immutable-store`
+
 
 - An immutable state tree
 - Allows you to map state to new state
