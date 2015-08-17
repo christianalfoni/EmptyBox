@@ -1,4 +1,4 @@
-**Repo**: [cerebral-immutable-store](https://github.com/christianalfoni/cerebral-immutable-store) - @christianalfoni
+[cerebral-immutable-store](https://github.com/christianalfoni/cerebral-immutable-store) - @christianalfoni **/** [immutable-store](https://github.com/christianalfoni/immutable-store) - @christianalfoni
 
 `npm install cerebral-immutable-store`
 
@@ -16,11 +16,14 @@ import Model from 'cerebral-immutable-store';
 import request from 'superagent';
 
 // The initial state of the application
-const model = Model({
+const state = {
   isLoading: false,
   user: null,
   error: null
-});
+};
+
+// Instantiate the model
+const model = Model(state);
 
 // Any default input you want each action to receive. In this
 // example we pass in superagent ajax library

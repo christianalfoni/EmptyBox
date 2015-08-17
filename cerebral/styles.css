@@ -1,3 +1,7 @@
+body {
+  font-size: 80%;
+}
+
 .cerebral-container {
   max-width: 960px;
   margin: 0 auto;
@@ -89,4 +93,8 @@ iframe {
   background-color: #FFF;
   padding: 10px 20px;
   border-radius: 5px;
+  display: none;
+}
+.tab-pane.active {
+  display: block;
 }

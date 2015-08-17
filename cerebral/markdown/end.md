@@ -1,0 +1,1 @@
+Cerebral is an open source project located on [GitHub](https://github.com/christianalfoni/cerebral). Thanks to the community growing around Cerebral for all their valuable and enthusiastic suggestions!
