@@ -7,8 +7,8 @@ var buildPath = path.resolve(__dirname, 'build');
 
 var config = {
   entry: [
-    'webpack-dev-server/client?http://localhost:8080', 
-    'webpack/hot/only-dev-server', 
+    'webpack-dev-server/client?http://localhost:8080',
+    'webpack/hot/only-dev-server',
     path.resolve(corePath, '_main.jsx')
   ],
   context: corePath,
@@ -28,7 +28,7 @@ var config = {
     noParse: [reactPath],
     loaders: [{
       test: /\.jsx$/,
-      loaders: ['react-hot', 'jsx'],
+      loaders: ['react-hot', 'babel'],
       exclude: [node_modules_dir]
     }, {
       test: /\.md$/,

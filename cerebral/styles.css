@@ -1,0 +1,92 @@
+.cerebral-container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.cerebral-header {
+  text-align: center;
+}
+
+h1 {
+
+  margin-bottom: 0;
+}
+h4 {
+  font-family: "Roboto";
+  font-weight: 400;
+  margin-top: 5px;
+  color: #999
+}
+
+.cerebral-showcase {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.cerebral-showcase > div {
+  display: inline-block;
+  vertical-align: top;
+  margin: 5px;
+  border-radius: 5px;
+  height: 200px;
+  width: 200px;
+  color: #EAEAEA;
+}
+
+.cerebral-showcase h1 {
+  color: #eaeaea;
+}
+
+.cerebral-showcase-red {
+  background-color: #c9302c;
+  border: 2px solid #d43f3a;
+}
+
+.cerebral-showcase-green {
+  background-color: #5cb85c;
+  border: 2px solid #4cae4c;
+}
+
+.cerebral-showcase-yellow {
+  background-color: #f0ad4e;
+  border: 2px solid #eea236;
+}
+
+.cerebral-columns > div {
+  width: 50%;
+  display: inline-block;
+  vertical-align: top;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+iframe {
+  border: 0;
+}
+
+.nav {
+  list-style-type: none;
+  padding-left: 0;
+  margin-left: 0;
+  margin-bottom: 0;
+}
+
+.nav li {
+  display: inline-block;
+  margin-right: 15px;
+  padding: 0 10px;
+}
+
+.nav li.active {
+  border: 1px solid #2e6da4;
+  background-color: #337ab7;
+  border-radius: 3px;
+}
+.nav li.active a {
+  color: #EAEAEA;
+}
+.tab-pane {
+  background-color: #FFF;
+  padding: 10px 20px;
+  border-radius: 5px;
+}

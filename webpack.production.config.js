@@ -18,7 +18,7 @@ var config = {
   module: {
     loaders: [{
       test: /\.jsx$/,
-      loaders: ['react-hot', 'jsx'],
+      loaders: ['react-hot', 'babel'],
       exclude: [node_modules_dir]
     }, {
       test: /\.md$/,
