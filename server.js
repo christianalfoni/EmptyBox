@@ -6,11 +6,11 @@ global.isProduction = process.env.NODE_ENV === 'production';
 
 var express = require('express');
 var start = require('./server/core/start.js');
+var path = require('path');
+var cerebralPublicPath = path.resolve(__dirname, 'cerebral_public');
 
 var app = express();
 
-// Add more routes or plugins here
+app.use('/cerebral', express.static(cerebralPublicPath))
 
 start(app);
-
-
