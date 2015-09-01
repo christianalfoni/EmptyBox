@@ -1,16 +1,7 @@
 var React = require('react');
 var markdownRenderer = require('./../common/markdownRenderer.js');
-var introduction = require('./markdown/introduction.md');
-var modelLayer = require('./markdown/modelLayer.md');
-var viewLayer = require('./markdown/viewLayer.md');
-var cerebral = require('./markdown/cerebral.md');
-var immutableStore = require('./markdown/immutablestore.md');
-var baobab = require('./markdown/baobab.md');
-var tcomb = require('./markdown/tcomb.md');
-var react = require('./markdown/react.md');
-var angular = require('./markdown/angular.md');
-var signals = require('./markdown/signals.md');
-var end = require('./markdown/end.md');
+var codeLeft = require('./markdown/codeLeft.md');
+var codeRight = require('./markdown/codeRight.md');
 
 
 module.exports = React.createClass({
@@ -34,97 +25,34 @@ module.exports = React.createClass({
   },
   render: function () {
     return (
-      <div className="cerebral-container">
-        <div className="cerebral-header">
-          <h1>Cerebral</h1>
-          <h4>The state controller with its own debugger</h4>
-        </div>
-        <div className="cerebral-showcase">
-          <div className="cerebral-showcase-red">
-            <h1>M</h1>
-            <div>Immutable-Store, Baobab, Tcomb</div>
+      <div style={{paddingTop: 20}}>
+        <div className="cerebral-container simple-code">
+          <div className="cerebral-column">
+            {markdownRenderer(codeLeft).tree}
           </div>
-          <div className="cerebral-showcase-green">
-            <h1>V</h1>
-            <div>React, Angular</div>
+          <div className="cerebral-column">
+            <img src="logo.png"/>
           </div>
-          <div className="cerebral-showcase-yellow">
-            <h1>C</h1>
-            <div>Cerebral</div>
+          <div className="cerebral-column">
+            {markdownRenderer(codeRight).tree}
           </div>
         </div>
-        <div className="cerebral-columns">
-
-          <div>
-          {markdownRenderer(introduction).tree}
+        <div className="cerebral-container">
+          <div style={{margin: '0 auto', width: 700, textAlign: 'center'}}>
+            <h3 style={{marginTop: 0, color: '#333'}}>Express your application flow with signals</h3>
           </div>
-
-          <div style={{textAlign: 'center',paddingTop: 50}}>
-            <iframe width="420" height="315" src="https://www.youtube.com/embed/rHqIunT5qus" frameBorder="0" allowFullscreen></iframe>
-          </div>
-
         </div>
-        {markdownRenderer(cerebral).tree}
-        {markdownRenderer(modelLayer).tree}
-        <div>
-
-          <ul className="nav nav-tabs" role="tablist">
-            <li role="presentation" className={this.state.modelLayerTabIndex === 0 ? 'active' : ''}>
-              <a href="#" aria-controls="home" role="tab" data-toggle="tab" onClick={this.selectModelLayer.bind(null, 0)}>Immutable-Store</a>
-            </li>
-            <li role="presentation" className={this.state.modelLayerTabIndex === 1 ? 'active' : ''}>
-              <a href="#" aria-controls="home" role="tab" data-toggle="tab" onClick={this.selectModelLayer.bind(null, 1)}>Baobab</a>
-            </li>
-            <li role="presentation" className={this.state.modelLayerTabIndex === 2 ? 'active' : ''}>
-              <a href="#" aria-controls="home" role="tab" data-toggle="tab" onClick={this.selectModelLayer.bind(null, 2)}>Tcomb</a>
-            </li>
-            <li role="presentation">Immutable-JS (Coming soon)</li>
-          </ul>
-
-          <div className="tab-content">
-            <div role="tabpanel" className={'tab-pane' + (this.state.modelLayerTabIndex === 0 ? ' active' : '')}>
-              {markdownRenderer(immutableStore).tree}
+        <div style={{backgroundColor: '#5CB85C'}}>
+          <div className="cerebral-container">
+            <div className="cerebral-column">
+              <h3 className="cerebral-header white">Supports</h3>
             </div>
-            <div role="tabpanel" className={'tab-pane' + (this.state.modelLayerTabIndex === 1 ? ' active' : '')}>
-              {markdownRenderer(baobab).tree}
+            <div className="cerebral-column">
+              <h3 className="cerebral-header white">Debugger</h3>
             </div>
-            <div role="tabpanel" className={'tab-pane' + (this.state.modelLayerTabIndex === 2 ? ' active' : '')}>
-              {markdownRenderer(tcomb).tree}
+            <div className="cerebral-column">
+              <h3 className="cerebral-header white">Introductions</h3>
             </div>
-          </div>
-
-        </div>
-        {markdownRenderer(viewLayer).tree}
-        <div>
-
-          <ul className="nav nav-tabs" role="tablist">
-            <li role="presentation" className={this.state.viewLayerTabIndex === 0 ? 'active' : ''}>
-              <a href="#" aria-controls="home" role="tab" data-toggle="tab" onClick={this.selectViewLayer.bind(null, 0)}>React</a>
-            </li>
-            <li role="presentation" className={this.state.viewLayerTabIndex === 1 ? 'active' : ''}>
-              <a href="#" aria-controls="home" role="tab" data-toggle="tab" onClick={this.selectViewLayer.bind(null, 1)}>Angular</a>
-            </li>
-          </ul>
-
-          <div className="tab-content">
-            <div role="tabpanel" className={'tab-pane' + (this.state.viewLayerTabIndex === 0 ? ' active' : '')}>
-              {markdownRenderer(react).tree}
-            </div>
-            <div role="tabpanel" className={'tab-pane' + (this.state.viewLayerTabIndex === 1 ? ' active' : '')}>
-              {markdownRenderer(angular).tree}
-            </div>
-          </div>
-
-        </div>
-        {markdownRenderer(signals).tree}
-
-        <div style={{textAlign: 'center', margin: 25, borderRadius: 5, backgroundColor: '#FFF'}}>
-          <div style={{display: 'inline-block'}}>
-            <img src="logo.jpg" width="200" style={{float: 'left'}}/>
-            <div style={{float: 'left', width: 500, textAlign: 'left'}}>
-              {markdownRenderer(end).tree}
-            </div>
-            <div style={{clear: 'both'}}/>
           </div>
         </div>
       </div>

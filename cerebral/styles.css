@@ -1,5 +1,6 @@
 body {
-  font-size: 80%;
+  font-size: 100%;
+  background-color: #FFF;
 }
 
 .cerebral-container {
@@ -7,8 +8,26 @@ body {
   margin: 0 auto;
 }
 
+.cerebral-column {
+  display: inline-block;
+  width: 33.333333333333%;
+  vertical-align: top;
+}
+
 .cerebral-header {
-  text-align: center;
+
+}
+
+.cerebral-header.white {
+  color: #FFF;
+}
+
+.simple-code code {
+  font-size: 75%;
+}
+
+.simple-code pre {
+  background-color: transparent;
 }
 
 h1 {
