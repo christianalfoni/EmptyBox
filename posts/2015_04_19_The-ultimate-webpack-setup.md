@@ -1,6 +1,6 @@
 # The ultimate Webpack setup
 
-I have already written [an article](http://christianalfoni.com/articles/2014_12_13_Webpack-and-react-is-awesome) on using Webpack for your React application. Now I have more experience and want to share a really awesome setup we use at my employer, **Gloppens EDB Lag**, that gives you a great workflow expanding beyond the concepts of Webpack and makes it easy to do continuous deployment. 
+I have already written [an article](http://christianalfoni.com/articles/2014_12_13_Webpack-and-react-is-awesome) on using Webpack for your React application. Now I have more experience and want to share a really awesome setup we use at my employer, **Gloppens EDB Lag**, that gives you a great workflow expanding beyond the concepts of Webpack and makes it easy to do continuous deployment.
 
 We will be talking about the following:
 
@@ -62,7 +62,7 @@ var path = require('path');
 var app = express();
 
 var isProduction = process.env.NODE_ENV === 'production';
-var port = isProduction ? 8080 : 3000;
+var port = isProduction ? process.env.PORT : 3000;
 var publicPath = path.resolve(__dirname, 'public');
 
 // We point to our static assets
@@ -104,25 +104,25 @@ var buildPath = path.resolve(__dirname, 'public', 'build');
 var mainPath = path.resolve(__dirname, 'app', 'main.js');
 
 var config = {
-  
+
   // Makes sure errors in console map to the correct file
   // and line number
   devtool: 'eval',
   entry: [
 
     // For hot style updates
-    'webpack/hot/dev-server', 
+    'webpack/hot/dev-server',
 
     // The script refreshing the browser on none hot updates
-    'webpack-dev-server/client?http://localhost:8080', 
+    'webpack-dev-server/client?http://localhost:8080',
 
     // Our application
     mainPath],
   output: {
 
     // We need to give Webpack a path. It does not actually need it,
-    // because files are kept in memory in webpack-dev-server, but an 
-    // error will occur if nothing is specified. We use the buildPath 
+    // because files are kept in memory in webpack-dev-server, but an
+    // error will occur if nothing is specified. We use the buildPath
     // as that points to where the files will eventually be bundled
     // in production
     path: buildPath,
@@ -143,7 +143,7 @@ var config = {
       loader: 'babel',
       exclude: [nodeModulesPath]
     },
-  
+
     // Let us also add the style-loader and css-loader, which you can
     // expand with less-loader etc.
     {
@@ -177,7 +177,7 @@ var fs = require('fs');
 var mainPath = path.resolve(__dirname, '..', 'app', 'main.js');
 
 module.exports = function () {
-  
+
   // First we fire up Webpack an pass in the configuration we
   // created
   var bundleStart = null;
@@ -204,7 +204,7 @@ module.exports = function () {
     publicPath: '/build/',
 
     // Configure hot replacement
-    hot: true, 
+    hot: true,
 
     // The rest is terminal configurations
     quiet: false,
@@ -233,11 +233,11 @@ var express = require('express');
 var path = require('path');
 var httpProxy = require('http-proxy');
 
-var proxy = httpProxy.createProxyServer(); 
+var proxy = httpProxy.createProxyServer();
 var app = express();
 
 var isProduction = process.env.NODE_ENV === 'production';
-var port = isProduction ? 8080 : 3001;
+var port = isProduction ? process.env.PORT : 3000;
 var publicPath = path.resolve(__dirname, 'public');
 
 app.use(express.static(publicPath));
@@ -248,7 +248,7 @@ if (!isProduction) {
   // We require the bundler inside the if block because
   // it is only needed in a development environment. Later
   // you will see why this is a good idea
-  var bundle = require('./server/bundle.js'); 
+  var bundle = require('./server/bundle.js');
   bundle();
 
   // Any requests to localhost:3000/build is proxied
@@ -293,11 +293,11 @@ var httpProxy = require('http-proxy');
 // as we are now proxying outside localhost
 var proxy = httpProxy.createProxyServer({
   changeOrigin: true
-}); 
+});
 var app = express();
 
 var isProduction = process.env.NODE_ENV === 'production';
-var port = isProduction ? 8080 : 3001;
+var port = isProduction ? process.env.PORT : 3000;
 var publicPath = path.resolve(__dirname, 'public');
 
 app.use(express.static(publicPath));
@@ -312,7 +312,7 @@ app.all('/db/*', function (req, res) {
 
 if (!isProduction) {
 
-  var bundle = require('./server/bundle.js'); 
+  var bundle = require('./server/bundle.js');
   bundle();
   app.all('/build/*', function (req, res) {
     proxy.web(req, res, {
@@ -356,7 +356,7 @@ var buildPath = path.resolve(__dirname, 'public', 'build');
 var mainPath = path.resolve(__dirname, 'app', 'main.js');
 
 var config = {
-  
+
   // We change to normal source mapping
   devtool: 'source-map',
   entry: mainPath,
@@ -379,9 +379,9 @@ var config = {
 module.exports = config;
 ```
 
-If you want to test this you can run: 
+If you want to test this you can run:
 
-`NODE_ENV=production webpack -p --config webpack.production.config.js` 
+`NODE_ENV=production webpack -p --config webpack.production.config.js`
 
 You will see a *bundle.js* file appear in the *public/build* directory, and a *bundle.js.map* file. But we are not going to be running this locally, let us get this running in the cloud. **Make sure you delete the public/build folder, as express will serve these files instead of webpack-dev-server**.
 
@@ -425,7 +425,7 @@ if (process.env.NODE_ENV === 'production') {
   // We basically just create a child process that will run
   // the production bundle command
   var child_process = require('child_process');
-  return child_process.exec("webpack -p --config webpack.production.config.js", function (error, stdout, stderr) {
+  child_process.exec("webpack -p --config webpack.production.config.js", function (error, stdout, stderr) {
     console.log('stdout: ' + stdout);
     console.log('stderr: ' + stderr);
     if (error !== null) {
@@ -442,14 +442,14 @@ Depending on what solution you choose the production environment might need diff
 
 When you save a dependency to your *package.json* file using for example: `npm install underscore --save` that dependency will always be installed when `npm install` runs, regardless of the environment. If you save a dependency using: `npm install webpack --save-dev` that dependency will not be installed in an environment where *NODE_ENV* is *production*. So what you want is to only `--save` dependencies that you need in production, and `--save-dev` all other dependencies.
 
-If you remember from our *server.js* file we required the *bundle.js* module inside our "development if block". 
+If you remember from our *server.js* file we required the *bundle.js* module inside our "development if block".
 
 ```javascript
 
 ...
 if (!isProduction) {
 
-  var bundle = require('./server/bundle.js'); 
+  var bundle = require('./server/bundle.js');
   bundle();
   app.all('/build/*', function (req, res) {
     proxy.web(req, res, {
@@ -461,7 +461,7 @@ if (!isProduction) {
 ...
 ```
 
-That way, when *server.js* is loaded in a production environment, it will not load *bundle.js* with its Webpack and Webpack-dev-server dependencies. That said, a Heroku deployment will require Webpack since it runs the production bundle script. 
+That way, when *server.js* is loaded in a production environment, it will not load *bundle.js* with its Webpack and Webpack-dev-server dependencies. That said, a Heroku deployment will require Webpack since it runs the production bundle script.
 
 I hope this was not too confusing. You will get good errors if you did something wrong and it is not a problem if your production environment installs dependencies it does not need.
 

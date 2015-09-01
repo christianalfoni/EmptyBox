@@ -10,6 +10,7 @@ var config = {
     path.resolve(corePath, '_main.jsx')
   ],
   context: corePath,
+  devtool: 'source-map',
   output: {
     filename: 'blog.js',
     path: publicPath,
@@ -18,7 +19,7 @@ var config = {
   module: {
     loaders: [{
       test: /\.jsx$/,
-      loaders: ['react-hot', 'babel'],
+      loaders: ['babel'],
       exclude: [node_modules_dir]
     }, {
       test: /\.md$/,

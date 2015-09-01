@@ -12,7 +12,7 @@ var config = {
     path.resolve(corePath, '_main.jsx')
   ],
   context: corePath,
-  devtool: 'eval',
+  devtool: 'eval-source-map',
   output: {
     filename: 'blog.js',
     path: buildPath,

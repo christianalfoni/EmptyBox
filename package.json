@@ -1,6 +1,6 @@
 {
   "name": "christianalfoni",
-  "version": "0.1.0-69",
+  "version": "0.1.0-88",
   "description": "A blog creator based on React",
   "blog": {
     "css": {
@@ -20,6 +20,7 @@
   "scripts": {
     "start": "node server",
     "cerebral": "webpack-dev-server --progress --colors --content-base cerebral_build --config webpack.cerebral.config.js",
+    "cerebraldeploy": "webpack -p --config webpack.cerebral.production.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "domains": [
@@ -55,12 +56,9 @@
     "style-loader": "^0.8.3",
     "superagent": "^1.0.0",
     "webpack": "^1.6.0",
-    "webpack-dev-server": "^1.7.0"
-  },
-  "devDependencies": {
+    "webpack-dev-server": "^1.7.0",
     "babel-core": "^5.8.22",
     "babel-loader": "^5.3.2",
-    "file-loader": "^0.8.4",
-    "raw-loader": "^0.5.1"
+    "file-loader": "^0.8.4"
   }
 }

@@ -33,6 +33,10 @@ module.exports = React.createClass({
     });
   },
   render: function () {
+    var linkFontStyle = {
+      fontSize: 20,
+      lineHeight: '40px'
+    };
     return (
       <div className="cerebral-container">
         <div className="cerebral-header">
@@ -53,17 +57,18 @@ module.exports = React.createClass({
             <div>Cerebral</div>
           </div>
         </div>
-        <div className="cerebral-columns">
 
-          <div>
+
+        <div>
           {markdownRenderer(introduction).tree}
-          </div>
 
           <div style={{textAlign: 'center',paddingTop: 50}}>
-            <iframe width="420" height="315" src="https://www.youtube.com/embed/rHqIunT5qus" frameBorder="0" allowFullscreen></iframe>
+            <iframe width="420" height="315" src="https://www.youtube.com/embed/O_fk8jBtKSU" frameBorder="0" allowFullscreen></iframe>
+            <iframe width="420" height="315" src="https://www.youtube.com/embed/cFB5V86Kz20" frameBorder="0" allowFullscreen></iframe>
+            <iframe width="420" height="315" src="https://www.youtube.com/embed/PZjXPziD9Cw" frameborder="0" allowfullscreen></iframe>
           </div>
-
         </div>
+
         {markdownRenderer(cerebral).tree}
         {markdownRenderer(modelLayer).tree}
         <div>
@@ -116,11 +121,27 @@ module.exports = React.createClass({
           </div>
 
         </div>
+        <h2>4. Signals</h2>
+        <div>
+          <a href="#naming" style={linkFontStyle}> Naming</a> ---
+          <a href="#action" style={linkFontStyle}> Action</a> ---
+          <a href="#arguments" style={linkFontStyle}> Arguments</a> ---
+          <a href="#chain" style={linkFontStyle}> Chain</a> ---
+          <a href="#trigger" style={linkFontStyle}> Trigger</a> ---
+          <a href="#paths" style={linkFontStyle}> Paths</a> ---
+          <a href="#async" style={linkFontStyle}> Async</a> ---
+          <a href="#outputs" style={linkFontStyle}> Outputs</a> ---
+          <a href="#types" style={linkFontStyle}> Types</a> ---
+          <a href="#custom-types" style={linkFontStyle}> Custom Types</a> ---
+          <a href="#groups" style={linkFontStyle}> Groups</a> ---
+          <a href="#events" style={linkFontStyle}> Events</a> ---
+          <a href="#functional-traits" style={linkFontStyle}> Functional Traits</a>
+        </div>
         {markdownRenderer(signals).tree}
 
         <div style={{textAlign: 'center', margin: 25, borderRadius: 5, backgroundColor: '#FFF'}}>
           <div style={{display: 'inline-block'}}>
-            <img src="logo.jpg" width="200" style={{float: 'left'}}/>
+            <img src="logo.png" width="200" style={{float: 'left'}}/>
             <div style={{float: 'left', width: 500, textAlign: 'left'}}>
               {markdownRenderer(end).tree}
             </div>

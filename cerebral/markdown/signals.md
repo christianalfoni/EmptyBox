@@ -1,5 +1,3 @@
-## 4. Create signals
-
 ### Naming
 The way you think of signals is that something happened in your application. Either in your VIEW layer, a router, maybe a websocket connection etc. So the name of a signal should define what happened: "appMounted", "inputChanged", "formSubmitted". The actions are named by their purpose, like "setInputValue", "postForm" etc. This will make it very easy for you to read and understand the flow of the application. All signal definitions first tells you "what happened in your app". Then each action describes its part of the flow that occurs when the signal triggers.
 
@@ -18,11 +16,10 @@ export default myAction;
 ### Arguments
 ```javascript
 
-function MyAction (input, state, output) {
+function MyAction (input, state, output, services) {
 
   // Input contains all inputs passed to the signal itself
-  // and any outputs from the previous actions. Using packages
-  // you can also add default input like AJAX libs etc.
+  // and any outputs from the previous actions
   input // {}
 
   // Use an array as path to reach nested values
@@ -50,6 +47,9 @@ function MyAction (input, state, output) {
   output({foo: 'bar'});
   output.success({foo: 'bar'});
   output.error({foo: 'bar'});
+
+  // Any services
+  services // {request: function () {}}
 
 };
 
@@ -235,9 +235,18 @@ myAction.outputs = {
   }
 };
 
+// If not passing any value
+myAction.output = undefined;
+
+// If passing null or no value
+myAction.outputs = {
+  foo: null,
+  bar: undefined
+};
+
 export default myAction;
 ```
-The following types are available: **String, Number, Boolean, Object, Array**, its the default type constructors in JavaScript.
+The following types are available: **String, Number, Boolean, Object, Array, null** and in addition **undefined** where you do not want to pass a value.
 
 ### Custom Types
 
@@ -245,16 +254,18 @@ You can use a function instead. That allows you to use any typechecker.
 
 ```javascript
 
+import t from 'tcomb';
+
 function myAction (input, state, output) {
   output({foo: 'bar'});
 };
 
-// Define what args you expect to be received on this action
 myAction.input = {
-  isCool: function (value) {
-    return typeof value === 'string' || typeof value === 'number';
-  },
-  isNotCool: MyTypeChecker.isString
+  foo: t.String.is,
+  bar: t.maybe(t.Number).is,
+  signature: function (value) {
+    return typeof value === 'string';
+  }
 };
 ```
 
@@ -268,3 +279,44 @@ const MyGroup = [Action1, Action2, Action3];
 controller.signal('appMounted', Action4, ...MyGroup);
 controller.signal('appMounted', Action5, ...MyGroup, Action6);
 ```
+
+### Events
+```js
+
+controller.on('change', function () {});
+controller.on('error', function (error) {});
+controller.on('signalStart', function () {});
+controller.on('signalEnd', function () {});
+controller.on('actionStart', function (isAsync) {});
+controller.on('actionEnd', function () {});
+```
+
+### Functional Traits
+Since actions are pure functions it is very easy for you to compose functions and even action chains together. You might have a complex flow that is to be reused across signals.
+
+*Simple action*
+```javascript
+
+function myAction (input, state, output, services) {}
+controller.signal('appMounted', myAction);
+```
+
+*Action Factory*
+```javascript
+
+function actionFactory (someArg) {
+  return function myCustomAction (input, state, output, services) {}
+}
+controller.signal('appMounted', actionFactory('someArg'), someOtherAction);
+```
+Now the custom action has access to the argument passed to the factory. This is especially great for handling http requests where maybe only the url differs on the different requests.
+
+*Action Chain Factory*
+```javascript
+
+function actionChainFactory (someArg) {
+  return [actionFactory(someArg), actionFactoryB('someOtherArg'), actionC];
+}
+controller.signal('appMounted', ...actionChainFactory('someArg'), someOtherAction);
+```
+By returning an array from a factory you are able to do some pretty nifty compositions. By using the ES6 spread operator you can easily inject this chain into any part of the signal chain.

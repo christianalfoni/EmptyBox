@@ -25,14 +25,12 @@ const state = {
 // Instantiate the model
 const model = Model(state);
 
-// Any default input you want each action to receive. In this
+// Any services you want each action to receive. In this
 // example we pass in superagent ajax library
-const defaultInput = {
-  utils: {
-    request: request
-  }
+const services = {
+  request: request
 };
 
 // Instantiate the controller
-export default Controller(model, defaultInput);
+export default Controller(model, services);
 ```
