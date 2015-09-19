@@ -1,0 +1,45 @@
+# Baobab STATE package
+
+### Install
+`$ npm install cerebral-baobab`. **Note!** This package runs the BETA version of Baobab V2.
+
+### Repo
+[cerebral-baobab](https://github.com/christianalfoni/cerebral-baobab)
+
+### Features
+Baobab allows you to use facets to map state. Baobab also allows you to validate any changes
+to the state tree. Read more about Baobab at the [github repo](https://github.com/Yomguithereal/baobab).
+
+### Get started
+
+```javascript
+
+import Controller from 'cerebral';
+import Model from 'cerebral-baobab';
+import request from 'superagent';
+
+// Any Baobab options
+const options = {
+
+};
+
+// The initial state of the application
+const model = Model({
+  isLoading: false,
+  user: null,
+  error: null
+}, options);
+
+// You have access to the Baobab tree itself
+model.tree.on('invalid', function () {
+
+});
+
+// Any utils you want each action to receive
+const services = {
+  request: request
+};
+
+// Instantiate the controller
+export default Controller(model, services);
+```

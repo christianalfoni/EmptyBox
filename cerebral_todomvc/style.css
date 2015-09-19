@@ -1,0 +1,55 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('fonts/icomoon.eot?azg06s');
+	src:url('fonts/icomoon.eot?#iefixazg06s') format('embedded-opentype'),
+		url('fonts/icomoon.ttf?azg06s') format('truetype'),
+		url('fonts/icomoon.woff?azg06s') format('woff'),
+		url('fonts/icomoon.svg?azg06s#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-home:before {
+	content: "\f015";
+}
+.icon-download:before {
+	content: "\f019";
+}
+.icon-play-circle-o:before {
+	content: "\f01d";
+}
+.icon-github-square:before {
+	content: "\f092";
+}
+.icon-twitter:before {
+	content: "\f099";
+}
+.icon-briefcase:before {
+	content: "\f0b1";
+}
+.icon-bars:before {
+	content: "\f0c9";
+}
+.icon-file-text:before {
+	content: "\f15c";
+}
+.icon-database:before {
+	content: "\f1c0";
+}
+.icon-television:before {
+	content: "\f26c";
+}

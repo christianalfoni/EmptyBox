@@ -1,120 +1,296 @@
-body {
+html, body {
   font-size: 100%;
-  background-color: #FFF;
+  height: 100%;
+  background-color: rgb(40, 49, 60);
 }
 
-.cerebral-container {
-  max-width: 960px;
-  margin: 0 auto;
+h2 {
+  font-weight: normal;
+  font-size: 34px;
 }
 
-.cerebral-column {
-  display: inline-block;
-  width: 33.333333333333%;
-  vertical-align: top;
+h3 {
+  font-weight: normal;
+  color: rgb(232, 137, 102);
 }
 
-.cerebral-header {
-
-}
-
-.cerebral-header.white {
-  color: #FFF;
-}
-
-.simple-code code {
-  font-size: 75%;
-}
-
-.simple-code pre {
-  background-color: transparent;
-}
-
-h1 {
-
-  margin-bottom: 0;
-}
 h4 {
-  font-family: "Roboto";
-  font-weight: 400;
-  margin-top: 5px;
-  color: #999
+  font-weight: bold;
+  font-size: 22px;
 }
 
-.cerebral-showcase {
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-.cerebral-showcase > div {
-  display: inline-block;
-  vertical-align: top;
-  margin: 5px;
-  border-radius: 5px;
-  height: 200px;
-  width: 200px;
-  color: #EAEAEA;
-}
-
-.cerebral-showcase h1 {
-  color: #eaeaea;
-}
-
-.cerebral-showcase-red {
-  background-color: #c9302c;
-  border: 2px solid #d43f3a;
-}
-
-.cerebral-showcase-green {
-  background-color: #5cb85c;
-  border: 2px solid #4cae4c;
-}
-
-.cerebral-showcase-yellow {
-  background-color: #f0ad4e;
-  border: 2px solid #eea236;
-}
-
-.cerebral-columns > div {
-  width: 50%;
-  display: inline-block;
-  vertical-align: top;
-  padding: 5px;
-  box-sizing: border-box;
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
 iframe {
   border: 0;
-  margin-right: 15px;
 }
 
-.nav {
-  list-style-type: none;
-  padding-left: 0;
-  margin-left: 0;
-  margin-bottom: 0;
+pre {
+  font-size: 14px;
+  background-color: #EAEAEA;
+  border-radius: 5px;
 }
 
-.nav li {
-  display: inline-block;
-  margin-right: 15px;
-  padding: 0 10px;
+code {
+  background-color: rgb(40, 49, 60);
+  font-family: monospace;
+  line-height: 25px !important;
 }
 
-.nav li.active {
-  border: 1px solid #2e6da4;
-  background-color: #337ab7;
-  border-radius: 3px;
+p {
+  font-size: 20px;
 }
-.nav li.active a {
+
+img {
+  border-radius: 5px;
+}
+.menu::-webkit-scrollbar, .content::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.menu {
+  color: #EAEAEA;
+  width: 200px;
+  height: 100%;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 50px;
+}
+
+.submenu {
   color: #EAEAEA;
 }
-.tab-pane {
-  background-color: #FFF;
-  padding: 10px 20px;
-  border-radius: 5px;
-  display: none;
+
+.submenu > li {
+  height: 25px;
+  padding: 5px 0 5px 10px;
+  cursor: pointer;
+  line-height: 25px;
+  font-size: 16px;
+  color: rgb(150, 155, 160);
+  margin: 0;
 }
-.tab-pane.active {
-  display: block;
+
+.menu > li {
+  min-height: 30px;
+  padding: 5px;
+  cursor: pointer;
+  line-height: 30px;
+  font-size: 18px;
+  color: rgb(150, 155, 160);
+  margin: 0;
+}
+
+.menu > li .icon {
+  color: rgb(150, 155, 160);
+}
+
+.menu li:hover {
+  color: rgb(90, 100, 110);
+}
+
+.menu li.active {
+  background-color: rgb(232, 137, 102);
+  font-size: 18px;
+  color: #EAEAEA;
+}
+
+.menu li.active.head {
+  background-color: rgb(90, 100, 110);
+}
+
+.menu li.active i {
+  color: #EAEAEA;
+}
+
+.submenu li.active i {
+  color: rgb(150, 155, 160);
+}
+
+.submenu li.active {
+  background-color: transparent;
+  font-size: 16px;
+  color: rgb(232, 137, 102);
+}
+
+.page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: translate3d(200px, 0, 0);
+  -webkit-transform: translate3d(200px, 0, 0);
+  background-color: rgb(244, 244, 244);
+  transition: transform 0.2s ease-in-out;
+  -webkit-transition: -webkit-transform 0.2s ease-in-out;
+  box-shadow: -2px 0 4px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  position: absolute;
+  box-sizing: border-box;
+  width: 100%;
+  height: 50px;
+  top: 0;
+  left: 0;
+  background-color: #FFF;
+  box-shadow: 0px 4px 4px 5px rgba(0, 0, 0, 0.1);
+  z-index: 999999;
+}
+
+.header > * {
+  float: left;
+}
+
+.center {
+  text-align: center;
+}
+
+.content {
+  padding: 60px 40px 40px 40px;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.content-wrapper {
+  max-width: 1280px;
+}
+
+.icon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  min-width: 25px;
+  line-height: 25px;
+  text-align: center;
+  height: 25px;
+  color: #333;
+}
+
+.icon.link:hover {
+  color: #555;
+  cursor: pointer;
+}
+
+.header .icon {
+  margin: 0 10px;
+}
+
+.cerebral-header {
+  margin: 0;
+  font-weight: normal;
+}
+
+.cerebral-row {
+  display: flex;
+  display: -webkit-flex;
+}
+
+.cerebral-column {
+  padding: 10px;
+  flex-grow: 1;
+  -webkit-flex-grow: 1;
+  max-width: 33.3333333%;
+}
+
+.cerebral-column.space {
+  padding: 0 15px;
+}
+
+.cerebral-logo {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.text-small {
+  font-size: 16px;
+}
+
+.header-subtitle {
+  margin: 0 0 10px 0;
+}
+
+.github, .tweet {
+  float: right;
+  cursor: pointer;
+  height: 30px;
+  margin: 10px;
+}
+
+.tweet {
+  border-right: 1px solid #DDD;
+}
+
+.github {
+  padding-right: 5px;
+}
+
+.github:hover i, .tweet:hover i {
+  color: #666;
+}
+
+.cerebral-list {
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.cerebral-list.divided {
+  display: inline-block;
+  width: 50%;
+  vertical-align: top;
+}
+
+.clip {
+  position: relative;
+  background-color: rgb(40, 49, 60);;
+  height: 200px;
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.clip .icon {
+  position: absolute;
+  color: rgb(244, 244, 244);
+  font-size: 60px;
+  top: 50%;
+  left: 50%;
+  cursor: pointer;
+  margin-left: -25px;
+  margin-top: -15px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #333;
+  opacity: 0;
+  transition: opacity 0.4s ease-in;
+  -webkit-transition: opacity 0.4s ease-in;
+}
+
+.videoframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -258px;
+  margin-left: -450px;
+  opacity: 0;
+  transition: opacity 0.4s ease-in;
+  -webkit-transition: opacity 0.4s ease-in;
+  background-color: #000;
+  border-radius: 5px;
+  padding: 10px;
 }
