@@ -4,6 +4,8 @@
 
 `npm install cerebral-router`
 
+A demo can be found at [this repo](https://github.com/christianalfoni/cerebral-router-demo).
+
 ### How to use
 
 The Cerebral router binds urls to signals. This gives you a flexible approach to what your urls should represent in your application. You might be surprised that the router does not affect your UI layer at all. Lets take a look.
@@ -89,7 +91,7 @@ Router(controller, {
   '/messages': 'messagesOpened',
   '/messages/:id': 'messageOpened'
 }, {
-  urlStorePath: true
+  urlStorePath: 'browserUrl'
 });
 ```
 

@@ -1,6 +1,6 @@
 # Async
 
-All actions are defined the same way, they being asynchronous or not. What decides if an action runs asynchronously is the signal. This is done by using an array.
+All actions are defined the same way, they being asynchronous or not. What decides if an action runs asynchronously is the signal. This is done by using an array. **Note!** that you can not use the state mutation methods in async actions. You can only use `state.get(path)`.
 
 ```javascript
 

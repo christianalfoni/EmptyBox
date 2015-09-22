@@ -8,7 +8,7 @@
 
 ### Features
 Baobab allows you to use facets to map state. Baobab also allows you to validate any changes
-to the state tree. Read more about Baobab at the [github repo](https://github.com/Yomguithereal/baobab).
+to the state tree. Read more about Baobab at the [github repo](https://github.com/Yomguithereal/baobab/tree/v2).
 
 ### Get started
 
@@ -43,3 +43,34 @@ const services = {
 // Instantiate the controller
 export default Controller(model, services);
 ```
+
+### Monkeys
+
+Monkeys are a high performant way to map state.
+
+```javascript
+
+import Controller from 'cerebral';
+import Model from 'cerebral-baobab';
+
+const VisibleTodos = Model.monkey({
+  cursors: {
+      todos: ['todos'],
+      ids: ['visibleTodos', 'ids']
+  },
+  get(data) {
+    return data.ids.map((id) => data.todos[id]);
+  }
+});
+
+// The initial state of the application
+const model = Model({
+  todos: {},
+  visibleTodos: {
+    ids: [],
+    list: VisibleTodos
+  }
+});
+```
+
+This allows you to handle relational state with ease. It also makes it possible to separate the data from how you want to display that data.

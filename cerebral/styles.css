@@ -49,7 +49,7 @@ img {
   border-radius: 5px;
 }
 .menu::-webkit-scrollbar, .content::-webkit-scrollbar {
-    -webkit-appearance: none;
+    -webkit-appearance: scrollbartrack-vertical;
 }
 
 .menu {

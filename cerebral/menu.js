@@ -2,7 +2,6 @@ var Home = require('./Home.js');
 var install = require('./markdown/install.md');
 var react = require('./markdown/react.md');
 var angular = require('./markdown/angular.md');
-var immutableStore = require('./markdown/immutable-store.md');
 var baobab = require('./markdown/baobab.md');
 var tcomb = require('./markdown/tcomb.md');
 var documentation = require('./markdown/documentation.md');
@@ -21,6 +20,9 @@ var routing = require('./markdown/routing.md');
 var transitions = require('./markdown/transitions.md');
 var bestPractices = require('./markdown/best-practices.md');
 var modals = require('./markdown/modals.md');
+var structure = require('./markdown/structure.md');
+var recording = require('./markdown/recording.md');
+var getStarted = require('./markdown/get-started.md');
 
 module.exports = [
   {
@@ -43,11 +45,6 @@ module.exports = [
       content: angular
     },
     {
-      label: 'Immutable-Store',
-      icon: 'database',
-      content: immutableStore
-    },
-    {
       label: 'Baobab',
       icon: 'database',
       content: baobab
@@ -58,6 +55,11 @@ module.exports = [
       content: tcomb
     }
   ],
+  {
+    label: 'Get Started',
+    icon: 'power-off',
+    content: getStarted
+  },
   {
     label: 'Documentation',
     icon: 'book',
@@ -118,6 +120,11 @@ module.exports = [
       label: 'Events',
       icon: 'file-text',
       content: events
+    },
+    {
+      label: 'Recording',
+      icon: 'file-text',
+      content: recording
     }
   ],
   {
@@ -135,11 +142,11 @@ module.exports = [
     label: 'Best Practices',
     icon: 'heart',
     content: bestPractices
-  }/*, [
+  }, [
     {
-      label: 'Modals',
+      label: 'Structure',
       icon: 'heart-o',
-      content: modals
+      content: structure
     }
-  ]*/
+  ]
 ];

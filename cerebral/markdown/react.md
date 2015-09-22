@@ -6,7 +6,7 @@
 ### Repo
 [cerebral-react](https://github.com/christianalfoni/cerebral-react)
 
-Read more about **decorators**, **hoc**, **mixins** and **stateless** components. Also information on recording state is located in the repo.
+Read more about **decorators**, **hoc**, **mixins** and **stateless/stateful** components.
 
 ### Get started
 
@@ -29,18 +29,11 @@ React.render(<Container controller={cerebral} app={App}/>, document.body);
 #### Get state in component
 ```javascript
 
-import React from 'react';
-import {Decorator as Cerebral} from 'cerebral-react';
+import {Component} from 'cerebral-react';
 
-@Cerebral({
+export default Component({
   title: ['title']
-})
-class MyComponent extends React.Component {
-  componentDidMount() {
-    this.props.signals.appMounted();
-  }
-  render() {
-    return <h1>{this.props.title}</h1>;
-  }
-}
+}, (props) => (
+  <h1>{props.title}</h1>  
+));
 ```

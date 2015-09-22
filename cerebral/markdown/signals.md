@@ -22,5 +22,38 @@ As you see there are not only functions that are used to express flow. You also 
 
 Note that the actions *setUser* and *setUserError* are not asynchronous. This means that "every other" nested array expresses asynchronous flow.
 
-### Why are not all actions asynchronous?
-It would indeed be easier if all actions ran asynchronous, like *promises* do. The problem with this approach though is that sync/async execution matters. In the example above we want to express that we first set a loading state. When Cerebral runs this action it will actually emit an event to the UI and tell it to update itself. The reason is that the next item in line is an array, asynchronous execution. So now our UI displays the loading state and the asynchronous code runs. When it is done the last *unsetLoading* action will run and the UI updates again. If all actions were asynchronous this flow would not be possible.
+### Namespace signals
+
+In larger applications it can be convenient to namespace your signals. You do that simply by using dot notation.
+
+```javascript
+
+controller.signal('admin.userOpened', action1);
+
+controller.signals.admin.userOpened();
+```
+
+### Sync signals
+
+By default Cerebral will run your signals between animation frames. Sometimes you want to trigger signals synchronously. Typically this is related to inputs.
+
+```javascript
+
+import {Component} from 'cerebral-react';
+
+export default Component({
+  value: ['inputValue']
+}, (props) => (
+
+  <div>
+    <input
+      type="text"
+      value={props.value}
+      onChange={(e) => props.signals.valueChanged.sync({value: e.target.value})}
+    />
+  </div>
+
+));
+```
+
+All signals has a `.sync()` method. Use this with inputs to avoid glitches in UI.

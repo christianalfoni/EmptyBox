@@ -6,36 +6,32 @@ We are going to look at an example using the *CSSTransitionGroup* plugin from Re
 
 ```javascript
 
-import {Decorator as Cerebral} from 'cerebral-react';
+import {Component} from 'cerebral-react';
 import {CSSTransitionGroup} from 'react/addons';
 
 import HomePage from './HomePage.js';
 import AdminPage from './AdminPage.js';
 
-@Cerebral({
+export default Component({
   currentPage: ['currentPage']
-})
-class App extends React.Component {
-  renderCurrentPage() {
+}, (props) => (
 
-    switch (this.props.currentPage) {
+  const renderCurrentPage = function () {
+    switch (props.currentPage) {
       case 'home':
         return <HomePage key="home"/>;
       case 'admin':
         return <AdminPage key="admin"/>;
-    }
+    }  
+  };
 
-  }
-  render() {
+  return (
+    <div className="page-container">
+      <CSSTransitionGroup transitionName="example">
+        {renderCurrentPage()}
+      </CSSTransitionGroup>
+    </div>
+  );
 
-    return (
-      <div className="page-container">
-        <CSSTransitionGroup transitionName="example">
-          {this.renderCurrentPage()}
-        </CSSTransitionGroup>
-      </div>
-    );
-
-  }
-}
+));
 ```

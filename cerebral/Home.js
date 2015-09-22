@@ -46,7 +46,6 @@ var Home = React.createClass({
               <li><i className="icon icon-television"/> Angular</li>
             </ul>
             <ul className="cerebral-list divided">
-              <li><i className="icon icon-database"/> Immutable Store</li>
               <li><i className="icon icon-database"/> Baobab</li>
               <li><i className="icon icon-database"/> Tcomb</li>
             </ul>
@@ -54,7 +53,7 @@ var Home = React.createClass({
 
           <div className="cerebral-column">
             <Header>Debugger</Header>
-            <div className="clip" onClick={this.props.openVideo.bind(null, 'https://www.youtube.com/embed/GS45Brok7Y0')}>
+            <div className="clip" onClick={this.props.openVideo.bind(null, 'https://www.youtube.com/embed/j2oxt0-pCuc')}>
               <i className="icon icon-play-circle-o"/>
             </div>
           </div>
@@ -65,7 +64,7 @@ var Home = React.createClass({
               <li>
                 <i
                   className="icon icon-play-circle-o link"
-                  onClick={this.props.openVideo.bind(null, 'https://www.youtube.com/embed/O_fk8jBtKSU')}> Introducing Cerebral - <small>30:37</small></i>
+                  onClick={this.props.openVideo.bind(null, 'https://www.youtube.com/embed/O_fk8jBtKSU')}> Introduction - <small>30:37</small></i>
               </li>
               <li>
                 <i
