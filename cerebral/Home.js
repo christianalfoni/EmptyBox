@@ -2,6 +2,9 @@ var React = require('react');
 var Header = require('./Header.js');
 
 var Home = React.createClass({
+  openIntroduction: function () {
+    window.open('http://www.christianalfoni.com/articles/2015_09_22_Introducing-Cerebral');
+  },
   render: function () {
     return (
       <div>
@@ -53,7 +56,7 @@ var Home = React.createClass({
 
           <div className="cerebral-column">
             <Header>Debugger</Header>
-            <div className="clip" onClick={this.props.openVideo.bind(null, 'https://www.youtube.com/embed/j2oxt0-pCuc')}>
+            <div className="clip" onClick={this.props.openVideo.bind(null, 'https://www.youtube.com/embed/QhStJqngBXc')}>
               <i className="icon icon-play-circle-o"/>
             </div>
           </div>
@@ -61,6 +64,11 @@ var Home = React.createClass({
           <div className="cerebral-column">
             <Header>Introductions</Header>
             <ul className="cerebral-list">
+            <li>
+              <i
+                className="icon icon-file-text link"
+                onClick={this.openIntroduction}> Introduction article</i>
+            </li>
               <li>
                 <i
                   className="icon icon-play-circle-o link"

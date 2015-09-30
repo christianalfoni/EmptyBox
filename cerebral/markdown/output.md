@@ -5,13 +5,13 @@ the next actions.
 
 ```javascript
 
-function actionA (input, state, output, services) {
+function actionA (input, state, output) {
     output({
       bip: 'bop'
     });
 }
 
-function actionB (input, state, output, services) {
+function actionB (input, state, output) {
   input.foo; // "bar"
   input.bip; // "bop"
 }
@@ -31,7 +31,7 @@ An action might want to take different paths based on some conditional. A exampl
 
 ```javascript
 
-function getItems (input, state, output, services) {
+function getItems (input, state, output) {
   fetch('/items')
     .then(function(response) {
       return response.json();
@@ -58,7 +58,7 @@ But you can define your own custom output paths if you want to.
 
 ```javascript
 
-function getItems (input, state, output, services) {
+function getItems (input, state, output) {
   // For simplicities sake
   output.success();
   output.notFound();
@@ -104,7 +104,7 @@ When defining outputs you can also define which one of those outputs are default
 
 ```javascript
 
-function myAction (input, state, output, services) {
+function myAction (input, state, output) {
   output(); // Will go to path "foo"
 }
 

@@ -3,7 +3,6 @@
 Factories are a well known concept in the functional world of JavaScript. It is just a function that returns a function. We can use this to empower our actions.
 
 ```javascript
-
 function get (url) {
 
   function action (input, state, output, services) {
@@ -51,4 +50,4 @@ function get (url) {
 }
 ```
 
-Now the debugger will display `get(/items)` and `get(/users)` instead of `action`.
+Now the debugger will display *get(/items)* and *get(/users)* instead of *action*.

@@ -82,8 +82,8 @@ module.exports = React.createClass({
       '/:item/:subitem': this.setContentByRoute
     });
   },
-  componentWillMount: function () {
-    this.mapUrl(this.state.url);
+  componentDidMount: function () {
+    this.mapUrl(location.href);
   },
   renderPage: function () {
     var pageStyle = {

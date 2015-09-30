@@ -6,17 +6,17 @@ All these projects has made our lives easier. It is practically impossible to bu
 
 ## State and UI
 
-We have two main states in our applications. The UI state and the APP state. The UI state is typically expressed with declarative templates or JSX. But you also have an APP state. This state are all the objects, arrays, strings, numbers and booleans that is used to display the UI. Ideally the UI state is a direct representation of the APP state. This is something all frameworks handles pretty well in practice, though some perform a lot better than others. You create the UI representation by passing a model into a template, using $scopes or passing state to a function that returns virtual DOM. The goal is the same, keep UI state in sync with APP state.
+We have two main states in our applications. The UI state and the APP state. The UI state is typically expressed with declarative templates or JSX. But you also have an APP state. This state are all the objects, arrays, strings, numbers and booleans that is used to display the UI. Ideally the UI state is a product of the APP state. This is something all frameworks handles pretty well in practice, though some perform a lot better than others. You create the UI representation by passing a model into a template, using $scopes or passing state to a function that returns virtual DOM. The goal is the same, make UI state a product of your APP state.
 
-How to structure UI state has never been a discussion. It is a tree structure. With children and siblings. How we structure APP state has been a discussion for years though, and still is. Abstractions are often created to handle pieces of your APP state. Frameworks has a tendency to split application state into different containers. Like Backbone.Model, $ngResource or flux stores. Often a router also contains some of your application state.
+How to structure UI state has never been a discussion. It is a tree structure. With children and siblings. How we structure APP state has been a discussion for years though, and still is. Frameworks has a tendency to split application state into different containers with varied degree of abstraction. Like Backbone.Model, $ngResource or flux stores. Often a router also contains some of your application state.
 
-I wrote an article on [Baobab](http://www.christianalfoni.com/articles/2015_02_06_Plant-a-Baobab-tree-in-your-flux-application). It is called a state tree. It is a very shallow abstraction because your mental image of this tree is a normal JavaScript object. An object with child objects, arrays and other plain JavaScript values. What makes this so great is that your mental image of UI state and APP state has the same structure. It is a tree! The goal is to translate the APP state tree into a UI tree.
+I wrote an article on [Baobab](http://www.christianalfoni.com/articles/2015_02_06_Plant-a-Baobab-tree-in-your-flux-application). It is called a state tree. It is a very shallow abstraction because your mental image of this tree is a normal JavaScript object. An object with child objects, arrays and other plain JavaScript values. What makes this so great is that your mental image of UI state and APP state has the same structure. It is a tree! The goal is to produce a UI tree based on the APP state tree.
 
-I think it is important to prevent putting our APP state into many different containers. Because each container creates at least one new relationship in your application. And when the relationship (dependency) graph becomes too big we start to loose control of our mental image.
+I think it is important to prevent splitting our APP state into many different containers. Each container creates at least one new relationship in your application. And when the relationship (dependency) graph becomes too big we start to loose control of our mental image.
 
 ## The missing piece
 
-But there is something missing here. How do you make changes to your APP state? What is the mechanism that performs this change? Lets us use an example. The user clicks a button. The button should refresh a list of messages. The latest message content should also be downloaded and displayed next to the list.
+But there is something missing here. How do you make changes to your APP state? What is the mechanism that performs this change? Let us use an example. The user clicks a button. The button should refresh a list of messages. The latest message content should also be downloaded and displayed next to the list.
 
 Typically you start with an event listener on the button.
 
@@ -27,7 +27,7 @@ onButtonClick: function () {
 }
 ```
 
-The big question is, what do you do now? One approach would be to contact the dependency that is responsible for the messages list. Wait for it to complete, then contact the dependency responsible for the current message. The example here uses abstractions from an imagined framework.
+The big question is, what do you do now? One approach would be to reference the dependency that is responsible for the messages list, Wait for it to complete and then reference the dependency responsible for the current message. The example here uses abstractions from an imagined framework.
 
 ```javascript
 
@@ -106,7 +106,7 @@ signal('refreshButtonClicked',
 );
 ```
 
-A signal needs a name. I encourage you to express that name as: "What happened to trigger the signal". When you look at the signal definition you now know what happened to trigger it and what it does.
+A signal needs a name. I encourage you to express that name as: "What happened to trigger the signal". When you look at the signal definition you know what happened to trigger it and what it does.
 
 ### Actions
 
@@ -143,7 +143,7 @@ signal('refreshButtonClicked',
 
 The array in this signal indicates that the *getMessages* action is asynchronous. We do not define asynchronous behavior in the action itself, but in the signal. This increases your understanding of how the signal runs. We also define an object following *getMessages*. All actions can be followed by an object. The object represents paths. By default any action can choose a *success* or *error* path, but you can also define your own.
 
-The arrays defined on **success** and **error** does not mean actions inside it runs asynchronous. Arrays are also required to express paths. So arrays inside an array means that it is asynchronous. So think of the arguments passed to the signal as an array... which they actually are.
+The arrays defined on **success** and **error** does not mean actions inside it runs asynchronous. Arrays are also required to express paths. So arrays inside an array means that it is asynchronous. So think of the arguments passed to the signal as an array... which it actually is.
 
 Let us take a look at the *getMessages* action.
 
@@ -346,7 +346,7 @@ exports['should change loading state based on type'] = function (test) {
 };
 ```
 
-Remember that testing is not only to verify that a logic runs as intended. It also protects your from other developers, and yourself, making changes that breaks the application.
+Remember that testing is not only to verify that logic runs as intended. It also protects your from other developers, and yourself, making changes that breaks the application.
 
 ### Reusability
 

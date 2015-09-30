@@ -61,11 +61,11 @@ Sometimes you want to track the progress of parallel async operations. You achie
 
 ```javascript
 
-function resetProgress (input, state, output, services) {
+function resetProgress (input, state, output) {
   state.set('progress', 0);
 }
 
-function progress (input, state, output, services) {
+function progress (input, state, output) {
   state.set('progress', state.get('progress') + 50);
 }
 

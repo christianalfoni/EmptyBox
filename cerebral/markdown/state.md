@@ -7,7 +7,7 @@ Let us start with an example:
 
 ```javascript
 
-function myAction (input, state, output, services) {
+function myAction (input, state, output) {
 
   state.set('isLoading', false);
 
@@ -21,7 +21,7 @@ use an array.
 
 ```javascript
 
-function myAction (input, state, output, services) {
+function myAction (input, state, output) {
 
   state.set(['user', 'isLoading'], false);
 
@@ -35,7 +35,7 @@ strings and arrays here also to be more specific.
 
 ```javascript
 
-function myAction (input, state, output, services) {
+function myAction (input, state, output) {
 
   state.get('isLoading'); // false
   state.get(['user', 'isLoading']); // false
@@ -49,7 +49,7 @@ you know from JavaScript.
 
 ```javascript
 
-function myAction (input, state, output, services) {
+function myAction (input, state, output) {
 
   // Set value on property
   state.set('isLoading', false);

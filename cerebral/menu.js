@@ -4,7 +4,6 @@ var react = require('./markdown/react.md');
 var angular = require('./markdown/angular.md');
 var baobab = require('./markdown/baobab.md');
 var tcomb = require('./markdown/tcomb.md');
-var documentation = require('./markdown/documentation.md');
 var signals = require('./markdown/signals.md');
 var actions = require('./markdown/actions.md');
 var input = require('./markdown/input.md');
@@ -23,6 +22,8 @@ var modals = require('./markdown/modals.md');
 var structure = require('./markdown/structure.md');
 var recording = require('./markdown/recording.md');
 var getStarted = require('./markdown/get-started.md');
+var utilities = require('./markdown/utilities.md');
+var relational = require('./markdown/relational.md');
 
 module.exports = [
   {
@@ -61,16 +62,11 @@ module.exports = [
     content: getStarted
   },
   {
-    label: 'Documentation',
-    icon: 'book',
-    content: documentation
+    label: 'Signals',
+    icon: 'file-text',
+    content: signals
   },
   [
-    {
-      label: 'Signals',
-      icon: 'file-text',
-      content: signals
-    },
     {
       label: 'Actions',
       icon: 'file-text',
@@ -92,38 +88,45 @@ module.exports = [
       content: output
     },
     {
-      label: 'Services',
+      label: 'Async',
       icon: 'file-text',
+      content: async
+    }
+  ],
+  {
+    label: 'Utilities',
+    icon: 'wrench',
+    content: utilities
+  },
+  [
+    {
+      label: 'Services',
+      icon: 'wrench',
       content: services
     },
     {
       label: 'Factories',
-      icon: 'file-text',
+      icon: 'wrench',
       content: factories
     },
     {
       label: 'Chains',
-      icon: 'file-text',
+      icon: 'wrench',
       content: chains
     },
     {
-      label: 'Async',
-      icon: 'file-text',
-      content: async
-    },
-    {
       label: 'Type checking',
-      icon: 'file-text',
+      icon: 'wrench',
       content: typeChecking
     },
     {
       label: 'Events',
-      icon: 'file-text',
+      icon: 'wrench',
       content: events
     },
     {
       label: 'Recording',
-      icon: 'file-text',
+      icon: 'wrench',
       content: recording
     }
   ],
@@ -147,6 +150,11 @@ module.exports = [
       label: 'Structure',
       icon: 'heart-o',
       content: structure
+    },
+    {
+      label: 'Relational data',
+      icon: 'heart-o',
+      content: relational
     }
   ]
 ];

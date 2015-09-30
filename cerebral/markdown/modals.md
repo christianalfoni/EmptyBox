@@ -8,7 +8,7 @@ You might be used to calling a method to toggle a modal. With Cerebral you do th
 ```javascript
 
 import Controller from 'Cerebral';
-import Model from 'cerebral-immutable-store';
+import Model from 'cerebral-baobab';
 
 const model = Model({
   modalA: {

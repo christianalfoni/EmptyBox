@@ -4,7 +4,7 @@ An action is just a pure function.
 
 ```javascript
 
-function myAction (input, state, output, services) {
+function myAction (input, state, output) {
 
 }
 ```

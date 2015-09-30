@@ -64,6 +64,9 @@ This factory can now be used as:
 
 ```javascript
 
+import get from './chains/get.js';
+import setItems from './actions/setItems.js';
+
 controller.signal('somethingHappened',
   [
     ...get('/items', {

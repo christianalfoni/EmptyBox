@@ -2,7 +2,7 @@
 
 ```javascript
 
-function myAction (input, state, output, services) {
+function myAction (input, state, output) {
   input.foo; // "bar"
 }
 
@@ -22,11 +22,11 @@ The input can be updated in two different ways. Any object passed when you trigg
 
 ```javascript
 
-function myAction (input, state, output, services) {
+function myAction (input, state, output) {
   input.foo; // "bar"
 }
 
-function myAction2 (input, state, output, services) {
+function myAction2 (input, state, output) {
   input.foo; // "bar"
 }
 
