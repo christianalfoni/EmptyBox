@@ -24,6 +24,8 @@ var recording = require('./markdown/recording.md');
 var getStarted = require('./markdown/get-started.md');
 var utilities = require('./markdown/utilities.md');
 var relational = require('./markdown/relational.md');
+var internetExplorer = require('./markdown/internetExplorer.md');
+var propsAndState = require('./markdown/propsAndState.md');
 
 module.exports = [
   {
@@ -54,6 +56,11 @@ module.exports = [
       label: 'Tcomb',
       icon: 'database',
       content: tcomb
+    },
+    {
+      label: 'Internet Explorer',
+      icon: 'internet-explorer',
+      content: internetExplorer
     }
   ],
   {
@@ -155,6 +162,11 @@ module.exports = [
       label: 'Relational data',
       icon: 'heart-o',
       content: relational
+    },
+    {
+      label: 'Props and State',
+      icon: 'heart-o',
+      content: propsAndState
     }
   ]
 ];

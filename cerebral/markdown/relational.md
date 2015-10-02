@@ -63,19 +63,18 @@ This is what we call *source data*. It is data contained in your application sta
       get(data) {
         return data.ids.map((messageId) => {
 
-          const message = data.messages[messageId];
+          const message = messages[id];
           return {
-            title: message.title,
+            ...message,
             comments: message.comments.map((commentId) => {
-
               const comment = data.comments[commentId];
               return {
-                content: comment.content,
+                ...comment,
                 user: data.users[comment.user]
               };
 
             })
-          };
+          }
 
         });
       }
