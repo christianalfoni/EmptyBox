@@ -26,6 +26,9 @@ module.exports = function(req, res) {
     });
   });
   res.type('application/rss+xml');
-  res.send(feed.render('rss-2.0'));
+
+  // Content encoded fix, should not be there
+  var feedString = feed.render('rss-2.0').replace(/\<content\:encoded\/\>/g, '');
+  res.send(feedString);
 
 };
