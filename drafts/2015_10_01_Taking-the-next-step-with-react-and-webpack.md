@@ -1,4 +1,4 @@
-# Taking the next step with React and Webpack
+# Webpack and React tutorial - Taking the next steps
 
 It has been a year since I first got into React and Webpack. I have many times expressed that Webpack is amazing, but hard to configure. That being truthy I think there is a different reason why developers does not adopt it. So I want to go head first and say; "Webpack is amazing, but it is hard to understand why". In this article I will try to convey the core of what makes Webpack great. Then we are going to look at the very latest contributions to the Webpack/React ecosystem.
 
@@ -249,5 +249,5 @@ So you only use classes and those classes can be referenced by name when you imp
 
 There are more to these CSS Modules which you can look at [here](http://glenmaddern.com/articles/css-modules). Composition being one of the most important parts. But the core concept here is that you get the power of CSS with the scoping of JavaScript modules. Fantastic!
 
-## Summary
+## A boilerplate for this React & Webpack tutorial
 To play around with this setup you can use [this boilerplate](https://github.com/christianalfoni/webpack-express-boilerplate). It is basically works like the examples shown here. Expressing project structure is difficult. Yes, we have our files and folders, but how those files are part of your application is often not obvious. With Webpack you can stop thinking files and start thinking modules. A module is a folder with the React component, images, fonts, css and any child components. The files and folders now reflects how they are used inside your application and that is a powerful concept.
