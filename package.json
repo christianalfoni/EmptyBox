@@ -1,6 +1,6 @@
 {
   "name": "christianalfoni",
-  "version": "0.1.0-108",
+  "version": "0.1.0-135",
   "description": "A blog creator based on React",
   "blog": {
     "css": {
@@ -19,6 +19,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server",
+    "deploy": "jitsu deploy",
     "cerebral": "webpack-dev-server --progress --colors --content-base cerebral_build --config webpack.cerebral.config.js",
     "cerebraldeploy": "webpack -p --config webpack.cerebral.production.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -65,6 +66,7 @@
     "webpack-dev-server": "^1.7.0"
   },
   "devDependencies": {
+    "jitsu": "^0.15.0",
     "react-addressbar": "^0.1.4"
   }
 }

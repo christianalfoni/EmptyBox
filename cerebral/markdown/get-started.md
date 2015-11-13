@@ -1,10 +1,8 @@
 # Get Started
 
-This is one example of how you can get started using Cerebral. The article [The ultimate Webpack setup](http://www.christianalfoni.com/articles/2015_04_19_The-ultimate-webpack-setup) will help you get going with a boilerplate that fits very nicely with Cerebral.
+This is one example of how you can get started using Cerebral. The article [The ultimate Webpack setup](http://www.christianalfoni.com/articles/2015_04_19_The-ultimate-webpack-setup) will help you get going with a boilerplate that fits very nicely with Cerebral. It is recommended to use Node from version **4.x.x**.
 
-`npm install cerebral && npm install cerebral-baobab && npm install cerebral-react`
-
-This example also uses React 0.14, which is currently in release candidate. Install it using `npm install react@0.14.0-rc1`.
+`npm install cerebral cerebral-baobab cerebral-react`
 
 *controller.js*
 ```javascript
@@ -22,27 +20,34 @@ export default Controller(model);
 *App.js*
 ```javascript
 
-import {Component} from 'cerebral-react';
+import React from 'react';
+import {Decorator as Cerebral} from 'cerebral-react';
 
-export default Component({
+@Cerebral({
   title: ['title']
-}, (props) => (
+})
+class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <h1>{this.props.title}</h1>
+        <input
+          type="text"
+          value={this.props.title}
+          onChange={(e) => this.props.signals.titleChanged({title: e.target.value})}
+        />
+      </div>
+    );
+  }
+}
 
-  <div>
-    <h1>{props.title}</h1>
-    <input
-      type="text"
-      value={props.title}
-      onChange={(e) => props.signals.titleChanged({title: e.target.value})}
-    />
-  </div>
-
-));
+export default App;
 ```
 
 *main.js*
 ```javascript
 
+import React from 'react';
 import controller from './controller.js';
 import {Container} from 'cerebral-react';
 import ReactDOM from 'react-dom';
@@ -52,7 +57,11 @@ function changeTitle (input, state) {
   state.set('title', input.title);
 }
 
-controller.signal('titleChanged', changeTitle);
+const signal = [
+  changeTitle
+];
+
+controller.signal('titleChanged', signal);
 
 ReactDOM.render(
   <Container controller={controller}>

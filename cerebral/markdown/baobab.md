@@ -1,7 +1,7 @@
 # Baobab STATE package
 
 ### Install
-`$ npm install cerebral-baobab`. **Note!** This package runs the BETA version of Baobab V2.
+`$ npm install cerebral-baobab`
 
 ### Repo
 [cerebral-baobab](https://github.com/christianalfoni/cerebral-baobab)

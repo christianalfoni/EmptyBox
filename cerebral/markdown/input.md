@@ -6,7 +6,11 @@ function myAction (input, state, output) {
   input.foo; // "bar"
 }
 
-controller.signal('somethingHappened', myAction);
+const signal = [
+  myAction
+];
+
+controller.signal('somethingHappened', signal);
 
 controller.signals.somethingHappened({
   foo: 'bar'
@@ -30,7 +34,12 @@ function myAction2 (input, state, output) {
   input.foo; // "bar"
 }
 
-controller.signal('somethingHappened', myAction, myAction2);
+const signal = [
+  myAction,
+  myAction2
+];
+
+controller.signal('somethingHappened', signal);
 
 controller.signals.somethingHappened({
   foo: 'bar'
@@ -38,3 +47,17 @@ controller.signals.somethingHappened({
 ```
 
 Look more into outputs to see more examples of how the input updates.
+
+### Default input
+You can set default inputs to actions.
+
+```javascript
+
+function myAction (input, state, output) {
+  input.foo; // "bar"
+}
+
+myAction.defaultInput = {
+  foo: 'bar'
+};
+```

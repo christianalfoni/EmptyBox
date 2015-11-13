@@ -26,6 +26,9 @@ var utilities = require('./markdown/utilities.md');
 var relational = require('./markdown/relational.md');
 var internetExplorer = require('./markdown/internetExplorer.md');
 var propsAndState = require('./markdown/propsAndState.md');
+var responsibilities = require('./markdown/responsibilities.md');
+var compute = require('./markdown/compute.md');
+var immutableJS = require('./markdown/immutableJS.md');
 
 module.exports = [
   {
@@ -51,6 +54,11 @@ module.exports = [
       label: 'Baobab',
       icon: 'database',
       content: baobab
+    },
+    {
+      label: 'Immutable JS',
+      icon: 'database',
+      content: immutableJS
     },
     {
       label: 'Tcomb',
@@ -112,6 +120,11 @@ module.exports = [
       content: services
     },
     {
+      label: 'Compute',
+      icon: 'wrench',
+      content: compute
+    },
+    {
       label: 'Factories',
       icon: 'wrench',
       content: factories
@@ -167,6 +180,11 @@ module.exports = [
       label: 'Props and State',
       icon: 'heart-o',
       content: propsAndState
+    },
+    {
+      label: 'Responsibilities',
+      icon: 'heart-o',
+      content: responsibilities
     }
   ]
 ];

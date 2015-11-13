@@ -66,6 +66,11 @@ var Home = React.createClass({
             <ul className="cerebral-list">
             <li>
               <i
+                className="icon icon-play-circle-o link"
+                onClick={this.props.openVideo.bind(null, 'https://www.youtube.com/embed/BfzjuhX4wJ0?t=5h44m25s')}> ReactiveConf2015 Talk - <small>30:00</small></i>
+            </li>
+            <li>
+              <i
                 className="icon icon-file-text link"
                 onClick={this.openIntroduction}> Introduction article</i>
             </li>

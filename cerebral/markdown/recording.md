@@ -27,70 +27,92 @@ export default Controller(model);
 
 import controller from './controller.js';
 
-controller.signal('playClicked', function play (input, state, output, services) {
+function play (input, state, output, services) {
   state.set(['recorder', 'isPlaying'], true);
 
-  // First argument is duration and second
-  // is to start playing or not
-  services.recorder.seek(0, true);
-});
+  // First argument is duration
+  services.recorder.seek(0);
+  services.recorder.play();
+}
 
-controller.signal('recordClicked', function record (input, state, output, services) {
+const playClicked = [
+  play
+];
+
+controller.signal('playClicked', playClicked);
+
+function record (input, state, output, services) {
   state.merge('recorder', {
     isRecording: true,
     hasRecorded: true
   });
   services.recorder.record();
-});
+}
 
-controller.signal('stopClicked', function stop (input, state, output, services) {
+const recordClicked = [
+  record
+];
+
+controller.signal('recordClicked', recordClicked);
+
+function stop (input, state, output, services) {
   state.merge('recorder', {
     isRecording: false,
     isPlaying: false
   });
   services.recorder.stop();
-});
+}
+
+const stopClicked = [
+  stop
+];
+
+controller.signal('stopClicked', stopClicked);
 ```
 
 *App.js*
 ```javascript
 
-import {Component} from 'cerebral-react';
+import React from 'react';
+import {Decorator as Cerebral} from 'cerebral-react';
 
-export default Component({
+@Cerebral({
   recorder: ['recorder'],
   value: ['inputValue']
-}, (props) => (
-
-  <div>
-    {
-      props.recorder.isRecording ?
-        <button className="btn btn-stop" onClick={() => props.signals.stopClicked()}>Stop</button>
-      :
-      null
-    }
-    {
-      props.recorder.isPlaying ?
-        <button className="btn btn-play" disabled>Play</button>
-      :
-        null
-    }
-    {
-      !this.props.recorder.isRecording && !this.props.recorder.isPlaying && this.props.recorder.hasRecorded ?
-        <button className="btn btn-play" onClick={() => props.signals.playClicked()}>Play</button>
-      :
-        null
-    }
-    {
-      !this.props.recorder.isRecording && !this.props.recorder.isPlaying && !this.props.recorder.hasRecorded ?
-        <button className="btn btn-record" onClick={() => props.signals.recordClicked()}>Record</button>
-      :
-        null
-    }
-    <input value={props.value} onChange={(e) => props.signals.valueChanged.sync({value: e.target.value})}
-  </div>
-
-));
+})
+class Recorder extends React.Component {
+  render() {
+    return (
+      <div>
+        {
+          this.props.recorder.isRecording ?
+            <button className="btn btn-stop" onClick={() => this.props.signals.stopClicked()}>Stop</button>
+          :
+          null
+        }
+        {
+          this.props.recorder.isPlaying ?
+            <button className="btn btn-play" disabled>Play</button>
+          :
+            null
+        }
+        {
+          !this.props.recorder.isRecording && !this.props.recorder.isPlaying && this.props.recorder.hasRecorded ?
+            <button className="btn btn-play" onClick={() => this.props.signals.playClicked()}>Play</button>
+          :
+            null
+        }
+        {
+          !this.props.recorder.isRecording && !this.props.recorder.isPlaying && !this.props.recorder.hasRecorded ?
+            <button className="btn btn-record" onClick={() => this.props.signals.recordClicked()}>Record</button>
+          :
+            null
+        }
+        <input value={this.props.value} onChange={(e) => this.props.signals.valueChanged.sync({value: e.target.value})}
+      </div>
+    )
+  }
+}
 ```
 
 ### Save recording to server

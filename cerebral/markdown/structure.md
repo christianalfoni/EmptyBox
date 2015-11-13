@@ -29,7 +29,7 @@ In your *main.js* file you define all your signals, but bring them in from the *
 import controller from './controller.js';
 import appMounted from './signals/appMounted.js';
 
-controller.signal('appMounted', ...appMounted);
+controller.signal('appMounted', appMounted);
 
 ```
 

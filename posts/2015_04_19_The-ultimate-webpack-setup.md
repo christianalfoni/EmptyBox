@@ -1,5 +1,7 @@
 # The ultimate Webpack setup
 
+**Note!** The repo created for this article has quite a few updates. That said, it is within the same domain. So please read through for inspiration, but make sure you use the latest repo version to get the latest implementations.
+
 I have already written [an article](http://christianalfoni.com/articles/2014_12_13_Webpack-and-react-is-awesome) on using Webpack for your React application. Now I have more experience and want to share a really awesome setup we use at my employer, **Gloppens EDB Lag**, that gives you a great workflow expanding beyond the concepts of Webpack and makes it easy to do continuous deployment.
 
 We will be talking about the following:

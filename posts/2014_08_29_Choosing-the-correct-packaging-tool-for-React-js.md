@@ -1,5 +1,7 @@
 # Choosing the correct packaging tool for React JS
 
+**Note!** This article is over a year old now. Though it still has valid points, I would suggest reading some of my laster articles to get up to speed.
+
 When new frameworks are released they rarely have a workflow suggestion included and maybe with good reason. There are lots of tools out there to set up a workflow and what you end up with probably differs based on the project your are working on. In this post I am going to try to give you an overview of how you can set up workflows with React JS using different packaging tools.
 
 I have a set up a github project you can take a look at here: [react-packaging](https://github.com/christianalfoni/react-packaging). It has a small setup for each packaging tool mentioned below. The requirements for each project is:
@@ -27,22 +29,22 @@ grunt.initConfig({
   requirejs: {
     compile: {
       options: {
-      
+
         // The main file contains our configuration
         mainConfigFile: "./dev/app/main.js",
         baseUrl: "./dev/app",
         preserveLicenseComments: false, // Remove any comments
-        
+
         // JSX plugin will be stubbed  due to our files with JSX are already transformed
-        stubModules: ['jsx'], 
+        stubModules: ['jsx'],
         modules: [{
           name: "main",
-          
+
           // We do not need the transformer or the text plugin anymore
-          exclude: ["JSXTransformer", "text"] 
+          exclude: ["JSXTransformer", "text"]
         }],
         dir: './build' // Put in build folder
-      } 
+      }
     }
   },
   copy: {
@@ -50,10 +52,10 @@ grunt.initConfig({
       files: [{
         expand: true,
         flatten: true,
-        
+
         // Copy the main file and the RequireJS lib, the only requirements for production
-        src: ['build/main.js', 'dev/libs/requirejs.js'], 
-        dest: 'dist/', 
+        src: ['build/main.js', 'dev/libs/requirejs.js'],
+        dest: 'dist/',
         filter: 'isFile'
       }]
     }
@@ -84,7 +86,7 @@ You can check out the project structure here: [browserify-project](https://githu
 ```javascript
 
 var runBrowserifyTask = function (options) {
-  
+
   // Create a separate vendor bundler that will only run when starting gulp
   var vendorBundler = browserify({
     debug: true // Sourcemapping
@@ -94,7 +96,7 @@ var runBrowserifyTask = function (options) {
   // Create the application bundler
   var bundler = browserify({
     debug: true, // Sourcemapping
-    
+
     // watchify requires these options
     cache: {}, packageCache: {}, fullPaths: true
   })
@@ -103,8 +105,8 @@ var runBrowserifyTask = function (options) {
 
   // Do not bundle react as it will be available in the
   // vendor bundle
-  .external('react'); 
-  
+  .external('react');
+
   // The actual bundling process
   var rebundle = function() {
     var start = Date.now();
@@ -116,7 +118,7 @@ var runBrowserifyTask = function (options) {
       console.log('Built in ' + (Date.now() - start) + 'ms');
     }));
   };
-  
+
   // Add watchify
   if (options.watch) {
     bundler = watchify(bundler);
@@ -169,7 +171,7 @@ grunt.initConfig({
   webpack: {
     dev: {
       entry: entry,
-      
+
       // The CommonsChunkPlugin creates a file that other bundles can require from
       // based on an entry (vendors) and the output filename
       plugins: [new webpack.optimize.CommonsChunkPlugin("vendors", "vendors.js")],
@@ -187,7 +189,7 @@ grunt.initConfig({
     },
     deploy: {
       entry: entry
-      
+
       // We add a uglify plugin here to uglify our code
       plugins: [
         new webpack.optimize.CommonsChunkPlugin("vendors", "vendors.js"),
@@ -233,7 +235,7 @@ var bundle = function (entry, assets) {
   return duo(root)
   .entry(entry)
   .assets(assets)
-  
+
   // We actually have to define our own jsx plugin,
   // look at it in the repo
   .use(jsx)
@@ -242,7 +244,7 @@ var bundle = function (entry, assets) {
 // Dev task
 gulp.task('default', function () {
   bundle('main.js', '../../build')
-  
+
   // Write the file, then start watching
   .write(function () {
     console.log('Ready to work!');
@@ -261,7 +263,7 @@ gulp.task('default', function () {
 // Deploy task
 gulp.task('deploy', function () {
   bundle('main.js', '../../dist')
-  
+
   // Write the file, then overwrite the file
   // with the minified version
   .write(function () {  

@@ -1,6 +1,8 @@
 # Webpack and React is awesome
 
-Previously I have written a couple of articles about how to set up a workflow with React JS. The solution provided was [browserify](http://browserify.org) with [gulp](http://gulpjs.com). If React JS is not your thing I think you still will get a lot of value out of this article, so please read on. 
+**Note!** This article has aged quite a bit. Though it still has valid points, I would suggest reading some of my laster articles on Webpack to get up to speed.
+
+Previously I have written a couple of articles about how to set up a workflow with React JS. The solution provided was [browserify](http://browserify.org) with [gulp](http://gulpjs.com). If React JS is not your thing I think you still will get a lot of value out of this article, so please read on.
 
 To build a workflow for React JS with browserify and gulp you need a lot of dependencies and you have to write quite a bit of code. You might appreciate the flexibility gulp brings, but as the requirements of bundling your project grows, your workflow implementation becomes very complex. Nevertheless there are some core concepts you want to bring in to your React JS workflow:
 
@@ -161,8 +163,8 @@ var bower_dir = __dirname + '/bower_components';
 
 module.exports = {
   entry: ['./app/main.js'],
-  
-  // The resolve.alias object takes require expressions 
+
+  // The resolve.alias object takes require expressions
   // (require('react')) as keys and filepath to actual
   // module as values
   resolve: {
@@ -175,7 +177,7 @@ module.exports = {
     filename: 'bundle.js'
   },
   module: {
-  
+
     // There is no reason for WebPack to parse this file
     noParse: [bower_dir + '/react/react.min.js'],
     loaders: [
@@ -276,7 +278,7 @@ var config = {
     this.resolve.alias[name] = path;
     this.module.noParse.push(new RegExp('^' + name + '$'));
   },
-  
+
   // We split the entry into two specific chunks. Our app and vendors. Vendors
   // specify that react should be part of that chunk
   entry: {
@@ -284,7 +286,7 @@ var config = {
     vendors: ['react']
   },
   resolve: { alias: {} },
-  
+
   // We add a plugin called CommonsChunkPlugin that will take the vendors chunk
   // and create a vendors.js file. As you can see the first argument matches the key
   // of the entry, "vendors"
@@ -350,14 +352,14 @@ var React = require('react');
 
 // We create a function that will lazy load modules based on the current hash
 var resolveRoute = function () {
-  
+
   // If no hash or hash is '#' we lazy load the Home component
   if (!location.hash || location.hash.length === 1) {
     require.ensure([], function () {
       var Home = require('./Home.js');
       React.render(Home(), document.getElementById('app'));
     });
-    
+
   // Or if route is #admin we lazy load that
   } else if (location.hash === '#admin') {
     require.ensure([], function () {
@@ -387,8 +389,8 @@ The index.html file looks like:
 </head>
 <body>
   <div>
-    
-    
+
+
   </div>
   <div id="app"></div>
   <script src="bundle.js"></script>
@@ -410,7 +412,7 @@ module.exports = {
 };
 ```
 
-In this configuration React JS was included in the *bundle.js* file, but you could have created a specific vendors chunk like we did earlier. It all depends on how you want to load the files. 
+In this configuration React JS was included in the *bundle.js* file, but you could have created a specific vendors chunk like we did earlier. It all depends on how you want to load the files.
 
 
 ### Optimizing with a common chunk
@@ -484,8 +486,8 @@ And finally we add a script tag to the index.html file:
 </head>
 <body>
   <div>
-    
-    
+
+
   </div>
   <div id="app"></div>
   <script src="http://localhost:8080/webpack-dev-server.js"></script>
@@ -506,13 +508,13 @@ I will not go into detail about the general hot swapping in WebPack, but I will 
 var React = require('react');
 
 var resolveRoute = function () {
-  
+
   if (!location.hash || location.hash.length === 1) {
     require.ensure([], function () {
       var Home = require('./Home.js');
       React.render(Home(), document.getElementById('app'));
     });
-    
+
   } else if (location.hash === '#admin') {
     require.ensure([], function () {
       var Admin = require('./Admin.js');
@@ -553,9 +555,9 @@ module.exports = {
   },
   module: {
     loaders: [
-    
-      // Adding a loader for css. To do this with less you download the 
-      // less-loader and add it to the end of the load string here, and 
+
+      // Adding a loader for css. To do this with less you download the
+      // less-loader and add it to the end of the load string here, and
       // of course test for less files, not css
       { test: /\.css$/, loader: 'style-loader!css-loader' }
     ]
@@ -567,7 +569,7 @@ Out of the box any changes to the css/less will update without refreshing the pa
 
 
 ### Images and fonts
-A typical css file that uses fonts and images. Now, webfonts is a science in itself and heavily depends on your target browsers. In font loading examples we normally see 4 different formats added. woff, ttf, svg and eot. But that is hard to optimize, because only one of those formats will actually be used. Converting the font files to inline base64 string would cause all 4 to be included, increasing the file size unnecessarily. 
+A typical css file that uses fonts and images. Now, webfonts is a science in itself and heavily depends on your target browsers. In font loading examples we normally see 4 different formats added. woff, ttf, svg and eot. But that is hard to optimize, because only one of those formats will actually be used. Converting the font files to inline base64 string would cause all 4 to be included, increasing the file size unnecessarily.
 
 Looking at [caniuse.com](http://caniuse.com) we see that modern browsers support woff and svg. So depending on your project I would suggest sticking to only one of those two formats. Doing so will let us optimize it. Let us look at the code so that you see what I mean:
 
@@ -602,8 +604,8 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.css$/, loader: 'style-loader!css-loader' },
-      
-      // Any png-image or woff-font below or equal to 100K will be converted 
+
+      // Any png-image or woff-font below or equal to 100K will be converted
       // to inline base64 instead
       { test: /\.(png|woff)$/, loader: 'url-loader?limit=100000' }
     ]
@@ -661,7 +663,7 @@ var config = {
   entry: ['./app/main.js'],
   resolve: { alias: {} },
   output: {
-  
+
     // If in production mode we put the files into the dist folder instead
     path: process.env.NODE_ENV === 'production' ? './dist' : './build',
     filename: 'bundle.js'

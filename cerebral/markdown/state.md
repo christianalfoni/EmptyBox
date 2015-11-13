@@ -45,7 +45,7 @@ function myAction (input, state, output) {
 
 ### Mutation methods
 The methods you use to change the state of your application are typical mutation methods
-you know from JavaScript.
+you know from JavaScript. **Note!** These methods are not available when an action runs asynchronously.
 
 ```javascript
 
@@ -56,6 +56,9 @@ function myAction (input, state, output) {
 
   // Remove property
   state.unset('isLoading');
+
+  // Remove multiple properties
+  state.unset('messages', ['123', '456', '789']);
 
   // Merge object with object on property
   state.merge('user', {name: 'foo'});
@@ -77,6 +80,42 @@ function myAction (input, state, output) {
 
   // Normal array splice
   state.splice('list', 1, 1, [1]);
+
+}
+```
+
+### Accessors
+Accessors are methods that lets you grab state from the state store.
+
+```javascript
+
+function myAction (input, state, output) {
+
+  // Get from the top level of tree
+  state.get('isLoading'); // false
+
+  // Get from nested level of tree
+  state.get(['user', 'isLoading']); // false
+
+  // Get keys, given state is an object
+  state.keys('messages'); // ["id1", "id2", "id3"]
+
+  // Get first match given state is an array with objects
+  state.findWhere(['admin', 'users'], {name: 'Jack Frost'});
+
+  // Exports a guaranteed serializable version of the state store
+  state.export(); // {foo: 'bar'}
+
+  // Deep merges data into state store
+  state.import({
+    foo: 'bar',
+    admin: {
+      isLoading: true
+    }
+  }); // {foo: 'bar', somethingElse: 'hey', admin: {isLoading: true, users: []}}
+
+  // EXPERIMENTAL: get computed state
+  state.getComputed(['someComputed']);
 
 }
 ```

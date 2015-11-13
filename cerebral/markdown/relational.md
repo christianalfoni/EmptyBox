@@ -88,39 +88,37 @@ This is how a component could now display this list:
 
 ```javascript
 
-import {Component} from 'cerebral-react';
+import React from 'react';
+import {Decorator as Cerebral} from 'cerebral-react';
 
-const MyComp = Component({
+@Cerebral({
   messages: ['messages', 'list']
-}, function (props) {
-
-  const renderComment = function (comment, index) {
+})
+class Messages extends React.Component {
+  renderComment(comment, index) {
     return (
       <div key={index}>
         <h6>{comment.user.name}</h6>
         <p>{comment.content}</p>
       </div>
-    )
-  };
-
-  const renderMessage = function (message, index) {
+    );  
+  }
+  renderMessage(message, index) {
     return (
       <li key={index}>
         <h4>{message.title}</h4>
-        {message.comments.map(renderComment)}
+        {message.comments.map((comment, index) => this.renderComment(comment, index))}
       </li>
     );
-  };
-
-  return (
-    <ul>
-      {props.messages.map(renderMessage)}
-    </ul>
-  );
-
-});
-
-export default MyComp;
+  }
+  render() {
+    return (
+      <ul>
+        {this.props.messages.map((message, index) => this.renderMessage(message, index)))}
+      </ul>
+    );
+  }
+}
 ```
 
 You might say that this is quite verbose, but again, this is very complex relational state. It gives you complete flexibility in what you want to display in the UI.

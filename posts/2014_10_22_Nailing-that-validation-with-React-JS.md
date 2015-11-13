@@ -1,5 +1,7 @@
 # Nailing that validation with React JS
 
+**Note!** This article is over a year old now. Though it still has valid points the implementation has changed quite a bit. Look at the repo of [Formsy-React](http://github.com/christianalfoni/formsy-react) for more information.
+
 Validation is complex. Validation is extremely complex. I think it is right up there at the top of implementations we misjudge regarding complexity. So why is validation so difficult in general? How could we implement this with React JS? And do you get a prize for reading through this article? ... yep, you do! Look forward to a virtual cookie at the bottom of this article, you will definitely deserve it ;-)
 
 At my employer, Gloppen EDB Lag, we are building a React JS component framework for application development. We have everything from grids and panels to calendars and forms. Think of it as [React Bootstrap](http://react-bootstrap.github.io/), but with bigger parts specific to our applications. So we have lots of forms in our applications and we needed a form that could handle both user input validation, server validation and be very flexible with the contents of the form.
@@ -13,7 +15,7 @@ Validation is most often related to forms and that is what we are going to focus
 
   1. Client side validation
   2. Server side validation
-  
+
 You should of course always have server side validation, but to improve user experience we validate on the client side also. Bringing client side validation into forms has seriously made them more complex. It is not just the concept of handling validation state in the form, but we also have many different ways of indicating the actual validation error.
 
   1. Red border on the input
@@ -22,7 +24,7 @@ You should of course always have server side validation, but to improve user exp
   4. Text underneath
   5. Text on each form element or general text at the top... or bottom
   6. Lock submit button until form is valid
-  
+
 If that is not enough, we also have a choice of handling validation as we type/blur and not just when submitting the whole form. And even worse, the form should not validate the inputs initially, except if you pass initial values or you have set that input as required.
 
 ### A scaling related question
@@ -49,7 +51,7 @@ If you decided that the form was application state you would have to trigger an 
   |                 | COMPONENT | // 1. Get server validation state
   | 2. submit form  |-----------|
   |-----------------------|
-  
+
 ```
 
 This is of course a bigger implementation than:
@@ -82,7 +84,7 @@ So I personally believe validation should be handled within the component, which
   |              | COMPONENT | // 1. Send success/error action on server response when form submitted
   | 2. action    |-----------|
   |--------------------|
-  
+
 ```
 
 So to summarise. An isolated component is the way to go here.
@@ -118,7 +120,7 @@ When we change our inputs we want to validate the inputs themselves. If they tur
 And this is where things are really getting tricky. How you choose to design validation user experience is a matter of choice, but wiring up all the validation can be a daunting task.
 
 ### So how do we go about handling this?
-Well, we want this to be generic. So first of all we need our own form component and then we need our own input components. We will only look at a typical input in this article, but you can use the same principal on any kind of component you want to build. 
+Well, we want this to be generic. So first of all we need our own form component and then we need our own input components. We will only look at a typical input in this article, but you can use the same principal on any kind of component you want to build.
 
 Let us take a quick look at how we want to use these two components:
 
@@ -172,21 +174,21 @@ var Form = React.createClass({
     this.registerInputs(this.props.children); // We register inputs from the children
   },
   registerInputs: function (children) {
-    
+
     // A React helper for traversing children
     React.Children.forEach(children, function (child) {
-    
+
       // We do a simple check for "name" on the child, which indicates it is an input.
       // You might consider doing a better check though
       if (child.props.name) {
-      
+
         // We attach a method for the input to register itself to the form
         child.props.attachToForm = this.attachToForm;
-        
+
         // We attach a method for the input to detach itself from the form
         child.props.detachFromForm = this.detachFromForm;
       }
-      
+
       // If the child has its own children, traverse through them also...
       // in the search for inputs
       if (child.props.children) {
@@ -194,13 +196,13 @@ var Form = React.createClass({
       }
     }.bind(this));
   },
-  
+
   // All methods defined are bound to the component by React JS, so it is safe to use "this"
   // even though we did not bind it. We add the input component to our inputs map
   attachToForm: function (component) {
     this.inputs[component.props.name] = component;
   },
-  
+
   // We want to remove the input component from the inputs map
   detachFromForm: function (component) {
     delete this.inputs[component.props.name];
@@ -231,7 +233,7 @@ var Form = React.createClass({
   registerInputs: ...
   attachToForm: function (component) {
     this.inputs[component.props.name] = component;
-    
+
     // We add the value from the component to our model, using the
     // name of the component as the key. This ensures that we
     // grab the initial value of the input
@@ -239,7 +241,7 @@ var Form = React.createClass({
   },
   detachFromForm: function (component) {
     delete this.inputs[component.props.name];
-    
+
     // We of course have to delete the model property
     // if the component is removed
     delete this.model[component.props.name];
@@ -256,7 +258,7 @@ There is not really much to it. We create an input that will use our attachToFor
 ```javascript
 
 var Input = React.createClass({
-  
+
   // Create an initial state with the value passed to the input
   // or an empty value
   getInitialState: function () {
@@ -270,7 +272,7 @@ var Input = React.createClass({
   componentWillUnmount: function () {
     this.props.detachFromForm(this); // Detaching if unmounting
   },
-  
+
   // Whenever the input changes we update the value state
   // of this component
   setValue: function (event) {
@@ -297,7 +299,7 @@ var Form = React.createClass({
   registerInputs: ...
   attachToForm: ...
   detachFromForm: ...
-  
+
   // We need a method to update the model when submitting the form.
   // We go through the inputs and update the model
   updateModel: function (component) {
@@ -305,7 +307,7 @@ var Form = React.createClass({
       this.model[name] = this.inputs[name].state.value;
     }.bind(this));
   },
-  
+
   // We prevent the form from doing its native
   // behaviour, update the model and log out the value
   submit: function (event) {
@@ -313,7 +315,7 @@ var Form = React.createClass({
     this.updateModel();
     console.log(this.model);
   },
-  
+
   // And we add our submit method to onSubmit
   render: function () {
     return (
@@ -356,7 +358,7 @@ var Form = React.createClass({
   attachToForm: ...
   detachFromForm: ...
   updateModel: ...
-  
+
   // Just using some fake ajax service here to post the model to
   // the url set on the form. On sucess it wil run the onSuccess method.
   // Depending on your app you probably want to verify that the method actually exists
@@ -386,7 +388,7 @@ var Form = React.createClass({
   attachToForm: ...
   detachFromForm: ...
   updateModel: ...
-  
+
   // We change the state of the form before submitting
   submit: function (event) {
     event.preventDefault();
@@ -397,7 +399,7 @@ var Form = React.createClass({
     MyAjaxService.post(this.props.url, this.model)
       .then(this.props.onSuccess);
   },
-  
+
   // We disable the button if the form is submitting
   render: function () {
     return (
@@ -440,7 +442,7 @@ So there are a few things we need to do here:
   1. We need a valiation library
   2. We need a validate method that both runs the validation of a specific input and validates the form itself
   3. We need to handle errors from the server and set inputs and the form to invalid state
-  
+
 #### 1. Validation library
 We initially chose [validator](https://www.npmjs.org/package/validator) as our validation library. It has lots of default rules and we wanted to use them by defining comma separated rules on a validations property. Validator made that easy. Have a look at what we wanted:
 
@@ -465,7 +467,7 @@ var MyApplicationForm = React.createClass({
 What we realized though is that running a validation rule on some value is a very small percentage of the whole issue we are trying to solve, and as this code moved into the [formsy-react](https://github.com/christianalfoni/formsy-react) extension, there was no reason to add a dependency to "Validator". We just implemented our own validation rule handling.
 
 #### 2. Implementing the validate method
-As stated above we need a validate method that will handle our input validation and after that validate the actual form. We also want to use the same validator no matter what type of input it is. This means that the form needs to have this method, but at the same time let the inputs use it. 
+As stated above we need a validate method that will handle our input validation and after that validate the actual form. We also want to use the same validator no matter what type of input it is. This means that the form needs to have this method, but at the same time let the inputs use it.
 
 An other thing here is empty values. Should they be validated? Does "no value" actually mean "wrong value"? In this context requiring an input and giving an input is two different things. There might be an input you do not require, but if you put something in there you want to validate it. So we have to handle this with a **required** property. This is the syntax:
 
@@ -495,26 +497,26 @@ var Form = React.createClass({
   getInitialState: function () {
     return {
       isSubmitting: false,
-      
+
       // We add a new state here, isValid, which will be true initially.
-      // When inputs are attached they will be validated, in turn 
+      // When inputs are attached they will be validated, in turn
       // changing this value to false if any inputs are invalid
       isValid: true
     };
-  }, 
+  },
   componentWillMount: ...
-  
+
   // When the form loads we validate it
   componentDidMount: function () {
     this.validateForm();
   },
   registerInputs: function (children) {
     React.Children.forEach(children, function (child) {
-    
+
       if (child.props.name) {
         child.props.attachToForm = this.attachToForm;
         child.props.detachFromForm = this.detachFromForm;
-        
+
         // We also attach a validate method to the props of the input so
         // whenever the value is upated, the input will run this validate method
         child.props.validate = this.validate;
@@ -523,26 +525,26 @@ var Form = React.createClass({
       if (child.props.children) {
         this.registerInputs(child.props.children);
       }
-      
+
     }.bind(this));
   },
-  
+
   // The validate method grabs what it needs from the component,
   // validates the component and then validates the form
   validate: function (component) {
-  
+
     // If no validations property, do not validate
     if (!component.props.validations) {
       return;
     }
-    
+
     // We initially set isValid to true and then flip it if we
     // run a validator that invalidates the input
     var isValid = true;
-    
+
     // We only validate if the input has value or if it is required
     if (component.props.value || component.props.required) {
-    
+
       // We split on comma to iterate the list of validation rules
       component.props.validations.split(',').forEach(function (validation) {
 
@@ -568,24 +570,24 @@ var Form = React.createClass({
           isValid = false;
         }
       });
-      
+
     }
-    
+
     // Now we set the state of the input based on the validation
     component.setState({
       isValid: isValid,
-      
+
       // We use the callback of setState to wait for the state
       // change being propagated, then we validate the form itself
     }, this.validateForm);
 
   },
   validateForm: function () {
-    
+
     // We set allIsValid to true and flip it if we find any
     // invalid input components
     var allIsValid = true;
-    
+
     // Now we run through the inputs registered and flip our state
     // if we find an invalid input component
     var inputs = this.inputs;
@@ -594,7 +596,7 @@ var Form = React.createClass({
         allIsValid = false;
       }
     });
-    
+
     // And last, but not least, we set the valid state of the
     // form itself
     this.setState({
@@ -604,7 +606,7 @@ var Form = React.createClass({
   attachToForm: function (component) {
     this.inputs[component.props.name] = component;
     this.model[component .props.name] = component.state.value;
-    
+
     // We have to validate the input when it is attached to put the
     // form in its correct state
     this.validate(component);
@@ -625,7 +627,7 @@ var Input = React.createClass({
 
   getInitialState: ...
   componentWillMount: function () {
-  
+
     // If we use the required prop we add a validation rule
     // that ensures there is a value. The input
     // should not be valid with empty value
@@ -633,14 +635,14 @@ var Input = React.createClass({
       this.props.validations = this.props.validations ? this.props.validations + ',' : '';
       this.props.validations += 'isValue';
     }
-    
+
     this.props.attachToForm(this);
   },
   componentWillUnmount: ...
   setValue: function (event) {
     this.setState({
       value: event.currentTarget.value
-      
+
       // When the value changes, wait for it to propagate and
       // then validate the input
     }, function () {
@@ -658,7 +660,7 @@ var Input = React.createClass({
 Wow, that was a lot of code! Well, this is somewhat the hidden message of this article. Validation is freakin' complex! There are so many ways to create a user experience, you need validation both from user input and from server and you have two concepts of validation, form validation and input validation. On top of that we have this total headspin of "Should an empty value be validated?". But lets finish this up and I will give you a couple of advices when it comes to building validation for your application.
 
 #### 3. Server error response
-If the form itself is valid that does not mean the backend is happy. We have to make sure that we display error messages from the server. In this implementation we have a requirement. If the backend gives validation errors it has to return an object where the key maps to the name of the inputs and the value is the error message itself. F.ex. { email: 'Email already exists' }. Lets dive into our FORM code again and add an error handler. 
+If the form itself is valid that does not mean the backend is happy. We have to make sure that we display error messages from the server. In this implementation we have a requirement. If the backend gives validation errors it has to return an object where the key maps to the name of the inputs and the value is the error message itself. F.ex. { email: 'Email already exists' }. Lets dive into our FORM code again and add an error handler.
 
 ```javascript
 
@@ -668,11 +670,11 @@ var Form = React.createClass({
   componentDidMount: ...
   registerInputs: ...
   validate: function (component) {
-  
+
     if (!component.props.validations) {
       return;
     }
-    
+
     var isValid = true;
     if (component.props.value || component.props.required) {
       component.props.validations.split(',').forEach(function (validation) {
@@ -683,17 +685,17 @@ var Form = React.createClass({
         if (!validator[validateMethod].apply(validator, args)) {
           isValid = false;
         }
-      }); 
+      });
     }
-    
+
     component.setState({
       isValid: isValid,
-      
+
       // Our new server error state on a component needs to be reset when
       // new validations occur
-      serverError: null 
+      serverError: null
     }, this.validateForm);
-    
+
   },
   validateForm: ...
   attachToForm: ...
@@ -710,10 +712,10 @@ var Form = React.createClass({
       .catch(this.setErrorsOnInputs); // We catch the error from the post
   },
   setErrorsOnInputs: function (errors) {
-  
+
      // We go through the errors
      Object.keys(errors).forEach(function (name, index) {
-     
+
       // We grab the component by using the key from errors
       var component = this.inputs[name];
 
@@ -722,13 +724,13 @@ var Form = React.createClass({
         isValid: false,
         serverError: errors[name] // We use a new state here to indicate a server error
       });
-      
+
       // And after changing the state of the form,
       // we validate it
       this.setState({
         isSubmitting: false
       }, this.validateForm);
-      
+
     }.bind(this));
   },
   render: ...
@@ -740,7 +742,7 @@ Almost there! The only thing remaining now is making sure that our input validat
 ```javascript
 
 var Input = React.createClass({
-  
+
   getInitialState: function () {
     return {
       value: this.props.value || '',
@@ -750,17 +752,17 @@ var Input = React.createClass({
   componentWillMount: ...
   componentWillUnmount: ...
   setValue: ...
-  
+
   // We have to wrap our input to display error messages
   render: function () {
-    
+
     // We create variables that states how the input should be marked.
     // Should it be marked as valid? Should it be marked as required?
     var markAsValid = this.state.isValid;
     var markAsRequired = this.props.required && !this.state.value;
-    
+
     var className = '';
-    
+
     // We prioritize marking it as required over marking it
     // as not valid
     if (markAsRequired) {
@@ -768,7 +770,7 @@ var Input = React.createClass({
     } else if (!markAsValid) {
       className = 'error';
     }
-    
+
     // If it is valid or marked as required, we show no error.
     // If not valid we either show the server error or the validation error
     return (
@@ -785,7 +787,7 @@ Sweet! We got through it! And while we sum this up, enjoy your virtual cookie:
 
 ![Cookie](http://www.chick-fil-a.com/Media/Img/catalog/Food/XLarge/Cookie.png)
 
-As stated this article was written to point out the insane complexity we confront when building good user experiences in forms. The big takeaway here is that a form is an isolated implementation, just like a live search, autocomplete, calendar etc. I do not recommend implementing it as a "part of your application logic". The other takeaway here is that you will need a dynamic, but tight relationship between your form and the inputs. The reason is that user inputs will be validated on the input itself, but also needs to notify the form. And the same when the form receives an error from the server. It needs to invalidate itself and the related inputs. It is also worth mentioning that "empty value" should only be validated if you have a "required" flag on your input. 
+As stated this article was written to point out the insane complexity we confront when building good user experiences in forms. The big takeaway here is that a form is an isolated implementation, just like a live search, autocomplete, calendar etc. I do not recommend implementing it as a "part of your application logic". The other takeaway here is that you will need a dynamic, but tight relationship between your form and the inputs. The reason is that user inputs will be validated on the input itself, but also needs to notify the form. And the same when the form receives an error from the server. It needs to invalidate itself and the related inputs. It is also worth mentioning that "empty value" should only be validated if you have a "required" flag on your input.
 
 As stated above this article resulted in an extension for React JS, [formsy-react](https://github.com/christianalfoni/formsy-react), and for Angular JS, [formsy-angular](https://github.com/christianalfoni/formsy-angular). This will essentially just give a form and a toolbox to build whatever inputs you want in your application, even non-traditional form inputs and you still get the validation for free.
 

@@ -6,7 +6,7 @@ This is a typical signal:
 
 ```javascript
 
-controller.signal('appMounted',
+const signal = [
   setLoading,
   [
     getUser, {
@@ -15,12 +15,12 @@ controller.signal('appMounted',
     }
   ],
   unsetLoading
-);
+];
+
+controller.signal('appMounted', signal);
 ```
 
-As you see there are not only functions that are used to express flow. You also have arrays and objects. Arrays are used to express asynchronous actions. That means any actions defined inside an array can resolve at a later point in time. An object is used to define paths. This means that the execution of an action can result in different outcomes.
-
-Note that the actions *setUser* and *setUserError* are not asynchronous. This means that "every other" nested array expresses asynchronous flow.
+As you see there are not only functions that are used to express flow. You also have arrays and objects. Normally array and object literals defines data structure. In a signal it defines behaviour. When an array is an item of an other array it means that its contents will run asynchronously. The *getUser* action will run asynchronously. An object is used to define paths. This means that the execution of an action can result in different outcomes. Paths are also defined as arrays, but they are not asynchronous because they are not items of an array. If you would define an array inside a path though, that would run asynchronous.
 
 ### Namespace signals
 
@@ -28,7 +28,11 @@ In larger applications it can be convenient to namespace your signals. You do th
 
 ```javascript
 
-controller.signal('admin.userOpened', action1);
+const signal = [
+  action1
+];
+
+controller.signal('admin.userOpened', signal);
 
 controller.signals.admin.userOpened();
 ```
@@ -39,21 +43,25 @@ By default Cerebral will run your signals between animation frames. Sometimes yo
 
 ```javascript
 
-import {Component} from 'cerebral-react';
+import React from 'react';
+import {Decorator as Cerebral} from 'cerebral-react';
 
-export default Component({
+@Cerebral({
   value: ['inputValue']
-}, (props) => (
-
-  <div>
-    <input
-      type="text"
-      value={props.value}
-      onChange={(e) => props.signals.valueChanged.sync({value: e.target.value})}
-    />
-  </div>
-
-));
+})
+class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <input
+          type="text"
+          value={this.props.value}
+          onChange={(e) => this.props.signals.valueChanged.sync({value: e.target.value})}
+        />
+      </div>
+    );
+  }
+}
 ```
 
 All signals has a `.sync()` method. Use this with inputs to avoid glitches in UI.

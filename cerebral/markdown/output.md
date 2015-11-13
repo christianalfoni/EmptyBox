@@ -16,7 +16,12 @@ function actionB (input, state, output) {
   input.bip; // "bop"
 }
 
-controller.signal('somethingHappened', actionA, actionB);
+const signal = [
+  actionA,
+  actionB
+];
+
+controller.signal('somethingHappened', signal);
 
 controller.signals.somethingHappened({
   foo: 'bar'
@@ -24,7 +29,7 @@ controller.signals.somethingHappened({
 
 ```
 
-In the exampel above we call *output* directly. When doing so the next item in the signal has to be an action. By default you can also use *success* or *error* to output to paths.
+In the example above we call *output* directly. When doing so the next item in the signal has to be an action, it can not be an object representing paths.
 
 ### Paths
 An action might want to take different paths based on some conditional. A example of this would be:
@@ -42,17 +47,19 @@ function getItems (input, state, output) {
     });
 }
 
-controller.signal('somethingHappened',
+const signal = [
   [
     getItems, {
       success: [setItems],
       error: [setError]
     }
   ]
-);
+];
+
+controller.signal('somethingHappened', signal);
 ```
 
-But you can define your own custom output paths if you want to.
+But you can define your own custom output paths if you want to. Note that actions does not know about paths they are currently running on. They only get inputs. The previous action could do an `output({})` or `output.success({})`, or nothing at all. An action always just starts with some input and can itself decide a path to take next.
 
 ### Custom outputs
 
@@ -73,7 +80,7 @@ getItems.outputs = [
   'error'
 ];
 
-controller.signal('somethingHappened',
+const signal = [
   [
     getItems, {
       success: [setItems],
@@ -82,19 +89,23 @@ controller.signal('somethingHappened',
       error: [setError]
     }
   ]
-);
+];
+
+controller.signal('somethingHappened', signal);
 ```
 This is a powerful tool to express the flow of your application. This can be combined with *factories* and *chains* to create default behavior in your signals. The new ES6 *spread* operator is also a great tool for signals. An example of that would be:
 
 ```javascript
 
-controller.signal('somethingHappened',
+const signal = [
   [
     ...get('/items', {
       success: [setItems]
     })
   ]
-);
+];
+
+controller.signal('somethingHappened', signal);
 ```
 If this is not perfectly clear to you, do not worry. You will learn more about *factories*, *chains* and the *spread operator*.
 

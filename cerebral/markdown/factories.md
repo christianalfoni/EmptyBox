@@ -17,14 +17,16 @@ function get (url) {
 
 }
 
-controller.signal('somethingHappened',
+const signal = [
   [
     get('/items'), {
       success: [setItems],
       error: [setItemsError]
     }
   ]
-);
+];
+
+controller.signal('somethingHappened', signal);
 ```
 
 ### Custom action names

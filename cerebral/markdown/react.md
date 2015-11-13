@@ -10,6 +10,8 @@ Read more about **decorators**, **hoc**, **mixins** and **stateless/stateful** c
 
 ### Get started
 
+It is encouraged that you put all the state of your application in the Cerebral state store. Also any initial/default state should also be defined in the state store. Keep your components as render/UI focused as possible.
+
 #### Render application
 
 ```javascript
@@ -23,17 +25,45 @@ import {Container} from 'cerebral-react';
 import App from './components/App.js';
 
 // Render the app
-React.render(<Container controller={cerebral} app={App}/>, document.body);
+React.render(
+  <Container controller={controller}>
+    <App/>
+  </Container>, document.body.querySelector('#app'));
 ```
 
 #### Get state in component
 ```javascript
 
-import {Component} from 'cerebral-react';
+import React from 'react';
+import {Decorator as Cerebral} from 'cerebral-react';
 
-export default Component({
+@Cerebral({
   title: ['title']
-}, (props) => (
-  <h1>{props.title}</h1>  
-));
+})
+class App extends React.Component {
+  render() {
+    return <h1>{this.props.title}</h1>  
+  }
+}
+```
+
+#### Create hyperlinks
+If you are using the `cerebral-router` you can use a component to create links.
+```javascript
+
+import React from 'react';
+import {Decorator as Cerebral, Link} from 'cerebral-react';
+
+@Cerebral()
+class App extends React.Component {
+  render() {
+    return (
+      <Link
+        signal={this.props.signals.somethingHappened}
+        params={{foo: 'bar'}}
+        className="my-class"
+      >Click me</Link>
+    );
+  }
+}
 ```
