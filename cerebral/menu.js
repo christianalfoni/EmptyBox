@@ -29,12 +29,18 @@ var propsAndState = require('./markdown/propsAndState.md');
 var responsibilities = require('./markdown/responsibilities.md');
 var compute = require('./markdown/compute.md');
 var immutableJS = require('./markdown/immutableJS.md');
+var faq = require('./markdown/faq.md');
+var contributors = require('./markdown/contributors.md');
 
 module.exports = [
   {
     label: 'Cerebral',
     icon: 'home',
     content: Home
+  }, {
+    label: 'Contributors',
+    icon: 'users',
+    content: contributors
   }, {
     label: 'Install',
     icon: 'download',
@@ -75,6 +81,11 @@ module.exports = [
     label: 'Get Started',
     icon: 'power-off',
     content: getStarted
+  },
+  {
+    label: 'FAQ',
+    icon: 'question',
+    content: faq
   },
   {
     label: 'Signals',

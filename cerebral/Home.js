@@ -67,7 +67,7 @@ var Home = React.createClass({
             <li>
               <i
                 className="icon icon-play-circle-o link"
-                onClick={this.props.openVideo.bind(null, 'https://www.youtube.com/embed/BfzjuhX4wJ0?t=5h44m25s')}> ReactiveConf2015 Talk - <small>30:00</small></i>
+                onClick={this.props.openVideo.bind(null, 'https://youtu.be/BfzjuhX4wJ0?t=5h44m34s')}> ReactiveConf2015 Talk - <small>30:00</small></i>
             </li>
             <li>
               <i
