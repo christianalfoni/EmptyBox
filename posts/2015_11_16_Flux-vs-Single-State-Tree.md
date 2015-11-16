@@ -1,6 +1,6 @@
 # Flux VS Single State Tree
 
-I attended the Reactive Conference in Bratislava a couple of weeks ago. I even gave a talk on [Cerebral](https://youtu.be/BfzjuhX4wJ0?t=5h44m34s) if you want to check it out. One of the questions after the talk was "How does Cerebral relate to Redux?". This is a difficult question to answer because they really try to solve different problems, but I would like the opportunity to answer a redefined question: "How does Flux differ from using a single state tree?". That way I am not in a position to favor my own creation over Redux. You might say now; "But is not Redux a single state tree?". Yeah, it is! So what is the difference between Redux and a library like [Baobab](https://github.com/Yomguithereal/baobab)? Please read on an I will explain. I will also be answering a more fundamental question about Flux's verbosity, even in Redux. Yes, I will actually say something bad about Redux. It does not feel good, because Redux is a really great project and Dan Abramov is one of the most humble developers in the community. But I think Dan will agree that even though Redux has become the de facto standard for Flux we should still bring in new ideas and talk about how we can solve our day to day problems with different approaches.
+I attended the Reactive Conference in Bratislava a couple of weeks ago. I even gave a talk on [Cerebral](https://youtu.be/BfzjuhX4wJ0?t=5h44m34s) if you want to check it out. One of the questions after the talk was "How does Cerebral relate to Redux?". This is a difficult question to answer because they really try to solve different problems, but I would like the opportunity to answer a redefined question: "How does Flux differ from using a single state tree?". That way I am not in a position to favor my own creation over Redux. You might say now; "But is not Redux a single state tree?". Yeah, it is! So what is the difference between Redux and a single state tree library like [Baobab](https://github.com/Yomguithereal/baobab)? Please read on and I will explain. I will also be answering a more fundamental question about Flux's verbosity, even in Redux. Yes, I will actually say something bad about Redux. It does not feel good, because Redux is a really great project and Dan Abramov is one of the most humble developers in the community. But I think Dan will agree that even though Redux is stated by some as the de facto standard for Flux we should still bring in new ideas and talk about how we can solve our day to day problems with different approaches.
 
 If you have not heard of Flux before you should read up a bit on that first. I will be using [Facebook Flux](https://facebook.github.io/flux/), the [Alt](http://alt.js.org/) project and [Redux](https://github.com/rackt/redux) to explain the evolution of Flux. Then I will compare them to using a single state tree like [Baobab](https://github.com/Yomguithereal/baobab) to point out that there is a different approach.
 
@@ -215,7 +215,7 @@ export function addTodo() {
 ```
 
 ### Comparing Redux with a single state tree
-So now we have taken a look at how Flux works. I indicated early in this article that **Redux** differs from a typical state tree. The reason I state that is because you do not define a Redux app as a single state tree, you define the branches separately in reducers and then you attach the branches later. You might say, "what is the difference?". Well, readability. Like our example above:
+So now we have taken a look at how Flux works. I indicated early in this article that **Redux** differs from a typical state tree. The reason I state that is because you do not define a Redux app as a single state tree, you define the branches separately in reducers and then you attach the branches later. You might say, "what is the difference?". It is the first part that reduces readability. Like our example above:
 
 This is typically how you would define the actual tree with Redux:
 ```javascript
@@ -239,7 +239,7 @@ But the tree really looks like this:
 }
 ```
 
-With Redux you do not describe the tree as a whole, but that is one of the greatest benefits of a single state tree. You can just read it and understand the complete state of your application. So let us look more into a tree that is defined an operated on as a whole, like [Baobab](https://github.com/Yomguithereal/baobab).
+With Redux you do not describe the tree as a whole, but that is one of the greatest benefits of a single state tree. You can just read it and understand the complete state of your application. So let us look more into a tree that is defined and operated on as a whole, like [Baobab](https://github.com/Yomguithereal/baobab).
 
 ```javascript
 
@@ -253,7 +253,7 @@ const tree = new Baobab({
 })
 ```
 
-So this is actually all we need when defining a Baobab tree. We create the tree by passing the object representing all the state. We do not split it into multiple state containers. If we want more state we just add it to this single object. With very big application you might decide to split the tree into multiple isolated branches, but you will still be able to read all the state of the specific branch as a whole.
+So this is actually all we need when defining a Baobab tree. We create the tree by passing the object representing all the state. We do not split it into multiple state containers. If we want more state we just add it to this single object. With very big application you might decide to split the tree into multiple branches, but you will still be able to read all the state of the specific branch as a whole.
 
 But how do we act upon dispatched actions? Well, when you represent all the state in your application as one state container you do not need a dispatcher and actions. There is only one place to go and that is the Baobab tree. And it is still as predictable as traditional Flux.
 
@@ -369,7 +369,7 @@ function addTodo(todo) {
 
 With a single state tree like **Baobab** you use imperative programming to do your state changes, just like you do normally in JavaScript. The tree is still immutable though, so any changes to the branches of the tree will replace the whole branch, not just the value on the branch. This makes it possible to do shallow checking of values when rendering React components, making it super fast.
 
-Notice the difference here. We only have **one** construct defining how our application changes its state. We do not have two different constructs, where one defines the async changes (action creator) and one defines the sync changes (store/reducer). This is really important. This is about readability.
+Notice the difference here. We only have **one** construct defining how our application changes its state. We do not have two different constructs, where one defines the async changes (action creator) and one defines the sync changes (store/reducer). This is really important. This is the second part of how readability of your code is reduced compared to a single state tree like **Baobab**.
 
 ### Getting back what we lost
 You might say now that the function above is horrible to test or you can not get time travel with this approach. And yeah, you are right. But if you imagine this state tree being your database and you watch this video [Turning the database inside out](https://www.youtube.com/watch?v=fU9hR3kiOK0), you will quickly realize that it is not the database itself that needs to handle these features, it is a transaction layer in front of it.
@@ -434,9 +434,11 @@ function setInputValue(input, state) {
 }
 ```
 
-This example can of course easily be solved with only one class of programming, it being FRP, functional or imperative. But it is when our applications grow and has to handle 100x the complexity shown here we start to see each of these approaches has their downsides.
+This example can of course easily be solved with only one class of programming, it being FRP, functional or imperative. But it is when our applications grow and has to handle XXX times the complexity shown here we start to see each of these approaches has their downsides.
 
 ### Summary
-There are many things happening in the JavaScript community now and functional programming and functional reactive programming is really starting to get a foothold. That is great! That said, functional concepts does not necessarily mean better in all scenarios. We have been doing imperative programming for a long time, for better and worse and there are features of the imperative style that is completely lost when replaced by functional approaches. In my opinion, one of those features is the readability of how you change a state value.
+There are many things happening in the JavaScript community now and functional programming and functional reactive programming is really starting to get a foothold. That is great! That said, functional concepts does not necessarily mean better in all scenarios. We have been doing imperative programming for a long time, for better and worse and there are features of the imperative style that is completely lost when replaced by functional approaches. In my opinion, one of those features is the readability of how you change a state value, as seen in the above examples.
+
+I would also like to state that there are other differences between Redux and Baobab, like Cursors and Monkeys, which would also be interesting comparisons. But this article wanted to make a point on readability, which I hope I did.
 
 Thanks for reading and please comment if you completely disagree with me, you think I am completely wrong about this or if you can relate to the statements made.
