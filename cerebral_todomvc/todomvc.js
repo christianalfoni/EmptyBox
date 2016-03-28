@@ -66,69 +66,69 @@
 	
 	var _AppJs2 = _interopRequireDefault(_AppJs);
 	
-	var _controllerJs = __webpack_require__(181);
+	var _controllerJs = __webpack_require__(184);
 	
 	var _controllerJs2 = _interopRequireDefault(_controllerJs);
 	
 	var _cerebralReact = __webpack_require__(168);
 	
-	var _cerebralRouter = __webpack_require__(205);
+	var _cerebralRouter = __webpack_require__(209);
 	
 	var _cerebralRouter2 = _interopRequireDefault(_cerebralRouter);
 	
-	var _signalsAllTodosClickedJs = __webpack_require__(219);
+	var _signalsAllTodosClickedJs = __webpack_require__(220);
 	
 	var _signalsAllTodosClickedJs2 = _interopRequireDefault(_signalsAllTodosClickedJs);
 	
-	var _signalsNewTodoTitleChangedJs = __webpack_require__(221);
+	var _signalsNewTodoTitleChangedJs = __webpack_require__(222);
 	
 	var _signalsNewTodoTitleChangedJs2 = _interopRequireDefault(_signalsNewTodoTitleChangedJs);
 	
-	var _signalsNewTodoSubmittedJs = __webpack_require__(223);
+	var _signalsNewTodoSubmittedJs = __webpack_require__(224);
 	
 	var _signalsNewTodoSubmittedJs2 = _interopRequireDefault(_signalsNewTodoSubmittedJs);
 	
-	var _signalsRemoveTodoClickedJs = __webpack_require__(230);
+	var _signalsRemoveTodoClickedJs = __webpack_require__(231);
 	
 	var _signalsRemoveTodoClickedJs2 = _interopRequireDefault(_signalsRemoveTodoClickedJs);
 	
-	var _signalsToggleCompletedChangedJs = __webpack_require__(232);
+	var _signalsToggleCompletedChangedJs = __webpack_require__(233);
 	
 	var _signalsToggleCompletedChangedJs2 = _interopRequireDefault(_signalsToggleCompletedChangedJs);
 	
-	var _signalsToggleAllChangedJs = __webpack_require__(234);
+	var _signalsToggleAllChangedJs = __webpack_require__(235);
 	
 	var _signalsToggleAllChangedJs2 = _interopRequireDefault(_signalsToggleAllChangedJs);
 	
-	var _signalsFilterClickedJs = __webpack_require__(236);
+	var _signalsFilterClickedJs = __webpack_require__(237);
 	
 	var _signalsFilterClickedJs2 = _interopRequireDefault(_signalsFilterClickedJs);
 	
-	var _signalsClearCompletedClickedJs = __webpack_require__(238);
+	var _signalsClearCompletedClickedJs = __webpack_require__(239);
 	
 	var _signalsClearCompletedClickedJs2 = _interopRequireDefault(_signalsClearCompletedClickedJs);
 	
-	var _signalsTodoDoubleClickedJs = __webpack_require__(240);
+	var _signalsTodoDoubleClickedJs = __webpack_require__(241);
 	
 	var _signalsTodoDoubleClickedJs2 = _interopRequireDefault(_signalsTodoDoubleClickedJs);
 	
-	var _signalsNewTitleChangedJs = __webpack_require__(242);
+	var _signalsNewTitleChangedJs = __webpack_require__(243);
 	
 	var _signalsNewTitleChangedJs2 = _interopRequireDefault(_signalsNewTitleChangedJs);
 	
-	var _signalsNewTitleSubmittedJs = __webpack_require__(244);
+	var _signalsNewTitleSubmittedJs = __webpack_require__(245);
 	
 	var _signalsNewTitleSubmittedJs2 = _interopRequireDefault(_signalsNewTitleSubmittedJs);
 	
-	var _signalsRecordClickedJs = __webpack_require__(246);
+	var _signalsRecordClickedJs = __webpack_require__(247);
 	
 	var _signalsRecordClickedJs2 = _interopRequireDefault(_signalsRecordClickedJs);
 	
-	var _signalsPlayClickedJs = __webpack_require__(248);
+	var _signalsPlayClickedJs = __webpack_require__(249);
 	
 	var _signalsPlayClickedJs2 = _interopRequireDefault(_signalsPlayClickedJs);
 	
-	var _signalsStopClickedJs = __webpack_require__(250);
+	var _signalsStopClickedJs = __webpack_require__(251);
 	
 	var _signalsStopClickedJs2 = _interopRequireDefault(_signalsStopClickedJs);
 	
@@ -148,12 +148,13 @@
 	_controllerJs2['default'].signal('stopClicked', _signalsStopClickedJs2['default']);
 	
 	// ROUTER
-	var router = (0, _cerebralRouter2['default'])(_controllerJs2['default'], {
+	(0, _cerebralRouter2['default'])(_controllerJs2['default'], {
 	  '/': 'allTodosClicked',
 	  '/:filter': 'filterClicked'
 	}, {
-	  baseUrl: '/todomvc'
-	}).trigger();
+	  onlyHash: true,
+	  baseUrl: '/todomvc/'
+	});
 	
 	// RENDER
 	_reactDom2['default'].render(_react2['default'].createElement(
@@ -467,7 +468,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(3)();
-	exports.push([module.id, "    body {\n        margin: 0 !important;\n        min-width: inherit !important;\n        max-width: inherit !important;\n    }\n\n    #todoapp-wrapper {\n        margin: 0 auto;\n        min-width: 230px;\n        max-width: 550px;\n    }\n\n    .btn {\n        margin: 15px;\n        background-color: #999;\n        border: 1px solid #666;\n        padding: 5px 10px;\n        border-radius: 4px;\n        color: #eaeaea;\n        font-size: 16px;\n        font-weight: bold;\n        cursor: pointer;\n    }\n\n    .btn-stop {\n        background-color: red;\n    }\n\n    .btn-record {\n        background-color: orange;\n    }\n\n    .btn-play {\n        background-color: green;\n    }\n\n    .btn[disabled] {\n        opacity: 0.5;\n    }\n", ""]);
+	exports.push([module.id, "    body {\n        margin: 0 !important;\n        min-width: inherit !important;\n        max-width: inherit !important;\n    }\n\n    #todoapp-wrapper {\n        margin: 0 auto;\n        min-width: 230px;\n        max-width: 550px;\n    }\n\n    .btn {\n        margin: 15px;\n        background-color: #999;\n        border: 1px solid #666;\n        padding: 5px 10px;\n        border-radius: 4px;\n        color: #eaeaea;\n        font-size: 16px;\n        font-weight: bold;\n        cursor: pointer;\n    }\n\n    .btn-stop {\n        background-color: red;\n    }\n\n    .btn-record {\n        background-color: orange;\n    }\n\n    .btn-play {\n        background-color: green;\n    }\n\n    .btn[disabled] {\n        opacity: 0.5;\n    }\n\n    a {\n      cursor: pointer;\n    }\n", ""]);
 
 /***/ },
 /* 9 */
@@ -20083,9 +20084,13 @@
 	
 	var _componentsTodosListJs2 = _interopRequireDefault(_componentsTodosListJs);
 	
-	var _componentsTodosFooterJs = __webpack_require__(180);
+	var _componentsTodosFooterJs = __webpack_require__(182);
 	
 	var _componentsTodosFooterJs2 = _interopRequireDefault(_componentsTodosFooterJs);
+	
+	var _computedVisibleTodosJs = __webpack_require__(181);
+	
+	var _computedVisibleTodosJs2 = _interopRequireDefault(_computedVisibleTodosJs);
 	
 	var App = (function (_React$Component) {
 	  _inherits(App, _React$Component);
@@ -20143,7 +20148,7 @@
 	          ) : null,
 	          !this.props.recorder.isRecording && !this.props.recorder.isPlaying && !this.props.recorder.hasRecorded ? _react2['default'].createElement(
 	            'button',
-	            { className: 'btn btn-record', onClick: function () {
+	            { disabled: this.props.isSaving, className: 'btn btn-record', onClick: function () {
 	                return _this.record();
 	              } },
 	            'Record'
@@ -20203,9 +20208,8 @@
 	  App = (0, _cerebralReact.Decorator)({
 	    todos: ['todos'],
 	    recorder: ['recorder'],
-	    isSaving: ['isSaving']
-	  }, {
-	    visibleTodos: ['visibleTodos']
+	    isSaving: ['isSaving'],
+	    visibleTodos: _computedVisibleTodosJs2['default']
 	  })(App) || App;
 	  return App;
 	})(_react2['default'].Component);
@@ -20247,9 +20251,14 @@
 	  },
 	  componentWillMount: function () {
 	    this.signals = this.context.controller.signals;
+	    this.modules = this.context.controller.modules;
 	
 	    if (!this.getStatePaths) {
 	      return;
+	    }
+	
+	    if (this.context.controller.isServer) {
+	      return this._update();
 	    }
 	
 	    if (!listener) {
@@ -20265,7 +20274,7 @@
 	  },
 	  componentWillUnmount: function () {
 	    this._isUmounting = true;
-	    if (this.getStatePaths || this.getComputedPaths) {
+	    if (this.getStatePaths) {
 	      callbacks.splice(callbacks.indexOf(this._update), 1);
 	    }
 	  },
@@ -20296,26 +20305,12 @@
 	      return;
 	    }
 	    var statePaths = this.getStatePaths ? this.getStatePaths() : {};
-	    var computedPaths = this.getComputedPaths ? this.getComputedPaths() : {};
 	    var controller = this.context.controller;
 	    var newState = {};
 	
 	    newState = Object.keys(statePaths).reduce(function (newState, key) {
-	      if (!Array.isArray(statePaths[key])) {
-	        throw new Error('Cerebral-React - You have to pass an array as state path ' + statePaths[key] + ' is not valid');
-	      }
 	      var value = controller.get(statePaths[key]);
-	      if (value !== undefined) {
-	        newState[key] = value;  
-	      }
-	      return newState;
-	    }, newState);
-	
-	    newState = Object.keys(computedPaths).reduce(function (newState, key) {
-	      if (!Array.isArray(computedPaths[key])) {
-	        throw new Error('Cerebral-React - You have to pass an array as a computed path ' + computedPaths[key] + ' is not valid');
-	      }
-	      newState[key] = controller.getComputedValue(computedPaths[key]);;
+	      newState[key] = value;
 	      return newState;
 	    }, newState);
 	
@@ -20332,7 +20327,7 @@
 	var mixin = __webpack_require__(169);
 	var render = __webpack_require__(171);
 	
-	module.exports = function (paths, computedPaths) {
+	module.exports = function (paths) {
 	  return function (Component) {
 	    return React.createClass({
 	      displayName: Component.name + 'Container',
@@ -20342,12 +20337,6 @@
 	          return {};
 	        }
 	        return typeof paths === 'function' ? paths(this.props) : paths;
-	      },
-	      getComputedPaths: function () {
-	        if (!computedPaths) {
-	          return {};
-	        }
-	        return typeof computedPaths === 'function' ? computedPaths(this.props) : computedPaths;
 	      },
 	      render: render(Component)
 	    });
@@ -20377,7 +20366,8 @@
 	    }, propsToPass);
 	
 	    propsToPass.signals = this.signals;
-	    propsToPass.get = this.get;
+	    propsToPass.modules = this.modules;
+	    propsToPass.get = this.get; // Uhm?
 	
 	    return React.createElement(Component, propsToPass);
 	  };
@@ -20392,7 +20382,7 @@
 	var mixin = __webpack_require__(169);
 	var render = __webpack_require__(171);
 	
-	module.exports = function (Component, paths, computedPaths) {
+	module.exports = function (Component, paths) {
 	  return React.createClass({
 	    displayName: Component.name + 'Container',
 	    mixins: [mixin],
@@ -20401,12 +20391,6 @@
 	        return {};
 	      }
 	      return typeof paths === 'function' ? paths(this.props) : paths;
-	    },
-	    getComputedPaths: function () {
-	      if (!computedPaths) {
-	        return {};
-	      }
-	      return typeof computedPaths === 'function' ? computedPaths(this.props) : computedPaths;
 	    },
 	    render: render(Component)
 	  });
@@ -20424,8 +20408,11 @@
 	  childContextTypes: {
 	    controller: React.PropTypes.object.isRequired
 	  },
-	  componentWillMount: function () {
+	  componentDidMount: function () {
 	    this.props.controller.devtools.start();
+	    if (this.props.controller.services.router) {
+	      this.props.controller.services.router.trigger();
+	    }
 	  },
 	  getChildContext: function () {
 	    return {
@@ -20433,7 +20420,7 @@
 	    }
 	  },
 	  render: function () {
-	    return this.props.app ? React.createElement(this.props.app) : this.props.children;
+	    return this.props.app ? React.createElement(this.props.app) : React.DOM.div(this.props);
 	  }
 	});
 
@@ -20486,15 +20473,37 @@
 	var React = __webpack_require__(9);
 	
 	module.exports = React.createClass({
+	  contextTypes: {
+	    controller: React.PropTypes.object
+	  },
+	
+	  componentWillMount: function() {
+	    if (typeof this.props.signal === 'string') {
+	      var signalPath = this.props.signal.split('.');
+	      var signalParent = this.context.controller.signals;
+	
+	      while(signalPath.length - 1) {
+	        signalParent = signalParent[signalPath.shift()] || {};
+	      }
+	      this.signal = signalParent[signalPath];
+	    } else {
+	      this.signal = this.props.signal;
+	    }
+	
+	    if (typeof this.signal !== 'function') {
+	      throw new Error('Cerebral React - You have to pass a signal to the Link component');
+	    }
+	
+	  },
+	
+	  onClick: function (e) {
+	
+	    e.preventDefault();
+	    this.signal(this.props.params);
+	
+	  },
+	
 	  render: function () {
-	
-	    if (typeof this.props.signal !== 'function') {
-	      throw new Error('Cerebral React - You have to pass a signal to the LINK component');
-	    }
-	
-	    if (typeof this.props.signal.getUrl !== 'function') {
-	      throw new Error('Cerebral React - The signal passed is not bound to a route');
-	    }
 	
 	    var passedProps = this.props;
 	    var props = Object.keys(passedProps).reduce(function (props, key) {
@@ -20502,9 +20511,13 @@
 	      return props;
 	    }, {});
 	
-	    props.href = this.props.signal.getUrl(this.props.params || {});
+	    if (typeof this.signal.getUrl === 'function') {
+	      props.href = this.signal.getUrl(this.props.params || {});
+	    } else {
+	      props.onClick = this.onClick;
+	    }
 	
-	    return React.DOM.a(props, this.props.children)
+	    return React.DOM.a(props, this.props.children);
 	  }
 	});
 
@@ -20622,6 +20635,14 @@
 	
 	var _cerebralReact = __webpack_require__(168);
 	
+	var _computedIsAllCheckedJs = __webpack_require__(180);
+	
+	var _computedIsAllCheckedJs2 = _interopRequireDefault(_computedIsAllCheckedJs);
+	
+	var _computedVisibleTodosJs = __webpack_require__(181);
+	
+	var _computedVisibleTodosJs2 = _interopRequireDefault(_computedVisibleTodosJs);
+	
 	var TodosList = (function (_React$Component) {
 	  _inherits(TodosList, _React$Component);
 	
@@ -20667,9 +20688,9 @@
 	  }]);
 	
 	  var _TodosList = TodosList;
-	  TodosList = (0, _cerebralReact.Decorator)({}, {
-	    isAllChecked: ['isAllChecked'],
-	    todos: ['visibleTodos']
+	  TodosList = (0, _cerebralReact.Decorator)({
+	    isAllChecked: _computedIsAllCheckedJs2['default'],
+	    todos: _computedVisibleTodosJs2['default']
 	  })(TodosList) || TodosList;
 	  return TodosList;
 	})(_react2['default'].Component);
@@ -20731,7 +20752,7 @@
 	
 	      // FOCUS fix
 	      setTimeout(function () {
-	        var input = _this.refs.edit.getDOMNode();
+	        var input = _this.refs.edit;
 	        input.focus();
 	        input.value = input.value;
 	      }, 0);
@@ -20748,7 +20769,7 @@
 	    key: 'onNewTitleSubmit',
 	    value: function onNewTitleSubmit(event) {
 	      event.preventDefault();
-	      this.refs.edit.getDOMNode().blur();
+	      this.refs.edit.blur();
 	    }
 	  }, {
 	    key: 'onCompletedToggle',
@@ -20907,6 +20928,59 @@
 	  value: true
 	});
 	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _visibleTodos = __webpack_require__(181);
+	
+	var _visibleTodos2 = _interopRequireDefault(_visibleTodos);
+	
+	exports['default'] = function (get) {
+	  var todos = get(_visibleTodos2['default']);
+	
+	  return todos.filter(function (todo) {
+	    return !todo.completed;
+	  }).length === 0 && todos.length !== 0;
+	};
+	
+	;
+	module.exports = exports['default'];
+
+/***/ },
+/* 181 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	exports['default'] = function (get) {
+	  var todos = get(['todos']);
+	  var filter = get(['filter']);
+	
+	  return Object.keys(todos).filter(function (key) {
+	
+	    var todo = todos[key];
+	    return filter === 'all' || filter === 'completed' && todo.completed || filter === 'active' && !todo.completed;
+	  }).map(function (key) {
+	    return todos[key];
+	  });
+	};
+	
+	;
+	module.exports = exports['default'];
+
+/***/ },
+/* 182 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
@@ -20922,6 +20996,10 @@
 	var _react2 = _interopRequireDefault(_react);
 	
 	var _cerebralReact = __webpack_require__(168);
+	
+	var _computedCountsJs = __webpack_require__(183);
+	
+	var _computedCountsJs2 = _interopRequireDefault(_computedCountsJs);
 	
 	var TodosFooter = (function (_React$Component) {
 	  _inherits(TodosFooter, _React$Component);
@@ -20965,6 +21043,8 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+	
 	      return _react2['default'].createElement(
 	        'footer',
 	        { id: 'footer' },
@@ -20985,7 +21065,9 @@
 	            null,
 	            _react2['default'].createElement(
 	              'a',
-	              { className: this.renderRouteClass('all'), href: '/' },
+	              { className: this.renderRouteClass('all'), onClick: function () {
+	                  return _this2.props.signals.allTodosClicked();
+	                } },
 	              'All'
 	            )
 	          ),
@@ -20994,7 +21076,9 @@
 	            null,
 	            _react2['default'].createElement(
 	              'a',
-	              { className: this.renderRouteClass('active'), href: '/active' },
+	              { className: this.renderRouteClass('active'), onClick: function () {
+	                  return _this2.props.signals.filterClicked({ filter: 'active' });
+	                } },
 	              'Active'
 	            )
 	          ),
@@ -21003,7 +21087,9 @@
 	            null,
 	            _react2['default'].createElement(
 	              'a',
-	              { className: this.renderRouteClass('completed'), href: '/completed' },
+	              { className: this.renderRouteClass('completed'), onClick: function () {
+	                  return _this2.props.signals.filterClicked({ filter: 'completed' });
+	                } },
 	              'Completed'
 	            )
 	          )
@@ -21015,9 +21101,8 @@
 	
 	  var _TodosFooter = TodosFooter;
 	  TodosFooter = (0, _cerebralReact.Decorator)({
-	    filter: ['filter']
-	  }, {
-	    counts: ['counts']
+	    filter: ['filter'],
+	    counts: _computedCountsJs2['default']
 	  })(TodosFooter) || TodosFooter;
 	  return TodosFooter;
 	})(_react2['default'].Component);
@@ -21026,7 +21111,43 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 181 */
+/* 183 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	exports['default'] = function (get) {
+	  var todos = get(['todos']);
+	  var counts = Object.keys(todos).reduce(function (counts, key) {
+	
+	    var todo = todos[key];
+	
+	    if (todo.completed) {
+	      counts.completedCount++;
+	    } else if (!todo.completed) {
+	      counts.remainingCount++;
+	    }
+	
+	    return counts;
+	  }, {
+	    completedCount: 0,
+	    remainingCount: 0
+	  });
+	
+	  return {
+	    remainingCount: counts.remainingCount,
+	    completedCount: counts.completedCount
+	  };
+	};
+	
+	module.exports = exports['default'];
+
+/***/ },
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21037,11 +21158,11 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _srcIndexJs = __webpack_require__(182);
+	var _srcIndexJs = __webpack_require__(185);
 	
 	var _srcIndexJs2 = _interopRequireDefault(_srcIndexJs);
 	
-	var _cerebralBaobab = __webpack_require__(195);
+	var _cerebralBaobab = __webpack_require__(199);
 	
 	var _cerebralBaobab2 = _interopRequireDefault(_cerebralBaobab);
 	
@@ -21068,68 +21189,24 @@
 	
 	var services = {};
 	
-	var computed = {
-	  visibleTodos: function visibleTodos(get) {
-	    var todos = get(['todos']);
-	    var filter = get(['filter']);
-	
-	    return Object.keys(todos).filter(function (key) {
-	
-	      var todo = todos[key];
-	      return filter === 'all' || filter === 'completed' && todo.completed || filter === 'active' && !todo.completed;
-	    }).map(function (key) {
-	      return todos[key];
-	    });
-	  },
-	  isAllChecked: function isAllChecked(get, getComputed) {
-	    var todos = getComputed(['visibleTodos']);
-	
-	    return todos.filter(function (todo) {
-	      return !todo.completed;
-	    }).length === 0 && todos.length !== 0;
-	  },
-	  counts: function counts(get) {
-	    var todos = get(['todos']);
-	    var counts = Object.keys(todos).reduce(function (counts, key) {
-	
-	      var todo = todos[key];
-	
-	      if (todo.completed) {
-	        counts.completedCount++;
-	      } else if (!todo.completed) {
-	        counts.remainingCount++;
-	      }
-	
-	      return counts;
-	    }, {
-	      completedCount: 0,
-	      remainingCount: 0
-	    });
-	
-	    return {
-	      remainingCount: counts.remainingCount,
-	      completedCount: counts.completedCount
-	    };
-	  }
-	};
-	
-	exports['default'] = (0, _srcIndexJs2['default'])(model, services, computed);
+	exports['default'] = (0, _srcIndexJs2['default'])(model, services);
 	module.exports = exports['default'];
 
 /***/ },
-/* 182 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var CreateSignalFactory = __webpack_require__(183);
-	var CreateSignalStore = __webpack_require__(190);
-	var CreateRecorder = __webpack_require__(191);
-	var Devtools = __webpack_require__(192);
-	var Compute = __webpack_require__(193);
-	var EventEmitter = __webpack_require__(194).EventEmitter;
+	var CreateSignalFactory = __webpack_require__(186);
+	var CreateSignalStore = __webpack_require__(193);
+	var CreateRecorder = __webpack_require__(194);
+	var CreateRegisterModules = __webpack_require__(195);
+	var Devtools = __webpack_require__(196);
+	var Compute = __webpack_require__(197);
+	var EventEmitter = __webpack_require__(198).EventEmitter;
 	
-	module.exports = function (Model, services, computed) {
+	var Controller = function Controller(Model, services) {
 	
 	  var controller = new EventEmitter();
 	  var model = Model(controller);
@@ -21144,14 +21221,9 @@
 	    devtools = Devtools(signalStore, controller);
 	  }
 	
-	  if (computed) {
-	    compute.register(computed);
-	  }
-	
 	  var recorder = CreateRecorder(signalStore, signals, controller, model);
 	  var signalFactory = CreateSignalFactory(signalStore, recorder, devtools, controller, model, services, compute);
-	
-	  controller.signal = function () {
+	  var signal = function signal() {
 	    var signalNamePath = arguments[0].split('.');
 	    var signalName = signalNamePath.pop();
 	    var signalMethodPath = signals;
@@ -21159,37 +21231,77 @@
 	      var pathName = signalNamePath.shift();
 	      signalMethodPath = signalMethodPath[pathName] = signalMethodPath[pathName] || {};
 	    }
-	    signalMethodPath[signalName] = signalFactory.apply(null, arguments);
+	    return signalMethodPath[signalName] = signalFactory.apply(null, arguments);
 	  };
 	
+	  controller.signal = signal;
+	  controller.signalSync = function () {
+	    var defaultOptions = arguments[2] || {};
+	    defaultOptions.isSync = true;
+	    return signal.apply(null, [arguments[0], arguments[1], defaultOptions]);
+	  };
 	  controller.services = services;
 	  controller.signals = signals;
 	  controller.store = signalStore;
 	  controller.recorder = recorder;
 	  controller.get = function () {
+	    if (typeof arguments[0] === 'function') {
+	      return compute.has(arguments[0]) ? compute.getComputedValue(arguments[0]) : compute.register(arguments[0]);
+	    }
 	    var path = !arguments.length ? [] : typeof arguments[0] === 'string' ? [].slice.call(arguments) : arguments[0];
 	    return model.accessors.get(path);
 	  };
 	  controller.devtools = devtools;
-	  controller.getComputedValue = compute.getComputedValue;
-	  controller.getComputedPaths = compute.getComputedPaths;
 	  services.recorder = recorder;
+	
+	  controller.modules = {};
+	  controller.register = CreateRegisterModules(controller);
 	
 	  return controller;
 	};
+	
+	Controller.ServerController = function (state) {
+	  var model = {
+	    accessors: {
+	      get: function get(path) {
+	        path = path.slice();
+	        var key = path.pop();
+	        var grabbedState = state;
+	        while (path.length) {
+	          grabbedState = grabbedState[path.shift()];
+	        }
+	        return grabbedState[key];
+	      }
+	    }
+	  };
+	  var compute = Compute(model);
+	
+	  return {
+	    isServer: true,
+	    get: function get(path) {
+	      if (typeof arguments[0] === 'function') {
+	        return compute.has(arguments[0]) ? compute.getComputedValue(arguments[0]) : compute.register(arguments[0]);
+	      }
+	      var path = !arguments.length ? [] : typeof arguments[0] === 'string' ? [].slice.call(arguments) : arguments[0];
+	      return model.accessors.get(path);
+	    }
+	  };
+	};
+	
+	module.exports = Controller;
 
 /***/ },
-/* 183 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
 	
-	var utils = __webpack_require__(184);
-	var createActionArgs = __webpack_require__(186);
-	var createNext = __webpack_require__(187);
-	var analyze = __webpack_require__(188);
-	var staticTree = __webpack_require__(189);
-	var types = __webpack_require__(185);
+	var utils = __webpack_require__(187);
+	var createActionArgs = __webpack_require__(189);
+	var createNext = __webpack_require__(190);
+	var analyze = __webpack_require__(191);
+	var staticTree = __webpack_require__(192);
+	var types = __webpack_require__(188);
 	
 	var batchedSignals = [];
 	var pending = false;
@@ -21203,12 +21315,9 @@
 	
 	    var args = [].slice.call(arguments);
 	    var signalName = args.shift();
+	    var defaultOptions = args[1] || {};
 	
-	    if (args.length > 1 || typeof args[0] === 'function') {
-	      console.warn('Cerebral - DEPRECATED signal definition with arguments. A signal is now defined with an array. This will lower threshold of readability for new devs using Cerebral');
-	    }
-	
-	    var chain = args.length === 1 && Array.isArray(args[0]) ? args[0] : args;
+	    var chain = args[0] || [];
 	
 	    if (utils.isDeveloping()) {
 	      analyze(signalName, chain);
@@ -21230,7 +21339,7 @@
 	      var tree = staticTree(signalChain.chain);
 	      var actions = tree.actions;
 	
-	      var runSync = options.isSync;
+	      var runSync = defaultOptions.isSync || options.isSync;
 	
 	      // When remembering, the branches with filled out values will be
 	      // passed
@@ -21272,7 +21381,7 @@
 	        };
 	
 	        if (!signalStore.isRemembering() && !recorder.isCatchingUp()) {
-	          controller.emit('signalStart', signal);
+	          controller.emit('signalStart', { signal: signal });
 	        }
 	
 	        if (recorder.isRecording()) {
@@ -21281,131 +21390,142 @@
 	
 	        signalStore.addSignal(signal);
 	
-	        var runBranch = function runBranch(branch, index, start) {
+	        var runBranch = function runBranch(_x, _x2, _x3) {
+	          var _again = true;
 	
-	          var currentBranch = branch[index];
-	          if (!currentBranch && branch === signal.branches && !signalStore.isRemembering() && !recorder.isCatchingUp()) {
+	          _function: while (_again) {
+	            var branch = _x,
+	                index = _x2,
+	                start = _x3;
+	            _again = false;
 	
-	            // Might not be any actions passed
-	            if (branch[index - 1]) {
-	              branch[index - 1].duration = Date.now() - start;
+	            var currentBranch = branch[index];
+	            if (!currentBranch && branch === signal.branches && !signalStore.isRemembering() && !recorder.isCatchingUp()) {
+	
+	              // Might not be any actions passed
+	              if (branch[index - 1]) {
+	                branch[index - 1].duration = Date.now() - start;
+	              }
+	
+	              signal.isExecuting = false;
+	              controller.emit('signalEnd', { signal: signal });
+	              controller.emit('change', { signal: signal });
+	              devtools && devtools.update();
+	              return;
 	            }
 	
-	            signal.isExecuting = false;
-	            controller.emit('signalEnd', signal);
-	            controller.emit('change');
-	            devtools && devtools.update();
-	            return;
-	          }
+	            if (!currentBranch) {
+	              return;
+	            }
 	
-	          if (!currentBranch) {
-	            return;
-	          }
+	            if (Array.isArray(currentBranch)) {
 	
-	          if (Array.isArray(currentBranch)) {
+	              if (signalStore.isRemembering()) {
 	
-	            if (signalStore.isRemembering()) {
+	                currentBranch.forEach(function (action) {
 	
-	              currentBranch.forEach(function (action) {
+	                  utils.merge(signalArgs, action.output);
 	
-	                utils.merge(signalArgs, action.output);
+	                  if (action.outputPath) {
+	                    runBranch(action.outputs[action.outputPath], 0);
+	                  }
+	                });
+	
+	                runBranch(branch, index + 1);
+	              } else if (recorder.isCatchingUp()) {
+	
+	                var currentSignal = recorder.getCurrentSignal();
+	                currentBranch.forEach(function (action) {
+	                  var recordedAction = currentSignal.asyncActionResults[currentSignal.asyncActionPaths.indexOf(action.path.join('.'))];
+	                  utils.merge(signalArgs, recordedAction.output);
+	
+	                  if (action.outputPath) {
+	                    runBranch(action.outputs[recordedAction.outputPath], 0);
+	                  }
+	                });
+	
+	                runBranch(branch, index + 1);
+	              } else {
+	
+	                controller.emit('change', { signal: signal });
+	
+	                var promises = currentBranch.map(function (action) {
+	
+	                  controller.emit('actionStart', { action: action, signal: signal });
+	                  var actionFunc = actions[action.actionIndex];
+	                  var inputArg = actionFunc.defaultInput ? utils.merge({}, actionFunc.defaultInput, signalArgs) : signalArgs;
+	                  var actionArgs = createActionArgs.async(action, inputArg, model, compute);
+	
+	                  if (utils.isDeveloping() && actionFunc.input) {
+	                    utils.verifyInput(action.name, signal.name, actionFunc.input, inputArg);
+	                  }
+	
+	                  signalStore.addAsyncAction();
+	
+	                  action.isExecuting = true;
+	                  action.input = utils.merge({}, inputArg);
+	                  var next = createNext.async(actionFunc);
+	                  actionFunc.call(null, {
+	                    input: actionArgs[0],
+	                    state: actionArgs[1],
+	                    output: next.fn,
+	                    services: services
+	                  });
+	
+	                  return next.promise.then(function (result) {
+	
+	                    action.hasExecuted = true;
+	                    action.isExecuting = false;
+	                    action.output = result.arg;
+	                    utils.merge(signalArgs, result.arg);
+	                    signalStore.removeAsyncAction();
+	
+	                    if (recorder.isRecording()) {
+	                      recorderSignal.asyncActionPaths.push(action.path.join('.'));
+	                      recorderSignal.asyncActionResults.push({
+	                        output: result.arg,
+	                        outputPath: result.path
+	                      });
+	                    }
+	
+	                    if (result.path) {
+	                      action.outputPath = result.path;
+	                      controller.emit('actionEnd', { action: action, signal: signal });
+	                      var result = runBranch(action.outputs[result.path], 0, Date.now());
+	                      controller.emit('change', { signal: signal });
+	                      devtools && devtools.update();
+	                      return result;
+	                    } else {
+	                      devtools && devtools.update();
+	                    }
+	                  });
+	                });
+	                devtools && devtools.update();
+	                return Promise.all(promises).then(function () {
+	                  return runBranch(branch, index + 1, Date.now());
+	                })['catch'](function (error) {
+	                  // We just throw any unhandled errors
+	                  controller.emit('error', error);
+	                  throw error;
+	                });
+	              }
+	            } else {
+	              if (signalStore.isRemembering()) {
+	
+	                var action = currentBranch;
+	                action.mutations.forEach(function (mutation) {
+	                  model.mutators[mutation.name].apply(null, [mutation.path.slice()].concat(mutation.args));
+	                });
 	
 	                if (action.outputPath) {
 	                  runBranch(action.outputs[action.outputPath], 0);
 	                }
-	              });
 	
-	              runBranch(branch, index + 1);
-	            } else if (recorder.isCatchingUp()) {
-	
-	              var currentSignal = recorder.getCurrentSignal();
-	              currentBranch.forEach(function (action) {
-	                var recordedAction = currentSignal.asyncActionResults[currentSignal.asyncActionPaths.indexOf(action.path.join('.'))];
-	                utils.merge(signalArgs, recordedAction.output);
-	
-	                if (action.outputPath) {
-	                  runBranch(action.outputs[recordedAction.outputPath], 0);
-	                }
-	              });
-	
-	              runBranch(branch, index + 1);
-	            } else {
-	
-	              controller.emit('actionStart', true);
-	              controller.emit('change');
-	
-	              var promises = currentBranch.map(function (action) {
-	
-	                var actionFunc = actions[action.actionIndex];
-	                var inputArg = actionFunc.defaultInput ? utils.merge({}, actionFunc.defaultInput, signalArgs) : signalArgs;
-	                var actionArgs = createActionArgs.async(action, inputArg, model, compute);
-	
-	                if (utils.isDeveloping() && actionFunc.input) {
-	                  utils.verifyInput(action.name, signal.name, actionFunc.input, inputArg);
-	                }
-	
-	                signalStore.addAsyncAction();
-	
-	                action.isExecuting = true;
-	                action.input = utils.merge({}, inputArg);
-	                var next = createNext.async(actionFunc);
-	                actionFunc.apply(null, actionArgs.concat(next.fn, services));
-	                return next.promise.then(function (result) {
-	
-	                  action.hasExecuted = true;
-	                  action.isExecuting = false;
-	                  action.output = result.arg;
-	                  utils.merge(signalArgs, result.arg);
-	                  signalStore.removeAsyncAction();
-	
-	                  if (recorder.isRecording()) {
-	                    recorderSignal.asyncActionPaths.push(action.path.join('.'));
-	                    recorderSignal.asyncActionResults.push({
-	                      output: result.arg,
-	                      outputPath: result.path
-	                    });
-	                  }
-	
-	                  if (result.path) {
-	                    action.outputPath = result.path;
-	                    var result = runBranch(action.outputs[result.path], 0, Date.now());
-	                    controller.emit('change');
-	                    devtools && devtools.update();
-	                    return result;
-	                  } else {
-	                    devtools && devtools.update();
-	                  }
-	                });
-	              });
-	              devtools && devtools.update();
-	              return Promise.all(promises).then(function () {
-	                return runBranch(branch, index + 1, Date.now());
-	              })['catch'](function (error) {
-	                // We just throw any unhandled errors
-	                controller.emit('error', error);
-	                throw error;
-	              });
-	            }
-	          } else {
-	
-	            if (signalStore.isRemembering()) {
-	
-	              var action = currentBranch;
-	              action.mutations.forEach(function (mutation) {
-	                model.mutators[mutation.name].apply(null, [mutation.path.slice()].concat(mutation.args));
-	              });
-	
-	              if (action.outputPath) {
-	                runBranch(action.outputs[action.outputPath], 0);
-	              }
-	
-	              runBranch(branch, index + 1);
-	            } else {
-	
-	              controller.emit('actionStart', false);
-	              try {
+	                runBranch(branch, index + 1);
+	              } else {
 	
 	                var action = currentBranch;
+	                controller.emit('actionStart', { action: action, signal: signal });
 	                var actionFunc = actions[action.actionIndex];
 	                var inputArg = actionFunc.defaultInput ? utils.merge({}, actionFunc.defaultInput, signalArgs) : signalArgs;
 	                var actionArgs = createActionArgs.sync(action, inputArg, model, compute);
@@ -21418,7 +21538,12 @@
 	                action.input = utils.merge({}, inputArg);
 	
 	                var next = createNext.sync(actionFunc, signal.name);
-	                actionFunc.apply(null, actionArgs.concat(next, services));
+	                actionFunc.call(null, {
+	                  input: actionArgs[0],
+	                  state: actionArgs[1],
+	                  output: next,
+	                  services: services
+	                });
 	
 	                // TODO: Also add input here
 	
@@ -21441,16 +21566,27 @@
 	                      return runBranch(branch, index + 1, Date.now());
 	                    });
 	                  } else {
-	                    return runBranch(branch, index + 1, start);
+	                    _x = branch;
+	                    _x2 = index + 1;
+	                    _x3 = start;
+	                    _again = true;
+	                    currentBranch = currentSignal = promises = action = action = actionFunc = inputArg = actionArgs = next = result = result = undefined;
+	                    continue _function;
 	                  }
+	                } else if (result.then) {
+	                  return result.then(function () {
+	                    controller.emit('actionEnd', { action: action, signal: signal });
+	                    return runBranch(branch, index + 1, start);
+	                  });
 	                } else {
-	                  controller.emit('actionEnd');
-	                  return runBranch(branch, index + 1, start);
+	                  controller.emit('actionEnd', { action: action, signal: signal });
+	                  _x = branch;
+	                  _x2 = index + 1;
+	                  _x3 = start;
+	                  _again = true;
+	                  currentBranch = currentSignal = promises = action = action = actionFunc = inputArg = actionArgs = next = result = result = undefined;
+	                  continue _function;
 	                }
-	              } catch (error) {
-	
-	                controller.emit('error', error);
-	                throw error;
 	              }
 	            }
 	          }
@@ -21481,11 +21617,11 @@
 	        }
 	      }
 	    };
-	
 	    signalChain.chain = chain;
 	    signalChain.sync = function (payload) {
 	      signalChain(payload, { isSync: true });
 	    };
+	    signalChain.signalName = signalName;
 	
 	    return signalChain;
 	  };
@@ -21493,12 +21629,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 184 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+	/* WEBPACK VAR INJECTION */(function(global, process) {'use strict';
 	
-	var types = __webpack_require__(185);
+	var types = __webpack_require__(188);
 	
 	module.exports = {
 	  getFunctionName: function getFunctionName(fun) {
@@ -21539,7 +21675,7 @@
 	    return typeof action === 'function';
 	  },
 	  isDeveloping: function isDeveloping() {
-	    return !global.process || global.process.env !== 'production';
+	    return typeof process === 'undefined' || process.env.NODE_ENV !== 'production';
 	  },
 	  verifyInput: function verifyInput(actionName, signalName, input, signalArgs) {
 	    Object.keys(input).forEach(function (key) {
@@ -21580,10 +21716,10 @@
 	    return traverse(source, target, [], {});
 	  }
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(12)))
 
 /***/ },
-/* 185 */
+/* 188 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21628,18 +21764,26 @@
 	};
 
 /***/ },
-/* 186 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(184);
+	var utils = __webpack_require__(187);
 	
 	var createStateArg = function createStateArg(action, model, isAsync, compute) {
 	  var state = Object.keys(model.accessors || {}).reduce(function (state, accessor) {
 	    state[accessor] = function () {
 	      var args = [].slice.call(arguments);
-	      var path = args[0] ? Array.isArray(args[0]) ? args.shift() : [args.shift()] : [];
+	      var path = [];
+	      if (args[0] && Array.isArray(args[0])) {
+	        path = args.shift();
+	      } else if (args[0] && typeof args[0] === 'string') {
+	        path = args.shift().split('.');
+	      }
+	      if (accessor === 'get' && typeof arguments[0] === 'function') {
+	        return compute.getComputedValue(arguments[0]);
+	      }
 	      return model.accessors[accessor].apply(null, [path].concat(args));
 	    };
 	    return state;
@@ -21666,8 +21810,6 @@
 	    return state;
 	  }, state);
 	
-	  state.getComputed = compute.getComputedValue;
-	
 	  return state;
 	};
 	
@@ -21681,13 +21823,13 @@
 	};
 
 /***/ },
-/* 187 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(184);
-	var types = __webpack_require__(185);
+	var utils = __webpack_require__(187);
+	var types = __webpack_require__(188);
 	
 	var validateOutput = function validateOutput(action, path, arg, signalName) {
 	  if (!action.output && !action.outputs || Array.isArray(action.outputs)) {
@@ -21793,12 +21935,12 @@
 	};
 
 /***/ },
-/* 188 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(184);
+	var utils = __webpack_require__(187);
 	module.exports = function (signalName, actions) {
 	  var traverse = function traverse(actions, parentActions, parentIndex) {
 	    actions.forEach(function (action, index) {
@@ -21831,6 +21973,13 @@
 	              throw new Error(['Cerebral: The action "' + utils.getFunctionName(action) + '" in signal "' + signalName + '" can not find path to its "' + output + '" output'].join(''));
 	            }
 	          });
+	        } else if (!Array.isArray(action) && typeof action === 'object' && typeof action !== null) {
+	          var prevAction = actions[index - 1];
+	          Object.keys(action).forEach(function (key) {
+	            if (!Array.isArray(action[key])) {
+	              throw new Error(['Cerebral: The paths for action "' + utils.getFunctionName(prevAction) + '" in signal "' + signalName + '" are not valid. They have to be an array"'].join(''));
+	            }
+	          });
 	        }
 	      }
 	    });
@@ -21839,12 +21988,12 @@
 	};
 
 /***/ },
-/* 189 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(184);
+	var utils = __webpack_require__(187);
 	
 	var traverse = function traverse(item, parentItem, path, actions, isSync) {
 	
@@ -21901,7 +22050,7 @@
 	};
 
 /***/ },
-/* 190 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -21913,7 +22062,7 @@
 	
 	'use strict';
 	
-	var utils = __webpack_require__(184);
+	var utils = __webpack_require__(187);
 	
 	module.exports = function (signalMethods, controller) {
 	
@@ -22077,12 +22226,12 @@
 	};
 
 /***/ },
-/* 191 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(184);
+	var utils = __webpack_require__(187);
 	
 	module.exports = function (signalStore, signalMethods, controller, model) {
 	
@@ -22155,8 +22304,9 @@
 	      durationTimer = setTimeout(update, 500);
 	    },
 	
+	    // TODO: Do I need this? Not in use?
 	    resetState: function resetState() {
-	      controller.emit('recorderReset', currentRecording.initialState);
+	      controller.emit('recorderReset', currentRecording);
 	    },
 	
 	    play: function play() {
@@ -22176,28 +22326,33 @@
 	      }
 	      _isPlaying = true;
 	      started = Date.now();
-	
-	      playbackTimers.push(setTimeout(function () {
-	        _isPlaying = false;
-	        controller.emit('change');
-	      }, currentRecording.end - currentRecording.start - startSeek));
 	    },
 	
-	    record: function record() {
+	    record: function record(options) {
 	
 	      if (signalStore.isRemembering()) {
 	        return;
 	      }
+	
+	      options = options || {};
 	
 	      // If we are recording over the previous stuff, go back to start
 	      if (currentRecording) {
 	        this.resetState();
 	      }
 	
+	      var state = model.accessors['export'] && model.accessors['export']();
+	      var path = options.path || [];
+	      var traversePath = path.slice();
+	      while (traversePath.length) {
+	        state = state[traversePath.shift()];
+	      }
+	
 	      currentRecording = {
-	        initialState: model.accessors['export'] && model.accessors['export'](),
+	        initialState: state,
 	        start: Date.now(),
-	        signals: []
+	        signals: [],
+	        path: path
 	      };
 	
 	      _isRecording = true;
@@ -22212,9 +22367,6 @@
 	
 	      if (signalStore.isRemembering() || wasPlaying) {
 	        return;
-	      } else if (signalStore.isExecutingAsync()) {
-	        throw new Error('Cerebral - You can not stop when async signals are running, make sure to handle that with: cerebral.hasExecutingSignal()');
-	        return;
 	      }
 	
 	      currentRecording.end = Date.now();
@@ -22222,11 +22374,6 @@
 	    },
 	
 	    pause: function pause() {
-	
-	      if (signalStore.isExecutingAsync()) {
-	        throw new Error('Cerebral - You can not stop when async signals are running, make sure to handle that with: cerebral.hasExecutingSignal()');
-	        return;
-	      }
 	
 	      if (signalStore.isRemembering()) {
 	        return;
@@ -22271,14 +22418,71 @@
 	};
 
 /***/ },
-/* 192 */
+/* 195 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	module.exports = function (controller) {
+	  return function (modules) {
+	    Object.keys(modules).forEach(function (moduleName) {
+	      var module = modules[moduleName];
+	      var signals = Object.keys(module.signals || {}).reduce(function (signals, key) {
+	        if (Array.isArray(module.signals[key])) {
+	          var signalName = moduleName + '.' + key;
+	          signals[key] = controller.signal(signalName, module.signals[key]);
+	        }
+	        return signals;
+	      }, {});
+	      signals = Object.keys(module.signalsSync || {}).reduce(function (signals, key) {
+	        if (Array.isArray(module.signalsSync[key])) {
+	          var signalName = moduleName + '.' + key;
+	          signals[key] = controller.signalSync(signalName, module.signalsSync[key]);
+	        }
+	        return signals;
+	      }, signals);
+	      controller.modules[moduleName] = {
+	        name: moduleName,
+	        signals: signals,
+	        services: module.services
+	      };
+	      if (typeof module.init === 'function') {
+	        var meta = module.init({
+	          controller: controller,
+	          name: moduleName,
+	          signals: signals
+	        });
+	        if (typeof meta === 'object') {
+	          Object.keys(meta).forEach(function (key) {
+	            controller.modules[moduleName][key] = meta[key];
+	          });
+	        }
+	      }
+	      controller.services[moduleName] = controller.services[moduleName] || {};
+	      Object.keys(module.services || {}).forEach(function (key) {
+	        controller.services[moduleName][key] = module.services[key];
+	      });
+	    });
+	    return controller.modules;
+	  };
+	};
+
+/***/ },
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(184);
+	var utils = __webpack_require__(187);
 	
 	module.exports = function (signalStore, controller) {
+	
+	  if (!utils.isDeveloping()) {
+	    return {
+	      update: function update() {},
+	      start: function start() {}
+	    };
+	  }
 	
 	  var isInitialized = false;
 	  var disableDebugger = false;
@@ -22291,7 +22495,7 @@
 	      currentSignalIndex: signalStore.getCurrentIndex(),
 	      isExecutingAsync: signalStore.isExecutingAsync(),
 	      isRemembering: signalStore.isRemembering(),
-	      computedPaths: controller.getComputedPaths()
+	      computedPaths: []
 	    });
 	  };
 	
@@ -22362,6 +22566,9 @@
 	
 	  window.addEventListener('cerebral.dev.toggleDisableDebugger', function () {
 	    disableDebugger = !disableDebugger;
+	    if (disableDebugger && signalStore.willKeepState()) {
+	      signalStore.toggleKeepState();
+	    }
 	    var event = new CustomEvent('cerebral.dev.update', {
 	      detail: getDetail()
 	    });
@@ -22406,62 +22613,37 @@
 	  return {
 	    update: update,
 	    start: function start() {
-	      if (utils.isDeveloping()) {
-	        var event = new Event('cerebral.dev.cerebralPing');
-	        window.dispatchEvent(event);
-	      }
+	      var event = new Event('cerebral.dev.cerebralPing');
+	      window.dispatchEvent(event);
 	    }
 	  };
 	};
 
 /***/ },
-/* 193 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(184);
+	var utils = __webpack_require__(187);
 	
 	module.exports = function (model) {
 	
-	  var computed = null;
+	  var registered = [];
+	  var computed = [];
 	
-	  var getComputedValue = function getComputedValue(path) {
-	    if (!computed) {
-	      return;
-	    }
-	
-	    if (typeof path === 'string') {
-	      path = path.split('.');
-	    } else {
-	      path = path.slice();
-	    }
-	    var level = computed;
-	    var key = path.pop();
-	    while (path.length) {
-	      level = level[path.shift()];
-	    }
-	
-	    if (typeof level[key] !== 'function') {
-	      throw new Error('CEREBRAL Computed - You are not passing a correct path to a computed');
-	    }
-	
-	    return level[key]();
-	  };
-	
-	  var createMapper = function createMapper(stringPath, cb) {
+	  var createMapper = function createMapper(cb) {
 	
 	    var initialRun = true;
 	    var currentState = {};
-	    var currentComputedState = {};
 	    var currentValue;
 	
 	    var get = function get(path) {
-	      return currentState[path.join('.')] = model.accessors.get(path);
-	    };
-	
-	    var getComputed = function getComputed(path) {
-	      return currentComputedState[path.join('.')] = getComputedValue(path);
+	      if (typeof path === 'function') {
+	        return currentState['COMPUTED_' + registered.indexOf(path)] = getComputedValue(path);
+	      } else {
+	        return currentState[path.join('.%.')] = model.accessors.get(path);
+	      }
 	    };
 	
 	    return function () {
@@ -22470,71 +22652,49 @@
 	        if (hasChanged) {
 	          return true;
 	        }
-	        return model.accessors.get(key.split('.')) !== currentState[key];
-	      }, false);
-	
-	      var hasChangedComputed = Object.keys(currentComputedState).reduce(function (hasChanged, key) {
-	        if (hasChanged) {
-	          return true;
+	        if (key.indexOf('COMPUTED') === 0) {
+	          return getComputedValue(registered[key.split('_')[1]]) !== currentState[key];
+	        } else {
+	          return model.accessors.get(key.split('.%.')) !== currentState[key];
 	        }
-	        return getComputedValue(key.split('.')) !== currentComputedState[key];
 	      }, false);
 	
-	      if (hasChanged || hasChangedComputed || initialRun) {
+	      if (hasChanged || initialRun) {
 	        currentState = {};
-	        currentComputedState = {};
 	        initialRun = false;
-	        return currentValue = cb(get, getComputed);
+	        return currentValue = cb(get);
 	      } else {
 	        return currentValue;
 	      }
 	    };
 	  };
 	
-	  return {
-	    register: function register(computeTree) {
-	      var path = [];
-	      var traverse = function traverse(tree, level) {
-	        return Object.keys(tree).reduce(function (computed, key) {
-	          if (typeof tree[key] === 'function') {
-	            computed[key] = createMapper(key, tree[key]);
-	          } else {
-	            computed[key] = traverse(tree[key], {});
-	          }
-	          return computed;
-	        }, level);
-	      };
-	      computed = traverse(computeTree, {});
-	    },
-	    getComputedValue: getComputedValue,
-	    getComputedPaths: function getComputedPaths() {
-	      var path = [];
-	      var paths = [];
+	  var has = function has(computedFunc) {
+	    return registered.indexOf(computedFunc) !== -1;
+	  };
 	
-	      if (!computed) {
-	        return paths;
-	      }
-	
-	      var traverse = function traverse(tree) {
-	        return Object.keys(tree).forEach(function (key) {
-	          path.push(key);
-	          if (typeof tree[key] === 'function') {
-	            paths.push(path.join('.'));
-	          } else {
-	            traverse(tree[key]);
-	          }
-	          path.pop();
-	          return paths;
-	        });
-	      };
-	      traverse(computed, []);
-	      return paths;
+	  var getComputedValue = function getComputedValue(computedFunc) {
+	    if (!has(computedFunc)) {
+	      registered.push(computedFunc);
+	      computed.push(createMapper(computedFunc));
 	    }
+	
+	    return computed[registered.indexOf(computedFunc)]();
+	  };
+	
+	  return {
+	    register: function register(computeFunc) {
+	      registered.push(computeFunc);
+	      computed.push(createMapper(computeFunc));
+	      return this.getComputedValue(computeFunc);
+	    },
+	    has: has,
+	    getComputedValue: getComputedValue
 	  };
 	};
 
 /***/ },
-/* 194 */
+/* 198 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -22838,11 +22998,11 @@
 
 
 /***/ },
-/* 195 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Baobab = __webpack_require__(196);
-	var deepmerge = __webpack_require__(204);
+	var Baobab = __webpack_require__(200);
+	var deepmerge = __webpack_require__(208);
 	
 	var Model = function (initialState, options) {
 	
@@ -22919,14 +23079,16 @@
 	          },
 	          pop: function (path) {
 	            tree.apply(path, function (existingValue) {
-	              existingValue.pop();
-	              return existingValue;
+	              var newArray = existingValue.slice();
+	              newArray.pop();
+	              return newArray;
 	            });
 	          },
 	          shift: function (path) {
 	            tree.apply(path, function (existingValue) {
-	              existingValue.shift();
-	              return existingValue;
+	              var newArray = existingValue.slice();
+	              newArray.shift();
+	              return newArray;
 	            });
 	          },
 	          unshift: function (path, value) {
@@ -22949,7 +23111,7 @@
 
 
 /***/ },
-/* 196 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -22978,29 +23140,29 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var _emmett = __webpack_require__(197);
+	var _emmett = __webpack_require__(201);
 	
 	var _emmett2 = _interopRequireDefault(_emmett);
 	
-	var _cursor = __webpack_require__(198);
+	var _cursor = __webpack_require__(202);
 	
 	var _cursor2 = _interopRequireDefault(_cursor);
 	
-	var _monkey = __webpack_require__(199);
+	var _monkey = __webpack_require__(203);
 	
-	var _watcher = __webpack_require__(203);
+	var _watcher = __webpack_require__(207);
 	
 	var _watcher2 = _interopRequireDefault(_watcher);
 	
-	var _type = __webpack_require__(200);
+	var _type = __webpack_require__(204);
 	
 	var _type2 = _interopRequireDefault(_type);
 	
-	var _update2 = __webpack_require__(201);
+	var _update2 = __webpack_require__(205);
 	
 	var _update3 = _interopRequireDefault(_update2);
 	
-	var _helpers = __webpack_require__(202);
+	var _helpers = __webpack_require__(206);
 	
 	var helpers = _interopRequireWildcard(_helpers);
 	
@@ -23547,7 +23709,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 197 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function() {
@@ -24106,7 +24268,7 @@
 
 
 /***/ },
-/* 198 */
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -24131,17 +24293,17 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var _emmett = __webpack_require__(197);
+	var _emmett = __webpack_require__(201);
 	
 	var _emmett2 = _interopRequireDefault(_emmett);
 	
-	var _monkey = __webpack_require__(199);
+	var _monkey = __webpack_require__(203);
 	
-	var _type = __webpack_require__(200);
+	var _type = __webpack_require__(204);
 	
 	var _type2 = _interopRequireDefault(_type);
 	
-	var _helpers = __webpack_require__(202);
+	var _helpers = __webpack_require__(206);
 	
 	/**
 	 * Traversal helper function for dynamic cursors. Will throw a legible error
@@ -24909,7 +25071,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 199 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -24930,15 +25092,15 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var _type = __webpack_require__(200);
+	var _type = __webpack_require__(204);
 	
 	var _type2 = _interopRequireDefault(_type);
 	
-	var _update2 = __webpack_require__(201);
+	var _update2 = __webpack_require__(205);
 	
 	var _update3 = _interopRequireDefault(_update2);
 	
-	var _helpers = __webpack_require__(202);
+	var _helpers = __webpack_require__(206);
 	
 	/**
 	 * Monkey Definition class
@@ -25162,7 +25324,7 @@
 	exports.Monkey = Monkey;
 
 /***/ },
-/* 200 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25179,7 +25341,7 @@
 	  value: true
 	});
 	
-	var _monkey = __webpack_require__(199);
+	var _monkey = __webpack_require__(203);
 	
 	var type = {};
 	
@@ -25408,7 +25570,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 201 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25428,13 +25590,13 @@
 	
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
 	
-	var _type = __webpack_require__(200);
+	var _type = __webpack_require__(204);
 	
 	var _type2 = _interopRequireDefault(_type);
 	
-	var _monkey = __webpack_require__(199);
+	var _monkey = __webpack_require__(203);
 	
-	var _helpers = __webpack_require__(202);
+	var _helpers = __webpack_require__(206);
 	
 	function err(operation, expectedTarget, path) {
 	  return (0, _helpers.makeError)('Baobab.update: cannot apply the "' + operation + '" on ' + ('a non ' + expectedTarget + ' (path: /' + path.join('/') + ').'), { path: path });
@@ -25616,7 +25778,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 202 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -25647,9 +25809,9 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var _monkey = __webpack_require__(199);
+	var _monkey = __webpack_require__(203);
 	
-	var _type = __webpack_require__(200);
+	var _type = __webpack_require__(204);
 	
 	var _type2 = _interopRequireDefault(_type);
 	
@@ -26220,7 +26382,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 203 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26246,19 +26408,19 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var _emmett = __webpack_require__(197);
+	var _emmett = __webpack_require__(201);
 	
 	var _emmett2 = _interopRequireDefault(_emmett);
 	
-	var _cursor = __webpack_require__(198);
+	var _cursor = __webpack_require__(202);
 	
 	var _cursor2 = _interopRequireDefault(_cursor);
 	
-	var _type = __webpack_require__(200);
+	var _type = __webpack_require__(204);
 	
 	var _type2 = _interopRequireDefault(_type);
 	
-	var _helpers = __webpack_require__(202);
+	var _helpers = __webpack_require__(206);
 	
 	/**
 	 * Watcher class.
@@ -26398,7 +26560,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 204 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (root, factory) {
@@ -26456,18 +26618,28 @@
 
 
 /***/ },
-/* 205 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var urlMapper = __webpack_require__(206);
-	var addressbar = __webpack_require__(213);
-	var pathToRegexp = __webpack_require__(211);
+	var Mapper = __webpack_require__(210);
+	var addressbar;
+	try {
+	  addressbar = __webpack_require__(215);
+	} catch(e) {
+	  addressbar = {
+	    pathname: '/',
+	    value: '',
+	    origin: '',
+	    on: function(){},
+	    removeListener: function(){}
+	  };
+	}
 	
-	function router (controller, routes, options) {
+	function router (controller, routesConfig, options) {
 	
 	  options = options || {};
 	
-	  if(!routes) {
+	  if(!routesConfig) {
 	    throw new Error('Cerebral router - Routes configuration wasn\'t provided.');
 	  }
 	
@@ -26477,105 +26649,82 @@
 	  }
 	  options.baseUrl = (options.baseUrl || '') + (options.onlyHash ? '#' : '');
 	
-	  var urlStorePath = options.urlStorePath || 'url';
+	  var urlMapper = Mapper(options.mapper);
 	
-	  // action to inject
-	  function setUrl (input, state, output) {
-	    state.set(urlStorePath, input.route.url);
-	  }
-	
-	  // Create url based on direct signal input
-	  function getUrl (route, input) {
-	    return pathToRegexp.compile(route)(input);
-	  }
-	
-	  var wrappedRoutes = Object.keys(routes)
+	  // prepare routes for url-mapper
+	  // flatten routes and use actual signal for match
+	  var routes = Object.keys(routesConfig)
 	    .map(function(route){
 	      return {
-	        path: route,
-	        signal: routes[route]
+	        route: route,
+	        signalName: routesConfig[route]
 	      };
 	    })
-	    .reduce(function wrapRoutes(wrappedRoutes, route) {
+	    .reduce(function wrapRoutes(routes, route) {
 	
-	      if (typeof route.signal === 'object') {
-	        Object.keys(route.signal).reduce(function(wrappedRoutes, nestedRoute) {
+	      // recursive call for nested definition
+	      if (typeof route.signalName === 'object') {
+	        Object.keys(route.signalName).reduce(function(routes, nestedRoute) {
 	          nestedRoute = {
-	            path: route.path + nestedRoute,
-	            signal: route.signal[nestedRoute]
+	            route: route.route + nestedRoute,
+	            signalName: route.signalName[nestedRoute]
 	          };
 	
-	          return wrapRoutes(wrappedRoutes, nestedRoute);
-	        }, wrappedRoutes);
+	          return wrapRoutes(routes, nestedRoute);
+	        }, routes);
 	
-	        return wrappedRoutes;
+	        return routes;
 	      }
 	
-	      var signalPath = route.signal.split('.');
+	      // retrieve actual signal by name
+	      var signalPath = route.signalName.split('.');
 	      var signalParent = controller.signals;
 	      var signal;
 	      while(signalPath.length - 1) {
-	        signalParent = signalParent[signalPath.shift()];
+	        signalParent = signalParent[signalPath.shift()] || {};
 	      }
 	      signal = signalParent[signalPath];
-	      if(!signal) {
-	        throw new Error('Cerebral router - The signal "' + route.signal + '" for the route "' + route.path + '" does not exist.');
+	      if(typeof signal !== "function") {
+	        throw new Error('Cerebral router - The signal "' + route.signalName + '" for the route "' + route.route + '" does not exist.');
 	      }
 	
 	      if (typeof signal.getUrl === "function") {
-	        throw new Error('Cerebral router - The signal "' + route.signal + '" has already been bound to route. Create a new signal and reuse actions instead if needed.');
-	      } else {
-	        signal.chain = [setUrl].concat(signal.chain);
+	        throw new Error('Cerebral router - The signal "' + route.signalName + '" has already been bound to route. Create a new signal and reuse actions instead if needed.');
 	      }
 	
-	      function wrappedSignal(payload, options) {
+	      // Create url based on direct signal input
+	      function getUrl (input) {
+	        return options.baseUrl + urlMapper.stringify(route.route, input || {});
+	      }
 	
-	        var input = payload || {};
-	        options = options || {};
-	        options.isSync = true;
+	      function wrappedSignal(payload, signalOptions) {
+	        addressbar.value = getUrl(payload);
 	
-	        if (!input.route) {
-	          input.route = {
-	            url: getUrl(route.path, input)
-	          };
-	        } else {
-	          // If called from a url change, add params to input
-	          var params = pathToRegexp(route.path).keys;
-	
-	          input = params.reduce(function (input, param) {
-	            input[param.name] = input.route.params[param.name];
-	            return input;
-	          }, input);
-	        }
+	        signalOptions = signalOptions || {};
 	
 	        // Should always run sync
-	        signal(input, options);
+	        signalOptions.isSync = true;
+	        signal(payload, signalOptions);
 	      }
 	
-	      // callback for urlMapper
-	      wrappedRoutes[route.path] = function(payload) {
-	        wrappedSignal({ route: payload });
-	      };
+	      // expose method for restoring url from params
+	      wrappedSignal.getUrl = getUrl;
 	
-	      signalParent[signalPath[0]] = wrappedSignal;
+	      // pass wrapped signal to url-mapper routes
+	      routes[route.route] = wrappedSignal;
 	
-	      wrappedSignal.sync = function(payload){
-	        wrappedSignal(payload, {isSync: true});
-	      };
+	      // replace signal on wrapped one in controller
+	      signalParent[signalPath[0]] = wrappedSignal.sync = wrappedSignal;
 	
-	      wrappedSignal.getUrl = function(payload){
-	        var url = getUrl(route.path, payload);
-	        return options.baseUrl + url;
-	      };
-	
-	      return wrappedRoutes;
+	      return routes;
 	
 	  }, {});
 	
-	  function onAddressbarChange(event) {
+	  function onUrlChange(event) {
 	
 	    var matchedRoute;
-	    var url = event.target.value.replace(addressbar.origin, '');
+	    var url = event ? event.target.value : addressbar.value;
+	    url = url.replace(addressbar.origin, '');
 	
 	    if (options.onlyHash && !~url.indexOf('#')) {
 	      // treat hash absense as root route
@@ -26588,10 +26737,12 @@
 	
 	    // check if url should be routed
 	    if (url.indexOf(options.baseUrl) === 0) {
-	      event.preventDefault();
-	      matchedRoute = urlMapper(url.replace(options.baseUrl, ''), wrappedRoutes);
+	      event && event.preventDefault();
+	      matchedRoute = urlMapper.map(url.replace(options.baseUrl, ''), routes);
 	
-	      if (!matchedRoute) {
+	      if (matchedRoute) {
+	        matchedRoute.match(matchedRoute.values);
+	      } else {
 	        console.warn('Cerebral router - No route matched "' + url + '" url, navigation was prevented. ' +
 	                     'Please verify url or catch unmatched routes with a "/*" route.');
 	      }
@@ -26599,18 +26750,11 @@
 	
 	  }
 	
-	  function onControllerChange() {
+	  addressbar.on('change', onUrlChange);
 	
-	    var url = controller.get(urlStorePath);
-	    if (url) addressbar.value = options.baseUrl + url;
-	
-	  }
-	
-	  addressbar.on('change', onAddressbarChange);
-	  controller.on('change', onControllerChange);
-	
+	  // auto expose router instance to services
 	  return controller.services.router = {
-	    trigger: function () {
+	    trigger: function (url) {
 	
 	      // If developing, remember signals before
 	      // route trigger
@@ -26618,16 +26762,9 @@
 	        controller.store.rememberInitial(controller.store.getSignals().length - 1);
 	      }
 	
-	      onAddressbarChange({
-	        preventDefault: function () {},
-	        target: {value: addressbar.value}
-	      });
+	      addressbar.value = url || addressbar.value;
+	      onUrlChange();
 	
-	    },
-	
-	    detach: function(){
-	      addressbar.removeListener('change', onAddressbarChange);
-	      controller.removeListener('change', onControllerChange);
 	    },
 	
 	    redirect: function(url, params) {
@@ -26640,8 +26777,16 @@
 	        replace: params.replace
 	      };
 	
-	      urlMapper(url, wrappedRoutes);
+	      onUrlChange();
 	
+	    },
+	
+	    getUrl: function() {
+	      return addressbar.value.replace(addressbar.origin + options.baseUrl, '');
+	    },
+	
+	    detach: function(){
+	      addressbar.removeListener('change', onUrlChange);
 	    }
 	  };
 	
@@ -26662,623 +26807,285 @@
 
 
 /***/ },
-/* 206 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	var qs = __webpack_require__(207);
-	var pathtoRegexp = __webpack_require__(211);
-	var cache = {};
-	
-	function isMatch(re, path, keys) {
-	  var match = re.exec(decodeURIComponent(path));
-	  if (!match) { return null; }
-	
-	  var params = {};
-	
-	  for (var i = 1; i < match.length; ++i) {
-	    var key = keys[i - 1];
-	    var value = decodeURIComponent(match[i].replace(/\+/g, ' '));
-	    if (value !== undefined || !(hasOwnProperty.call(params, key.name))) {
-	      params[key.name] = value;
-	    }
-	  }
-	
-	  return params;
-	}
-	
-	module.exports = function (url, routes) {
-	
-	  var path = url;
-	
-	  var params = {};
-	  var route = {};
-	  var hash = null;
-	  var queryString = null;
-	  var matchedRoute;
-	
-	  if (~path.indexOf('#')) {
-	    hash = path.split(/#(.+)/)[1];
-	    path = path.split('#')[0];
-	  }
-	
-	  if (~path.indexOf('?')) {
-	    queryString = path.split(/\?(.+)/)[1];
-	    path = path.split('?')[0];
-	  }
-	
-	  for (route in routes) {
-	    if (!cache[route]) {
-	      var keys = [];
-	      var re = pathtoRegexp(route, keys)
-	      cache[route] = {
-	        keys: keys,
-	        re: re
-	      }
-	    }
-	    params = isMatch(cache[route].re, path, cache[route].keys);
-	    if (params) {
-	      var query = queryString ? qs.parse(queryString) : {};
-	
-	      routes[route]({
-	        url: url,
-	        path: path,
-	        hash: hash || '',
-	        params: params,
-	        query: query
-	      });
-	
-	      matchedRoute = route;
-	      break;
-	    }
-	  }
-	
-	  return matchedRoute;
-	
-	};
-
-
-/***/ },
-/* 207 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// Load modules
-	
-	var Stringify = __webpack_require__(208);
-	var Parse = __webpack_require__(210);
-	
-	
-	// Declare internals
-	
-	var internals = {};
-	
-	
-	module.exports = {
-	    stringify: Stringify,
-	    parse: Parse
-	};
-
-
-/***/ },
-/* 208 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// Load modules
-	
-	var Utils = __webpack_require__(209);
-	
-	
-	// Declare internals
-	
-	var internals = {
-	    delimiter: '&',
-	    arrayPrefixGenerators: {
-	        brackets: function (prefix, key) {
-	
-	            return prefix + '[]';
-	        },
-	        indices: function (prefix, key) {
-	
-	            return prefix + '[' + key + ']';
-	        },
-	        repeat: function (prefix, key) {
-	
-	            return prefix;
-	        }
-	    },
-	    strictNullHandling: false
-	};
-	
-	
-	internals.stringify = function (obj, prefix, generateArrayPrefix, strictNullHandling, filter) {
-	
-	    if (typeof filter === 'function') {
-	        obj = filter(prefix, obj);
-	    }
-	    else if (Utils.isBuffer(obj)) {
-	        obj = obj.toString();
-	    }
-	    else if (obj instanceof Date) {
-	        obj = obj.toISOString();
-	    }
-	    else if (obj === null) {
-	        if (strictNullHandling) {
-	            return Utils.encode(prefix);
-	        }
-	
-	        obj = '';
-	    }
-	
-	    if (typeof obj === 'string' ||
-	        typeof obj === 'number' ||
-	        typeof obj === 'boolean') {
-	
-	        return [Utils.encode(prefix) + '=' + Utils.encode(obj)];
-	    }
-	
-	    var values = [];
-	
-	    if (typeof obj === 'undefined') {
-	        return values;
-	    }
-	
-	    var objKeys = Array.isArray(filter) ? filter : Object.keys(obj);
-	    for (var i = 0, il = objKeys.length; i < il; ++i) {
-	        var key = objKeys[i];
-	
-	        if (Array.isArray(obj)) {
-	            values = values.concat(internals.stringify(obj[key], generateArrayPrefix(prefix, key), generateArrayPrefix, strictNullHandling, filter));
-	        }
-	        else {
-	            values = values.concat(internals.stringify(obj[key], prefix + '[' + key + ']', generateArrayPrefix, strictNullHandling, filter));
-	        }
-	    }
-	
-	    return values;
-	};
-	
-	
-	module.exports = function (obj, options) {
-	
-	    options = options || {};
-	    var delimiter = typeof options.delimiter === 'undefined' ? internals.delimiter : options.delimiter;
-	    var strictNullHandling = typeof options.strictNullHandling === 'boolean' ? options.strictNullHandling : internals.strictNullHandling;
-	    var objKeys;
-	    var filter;
-	    if (typeof options.filter === 'function') {
-	        filter = options.filter;
-	        obj = filter('', obj);
-	    }
-	    else if (Array.isArray(options.filter)) {
-	        objKeys = filter = options.filter;
-	    }
-	
-	    var keys = [];
-	
-	    if (typeof obj !== 'object' ||
-	        obj === null) {
-	
-	        return '';
-	    }
-	
-	    var arrayFormat;
-	    if (options.arrayFormat in internals.arrayPrefixGenerators) {
-	        arrayFormat = options.arrayFormat;
-	    }
-	    else if ('indices' in options) {
-	        arrayFormat = options.indices ? 'indices' : 'repeat';
-	    }
-	    else {
-	        arrayFormat = 'indices';
-	    }
-	
-	    var generateArrayPrefix = internals.arrayPrefixGenerators[arrayFormat];
-	
-	    if (!objKeys) {
-	        objKeys = Object.keys(obj);
-	    }
-	    for (var i = 0, il = objKeys.length; i < il; ++i) {
-	        var key = objKeys[i];
-	        keys = keys.concat(internals.stringify(obj[key], key, generateArrayPrefix, strictNullHandling, filter));
-	    }
-	
-	    return keys.join(delimiter);
-	};
-
-
-/***/ },
-/* 209 */
-/***/ function(module, exports) {
-
-	// Load modules
-	
-	
-	// Declare internals
-	
-	var internals = {};
-	internals.hexTable = new Array(256);
-	for (var h = 0; h < 256; ++h) {
-	    internals.hexTable[h] = '%' + ((h < 16 ? '0' : '') + h.toString(16)).toUpperCase();
-	}
-	
-	
-	exports.arrayToObject = function (source, options) {
-	
-	    var obj = options.plainObjects ? Object.create(null) : {};
-	    for (var i = 0, il = source.length; i < il; ++i) {
-	        if (typeof source[i] !== 'undefined') {
-	
-	            obj[i] = source[i];
-	        }
-	    }
-	
-	    return obj;
-	};
-	
-	
-	exports.merge = function (target, source, options) {
-	
-	    if (!source) {
-	        return target;
-	    }
-	
-	    if (typeof source !== 'object') {
-	        if (Array.isArray(target)) {
-	            target.push(source);
-	        }
-	        else if (typeof target === 'object') {
-	            target[source] = true;
-	        }
-	        else {
-	            target = [target, source];
-	        }
-	
-	        return target;
-	    }
-	
-	    if (typeof target !== 'object') {
-	        target = [target].concat(source);
-	        return target;
-	    }
-	
-	    if (Array.isArray(target) &&
-	        !Array.isArray(source)) {
-	
-	        target = exports.arrayToObject(target, options);
-	    }
-	
-	    var keys = Object.keys(source);
-	    for (var k = 0, kl = keys.length; k < kl; ++k) {
-	        var key = keys[k];
-	        var value = source[key];
-	
-	        if (!Object.prototype.hasOwnProperty.call(target, key)) {
-	            target[key] = value;
-	        }
-	        else {
-	            target[key] = exports.merge(target[key], value, options);
-	        }
-	    }
-	
-	    return target;
-	};
-	
-	
-	exports.decode = function (str) {
-	
-	    try {
-	        return decodeURIComponent(str.replace(/\+/g, ' '));
-	    } catch (e) {
-	        return str;
-	    }
-	};
-	
-	exports.encode = function (str) {
-	
-	    // This code was originally written by Brian White (mscdex) for the io.js core querystring library.
-	    // It has been adapted here for stricter adherence to RFC 3986
-	    if (str.length === 0) {
-	        return str;
-	    }
-	
-	    if (typeof str !== 'string') {
-	        str = '' + str;
-	    }
-	
-	    var out = '';
-	    for (var i = 0, il = str.length; i < il; ++i) {
-	        var c = str.charCodeAt(i);
-	
-	        if (c === 0x2D || // -
-	            c === 0x2E || // .
-	            c === 0x5F || // _
-	            c === 0x7E || // ~
-	            (c >= 0x30 && c <= 0x39) || // 0-9
-	            (c >= 0x41 && c <= 0x5A) || // a-z
-	            (c >= 0x61 && c <= 0x7A)) { // A-Z
-	
-	            out += str[i];
-	            continue;
-	        }
-	
-	        if (c < 0x80) {
-	            out += internals.hexTable[c];
-	            continue;
-	        }
-	
-	        if (c < 0x800) {
-	            out += internals.hexTable[0xC0 | (c >> 6)] + internals.hexTable[0x80 | (c & 0x3F)];
-	            continue;
-	        }
-	
-	        if (c < 0xD800 || c >= 0xE000) {
-	            out += internals.hexTable[0xE0 | (c >> 12)] + internals.hexTable[0x80 | ((c >> 6) & 0x3F)] + internals.hexTable[0x80 | (c & 0x3F)];
-	            continue;
-	        }
-	
-	        ++i;
-	        c = 0x10000 + (((c & 0x3FF) << 10) | (str.charCodeAt(i) & 0x3FF));
-	        out += internals.hexTable[0xF0 | (c >> 18)] + internals.hexTable[0x80 | ((c >> 12) & 0x3F)] + internals.hexTable[0x80 | ((c >> 6) & 0x3F)] + internals.hexTable[0x80 | (c & 0x3F)];
-	    }
-	
-	    return out;
-	};
-	
-	exports.compact = function (obj, refs) {
-	
-	    if (typeof obj !== 'object' ||
-	        obj === null) {
-	
-	        return obj;
-	    }
-	
-	    refs = refs || [];
-	    var lookup = refs.indexOf(obj);
-	    if (lookup !== -1) {
-	        return refs[lookup];
-	    }
-	
-	    refs.push(obj);
-	
-	    if (Array.isArray(obj)) {
-	        var compacted = [];
-	
-	        for (var i = 0, il = obj.length; i < il; ++i) {
-	            if (typeof obj[i] !== 'undefined') {
-	                compacted.push(obj[i]);
-	            }
-	        }
-	
-	        return compacted;
-	    }
-	
-	    var keys = Object.keys(obj);
-	    for (i = 0, il = keys.length; i < il; ++i) {
-	        var key = keys[i];
-	        obj[key] = exports.compact(obj[key], refs);
-	    }
-	
-	    return obj;
-	};
-	
-	
-	exports.isRegExp = function (obj) {
-	
-	    return Object.prototype.toString.call(obj) === '[object RegExp]';
-	};
-	
-	
-	exports.isBuffer = function (obj) {
-	
-	    if (obj === null ||
-	        typeof obj === 'undefined') {
-	
-	        return false;
-	    }
-	
-	    return !!(obj.constructor &&
-	              obj.constructor.isBuffer &&
-	              obj.constructor.isBuffer(obj));
-	};
-
-
-/***/ },
 /* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// Load modules
+	'use strict';
+	var mapper = __webpack_require__(211);
+	var URLON = __webpack_require__(212);
+	var pathToRegexp = __webpack_require__(213);
 	
-	var Utils = __webpack_require__(209);
+	function compileRoute (route, options) {
+	  var re;
+	  var compiled;
+	  var keys = [];
 	
+	  re = pathToRegexp(route, keys);
+	  keys = keys.map(function(key){ return key.name.toString(); });
+	  compiled = pathToRegexp.compile(route);
 	
-	// Declare internals
+	  return {
+	    parse: function (url) {
+	      var path = url;
+	      var result = {};
 	
-	var internals = {
-	    delimiter: '&',
-	    depth: 5,
-	    arrayLimit: 20,
-	    parameterLimit: 1000,
-	    strictNullHandling: false,
-	    plainObjects: false,
-	    allowPrototypes: false
-	};
+	      if (~path.indexOf('#')) {
+	        path = path.split('#')[0];
+	      }
 	
-	
-	internals.parseValues = function (str, options) {
-	
-	    var obj = {};
-	    var parts = str.split(options.delimiter, options.parameterLimit === Infinity ? undefined : options.parameterLimit);
-	
-	    for (var i = 0, il = parts.length; i < il; ++i) {
-	        var part = parts[i];
-	        var pos = part.indexOf(']=') === -1 ? part.indexOf('=') : part.indexOf(']=') + 1;
-	
-	        if (pos === -1) {
-	            obj[Utils.decode(part)] = '';
-	
-	            if (options.strictNullHandling) {
-	                obj[Utils.decode(part)] = null;
-	            }
+	      if (~path.indexOf('?')) {
+	        if (options.query) {
+	          var queryString = '_' + path.split(/\?(.+)/)[1];
+	          result = URLON.parse(queryString);
 	        }
-	        else {
-	            var key = Utils.decode(part.slice(0, pos));
-	            var val = Utils.decode(part.slice(pos + 1));
+	        path = path.split('?')[0];
+	      }
 	
-	            if (!Object.prototype.hasOwnProperty.call(obj, key)) {
-	                obj[key] = val;
-	            }
-	            else {
-	                obj[key] = [].concat(obj[key]).concat(val);
-	            }
+	      var match = re.exec(path);
+	      if (!match) return null;
+	
+	      for (var i = 1; i < match.length; ++i) {
+	        var key = keys[i - 1];
+	        var value = decodeURIComponent(match[i]);
+	        if (value[0] === ':') {
+	          result[key] = URLON.parse(value);
+	        } else {
+	          result[key] = value;
 	        }
-	    }
+	      }
 	
-	    return obj;
-	};
+	      return result;
+	    },
 	
+	    stringify: function (values) {
+	      var pathParams = {};
+	      var queryParams = {};
 	
-	internals.parseObject = function (chain, val, options) {
+	      Object.keys(values).forEach(function(key) {
+	        if (~keys.indexOf(key)) {
+	          switch (typeof values[key]) {
+	            case 'boolean':
+	            case 'number':
+	              pathParams[key] = URLON.stringify(values[key]);
+	              break;
 	
-	    if (!chain.length) {
-	        return val;
-	    }
+	            case 'object':
+	              throw new Error('URL Mapper - objects are not allowed to be stringified as part of path');
 	
-	    var root = chain.shift();
-	
-	    var obj;
-	    if (root === '[]') {
-	        obj = [];
-	        obj = obj.concat(internals.parseObject(chain, val, options));
-	    }
-	    else {
-	        obj = options.plainObjects ? Object.create(null) : {};
-	        var cleanRoot = root[0] === '[' && root[root.length - 1] === ']' ? root.slice(1, root.length - 1) : root;
-	        var index = parseInt(cleanRoot, 10);
-	        var indexString = '' + index;
-	        if (!isNaN(index) &&
-	            root !== cleanRoot &&
-	            indexString === cleanRoot &&
-	            index >= 0 &&
-	            (options.parseArrays &&
-	             index <= options.arrayLimit)) {
-	
-	            obj = [];
-	            obj[index] = internals.parseObject(chain, val, options);
+	            default:
+	              pathParams[key] = values[key];
+	          }
+	        } else {
+	          queryParams[key] = values[key];
 	        }
-	        else {
-	            obj[cleanRoot] = internals.parseObject(chain, val, options);
+	      });
+	
+	      var path = compiled(pathParams);
+	      var queryString = '';
+	
+	      if (options.query) {
+	        if (Object.keys(queryParams).length) {
+	          queryString = '?' + URLON.stringify(queryParams).slice(1);
 	        }
+	      }
+	
+	      return path + queryString;
 	    }
+	  };
+	}
 	
-	    return obj;
-	};
-	
-	
-	internals.parseKeys = function (key, val, options) {
-	
-	    if (!key) {
-	        return;
-	    }
-	
-	    // Transform dot notation to bracket notation
-	
-	    if (options.allowDots) {
-	        key = key.replace(/\.([^\.\[]+)/g, '[$1]');
-	    }
-	
-	    // The regex chunks
-	
-	    var parent = /^([^\[\]]*)/;
-	    var child = /(\[[^\[\]]*\])/g;
-	
-	    // Get the parent
-	
-	    var segment = parent.exec(key);
-	
-	    // Stash the parent if it exists
-	
-	    var keys = [];
-	    if (segment[1]) {
-	        // If we aren't using plain objects, optionally prefix keys
-	        // that would overwrite object prototype properties
-	        if (!options.plainObjects &&
-	            Object.prototype.hasOwnProperty(segment[1])) {
-	
-	            if (!options.allowPrototypes) {
-	                return;
-	            }
-	        }
-	
-	        keys.push(segment[1]);
-	    }
-	
-	    // Loop through children appending to the array until we hit depth
-	
-	    var i = 0;
-	    while ((segment = child.exec(key)) !== null && i < options.depth) {
-	
-	        ++i;
-	        if (!options.plainObjects &&
-	            Object.prototype.hasOwnProperty(segment[1].replace(/\[|\]/g, ''))) {
-	
-	            if (!options.allowPrototypes) {
-	                continue;
-	            }
-	        }
-	        keys.push(segment[1]);
-	    }
-	
-	    // If there's a remainder, just add whatever is left
-	
-	    if (segment) {
-	        keys.push('[' + key.slice(segment.index) + ']');
-	    }
-	
-	    return internals.parseObject(keys, val, options);
-	};
-	
-	
-	module.exports = function (str, options) {
-	
-	    options = options || {};
-	    options.delimiter = typeof options.delimiter === 'string' || Utils.isRegExp(options.delimiter) ? options.delimiter : internals.delimiter;
-	    options.depth = typeof options.depth === 'number' ? options.depth : internals.depth;
-	    options.arrayLimit = typeof options.arrayLimit === 'number' ? options.arrayLimit : internals.arrayLimit;
-	    options.parseArrays = options.parseArrays !== false;
-	    options.allowDots = options.allowDots !== false;
-	    options.plainObjects = typeof options.plainObjects === 'boolean' ? options.plainObjects : internals.plainObjects;
-	    options.allowPrototypes = typeof options.allowPrototypes === 'boolean' ? options.allowPrototypes : internals.allowPrototypes;
-	    options.parameterLimit = typeof options.parameterLimit === 'number' ? options.parameterLimit : internals.parameterLimit;
-	    options.strictNullHandling = typeof options.strictNullHandling === 'boolean' ? options.strictNullHandling : internals.strictNullHandling;
-	
-	    if (str === '' ||
-	        str === null ||
-	        typeof str === 'undefined') {
-	
-	        return options.plainObjects ? Object.create(null) : {};
-	    }
-	
-	    var tempObj = typeof str === 'string' ? internals.parseValues(str, options) : str;
-	    var obj = options.plainObjects ? Object.create(null) : {};
-	
-	    // Iterate over the keys and setup the new object
-	
-	    var keys = Object.keys(tempObj);
-	    for (var i = 0, il = keys.length; i < il; ++i) {
-	        var key = keys[i];
-	        var newObj = internals.parseKeys(key, tempObj[key], options);
-	        obj = Utils.merge(obj, newObj, options);
-	    }
-	
-	    return Utils.compact(obj);
+	module.exports = function urlMapper (options) {
+	  return mapper(compileRoute, options);
 	};
 
 
 /***/ },
 /* 211 */
+/***/ function(module, exports) {
+
+	module.exports = function mapper (compileFn, options) {
+	  if (typeof compileFn != 'function') throw new Error('URL Mapper - function to compile a route expected as first argument');
+	
+	  options = options || {};
+	  var cache = {};
+	
+	  function getCompiledRoute(route) {
+	    if (!cache[route]) {
+	      cache[route] = compileFn(route, options);
+	    }
+	
+	    return cache[route];
+	  }
+	
+	  function parse (route, url) {
+	    if (arguments.length < 2) throw new Error('URL Mapper - parse method expects 2 arguments');
+	    return getCompiledRoute(route).parse(url);
+	  }
+	
+	  function stringify (route, values) {
+	    if (arguments.length < 2) throw new Error('URL Mapper - stringify method expects 2 arguments');
+	    return getCompiledRoute(route).stringify(values);
+	  }
+	
+	  function map(url, routes) {
+	    if (arguments.length < 2) throw new Error('URL Mapper - map method expects 2 arguments');
+	    for (var route in routes) {
+	      var compiled = getCompiledRoute(route);
+	      var values = compiled.parse(url);
+	      if (values) {
+	        var match = routes[route];
+	
+	        return {
+	          route: route,
+	          match: match,
+	          values: values
+	        };
+	      }
+	    }
+	  }
+	
+	  return {
+	    parse: parse,
+	    stringify: stringify,
+	    map: map
+	  };
+	};
+
+
+/***/ },
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isarray = __webpack_require__(212)
+	URLON = {
+		stringify: function (input) {
+			function encodeString (str) {
+				return encodeURI(str.replace(/([=:&@_;\/])/g, '/$1'));
+			}
+	
+			function stringify (input) {
+				// Number or Boolean or Null
+				if (typeof input === 'number' || input === true || input === false || input === null) {
+					return ':' + input;
+				}
+				// Array
+				if (input instanceof Array) {
+					var res = [];
+					for (var i = 0; i < input.length; ++i) {
+						res.push(stringify(input[i]));
+					}
+					return '@' + res.join('&') + ';';
+				}
+				// Object
+				if (typeof input === 'object') {
+					var res = [];
+					for (var key in input) {
+						res.push(encodeString(key) + stringify(input[key]));
+					}
+					return '_' + res.join('&') + ';';
+				}
+				// String or undefined			
+				return '=' + encodeString((input !== null ? (input !== undefined ? input : "undefined") : "null").toString());
+			}
+	
+			return stringify(input).replace(/;+$/g, '');
+		},
+	
+		parse: function (str) {
+			var pos = 0;
+			str = decodeURI(str);
+	
+			function read() {
+				var token = '';
+				for (; pos !== str.length; ++pos) {
+					if (str.charAt(pos) === '/') {
+						pos += 1;
+						if (pos === str.length) {
+							token += ';';
+							break;
+						}
+					} else if (str.charAt(pos).match(/[=:&@_;]/)) {
+						break;
+					}
+					token += str.charAt(pos);
+				}
+				return token;
+			}
+	
+			function parse() {
+				var type = str.charAt(pos++);
+	
+				// String
+				if (type === '=') {
+					return read();
+				}
+				// Number or Boolean
+				if (type === ':') {
+					var value = read();
+					if (value === 'true') {
+						return true;
+					}
+					if (value === 'false') {
+						return false;
+					}
+					value = parseFloat(value);
+					return isNaN(value) ? null : value;
+				}
+				// Array
+				if (type === '@') {
+					var res = [];
+					loop: {
+						if (pos >= str.length || str.charAt(pos) === ';') {
+							break loop;
+						}
+						while (1) {
+							res.push(parse());
+							if (pos >= str.length || str.charAt(pos) === ';') {
+								break loop;
+							}
+							pos += 1;
+						}
+					}
+					pos += 1;
+					return res;
+				}
+				// Object
+				if (type === '_') {
+					var res = {};
+					loop: {
+						if (pos >= str.length || str.charAt(pos) === ';') {
+							break loop;
+						}
+						while (1) {
+							var name = read();
+							res[name] = parse();
+							if (pos >= str.length || str.charAt(pos) === ';') {
+								break loop;
+							}
+							pos += 1;
+						}
+					}
+					pos += 1;
+					return res;
+				}
+				// Error
+				throw 'Unexpected char ' + type;
+			}
+	
+			return parse();
+		}
+	};
+	
+	if (true) {
+		exports.stringify = URLON.stringify;
+		exports.parse = URLON.parse;
+	}
+
+
+/***/ },
+/* 213 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isarray = __webpack_require__(214)
 	
 	/**
 	 * Expose `pathToRegexp`.
@@ -27671,7 +27478,7 @@
 
 
 /***/ },
-/* 212 */
+/* 214 */
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -27680,11 +27487,11 @@
 
 
 /***/ },
-/* 213 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {var URI = __webpack_require__(214);
-	var EventEmitter = __webpack_require__(194).EventEmitter;
+	/* WEBPACK VAR INJECTION */(function(global) {var URL = __webpack_require__(216);
+	var EventEmitter = __webpack_require__(198).EventEmitter;
 	var instance = null;
 	
 	var location = window.location;
@@ -27701,7 +27508,8 @@
 	  eventEmitter.removeEventListener = eventEmitter.removeListener;
 	
 	  var initialUrl = location.href;
-	  var origin = URI(initialUrl).protocol() + '://' + URI(initialUrl).host();
+	  var uri = URL(initialUrl);
+	  var origin = uri.protocol + '//' + uri.host;
 	  var isPreventingDefault = false;
 	  var doReplace = false;
 	  var prevUrl = '';
@@ -27797,38 +27605,38 @@
 	  // thanks https://github.com/cofounders/urlutils for reference
 	  Object.defineProperty(eventEmitter, 'origin', {
 	    get: function () {
-	      var uri = URI(location.href);
-	      return uri.protocol() + '://' + uri.host();
+	      var uri = URL(location.href);
+	      return uri.protocol + '//' + uri.host;
 	    }
 	  });
 	
 	  Object.defineProperty(eventEmitter, 'protocol', {
 	    get: function () {
-	      return URI(location.href).protocol() + ':';
+	      return URL(location.href).protocol;
 	    }
 	  });
 	
 	  Object.defineProperty(eventEmitter, 'port', {
 	    get: function () {
-	      return URI(location.href).port();
+	      return URL(location.href).port;
 	    }
 	  });
 	
 	  Object.defineProperty(eventEmitter, 'hostname', {
 	    get: function () {
-	      return URI(location.href).hostname();
+	      return URL(location.href).hostname;
 	    }
 	  });
 	
 	  Object.defineProperty(eventEmitter, 'pathname', {
 	    get: function () {
-	      return URI(location.href).pathname();
+	      return URL(location.href).pathname;
 	    }
 	  });
 	
 	  Object.defineProperty(eventEmitter, 'hash', {
 	    get: function () {
-	      return URI(location.href).hash();
+	      return URL(location.href).hash;
 	    }
 	  });
 	
@@ -27896,3117 +27704,404 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 214 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*!
-	 * URI.js - Mutating URLs
-	 *
-	 * Version: 1.16.1
-	 *
-	 * Author: Rodney Rehm
-	 * Web: http://medialize.github.io/URI.js/
-	 *
-	 * Licensed under
-	 *   MIT License http://www.opensource.org/licenses/mit-license
-	 *   GPL v3 http://opensource.org/licenses/GPL-3.0
-	 *
-	 */
-	(function (root, factory) {
-	  'use strict';
-	  // https://github.com/umdjs/umd/blob/master/returnExports.js
-	  if (true) {
-	    // Node
-	    module.exports = factory(__webpack_require__(215), __webpack_require__(217), __webpack_require__(218));
-	  } else if (typeof define === 'function' && define.amd) {
-	    // AMD. Register as an anonymous module.
-	    define(['./punycode', './IPv6', './SecondLevelDomains'], factory);
-	  } else {
-	    // Browser globals (root is window)
-	    root.URI = factory(root.punycode, root.IPv6, root.SecondLevelDomains, root);
-	  }
-	}(this, function (punycode, IPv6, SLD, root) {
-	  'use strict';
-	  /*global location, escape, unescape */
-	  // FIXME: v2.0.0 renamce non-camelCase properties to uppercase
-	  /*jshint camelcase: false */
-	
-	  // save current URI variable, if any
-	  var _URI = root && root.URI;
-	
-	  function URI(url, base) {
-	    var _urlSupplied = arguments.length >= 1;
-	    var _baseSupplied = arguments.length >= 2;
-	
-	    // Allow instantiation without the 'new' keyword
-	    if (!(this instanceof URI)) {
-	      if (_urlSupplied) {
-	        if (_baseSupplied) {
-	          return new URI(url, base);
-	        }
-	
-	        return new URI(url);
-	      }
-	
-	      return new URI();
-	    }
-	
-	    if (url === undefined) {
-	      if (_urlSupplied) {
-	        throw new TypeError('undefined is not a valid argument for URI');
-	      }
-	
-	      if (typeof location !== 'undefined') {
-	        url = location.href + '';
-	      } else {
-	        url = '';
-	      }
-	    }
-	
-	    this.href(url);
-	
-	    // resolve to base according to http://dvcs.w3.org/hg/url/raw-file/tip/Overview.html#constructor
-	    if (base !== undefined) {
-	      return this.absoluteTo(base);
-	    }
-	
-	    return this;
-	  }
-	
-	  URI.version = '1.16.1';
-	
-	  var p = URI.prototype;
-	  var hasOwn = Object.prototype.hasOwnProperty;
-	
-	  function escapeRegEx(string) {
-	    // https://github.com/medialize/URI.js/commit/85ac21783c11f8ccab06106dba9735a31a86924d#commitcomment-821963
-	    return string.replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
-	  }
-	
-	  function getType(value) {
-	    // IE8 doesn't return [Object Undefined] but [Object Object] for undefined value
-	    if (value === undefined) {
-	      return 'Undefined';
-	    }
-	
-	    return String(Object.prototype.toString.call(value)).slice(8, -1);
-	  }
-	
-	  function isArray(obj) {
-	    return getType(obj) === 'Array';
-	  }
-	
-	  function filterArrayValues(data, value) {
-	    var lookup = {};
-	    var i, length;
-	
-	    if (getType(value) === 'RegExp') {
-	      lookup = null;
-	    } else if (isArray(value)) {
-	      for (i = 0, length = value.length; i < length; i++) {
-	        lookup[value[i]] = true;
-	      }
-	    } else {
-	      lookup[value] = true;
-	    }
-	
-	    for (i = 0, length = data.length; i < length; i++) {
-	      /*jshint laxbreak: true */
-	      var _match = lookup && lookup[data[i]] !== undefined
-	        || !lookup && value.test(data[i]);
-	      /*jshint laxbreak: false */
-	      if (_match) {
-	        data.splice(i, 1);
-	        length--;
-	        i--;
-	      }
-	    }
-	
-	    return data;
-	  }
-	
-	  function arrayContains(list, value) {
-	    var i, length;
-	
-	    // value may be string, number, array, regexp
-	    if (isArray(value)) {
-	      // Note: this can be optimized to O(n) (instead of current O(m * n))
-	      for (i = 0, length = value.length; i < length; i++) {
-	        if (!arrayContains(list, value[i])) {
-	          return false;
-	        }
-	      }
-	
-	      return true;
-	    }
-	
-	    var _type = getType(value);
-	    for (i = 0, length = list.length; i < length; i++) {
-	      if (_type === 'RegExp') {
-	        if (typeof list[i] === 'string' && list[i].match(value)) {
-	          return true;
-	        }
-	      } else if (list[i] === value) {
-	        return true;
-	      }
-	    }
-	
-	    return false;
-	  }
-	
-	  function arraysEqual(one, two) {
-	    if (!isArray(one) || !isArray(two)) {
-	      return false;
-	    }
-	
-	    // arrays can't be equal if they have different amount of content
-	    if (one.length !== two.length) {
-	      return false;
-	    }
-	
-	    one.sort();
-	    two.sort();
-	
-	    for (var i = 0, l = one.length; i < l; i++) {
-	      if (one[i] !== two[i]) {
-	        return false;
-	      }
-	    }
-	
-	    return true;
-	  }
-	
-	  URI._parts = function() {
-	    return {
-	      protocol: null,
-	      username: null,
-	      password: null,
-	      hostname: null,
-	      urn: null,
-	      port: null,
-	      path: null,
-	      query: null,
-	      fragment: null,
-	      // state
-	      duplicateQueryParameters: URI.duplicateQueryParameters,
-	      escapeQuerySpace: URI.escapeQuerySpace
-	    };
-	  };
-	  // state: allow duplicate query parameters (a=1&a=1)
-	  URI.duplicateQueryParameters = false;
-	  // state: replaces + with %20 (space in query strings)
-	  URI.escapeQuerySpace = true;
-	  // static properties
-	  URI.protocol_expression = /^[a-z][a-z0-9.+-]*$/i;
-	  URI.idn_expression = /[^a-z0-9\.-]/i;
-	  URI.punycode_expression = /(xn--)/i;
-	  // well, 333.444.555.666 matches, but it sure ain't no IPv4 - do we care?
-	  URI.ip4_expression = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
-	  // credits to Rich Brown
-	  // source: http://forums.intermapper.com/viewtopic.php?p=1096#1096
-	  // specification: http://www.ietf.org/rfc/rfc4291.txt
-	  URI.ip6_expression = /^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*$/;
-	  // expression used is "gruber revised" (@gruber v2) determined to be the
-	  // best solution in a regex-golf we did a couple of ages ago at
-	  // * http://mathiasbynens.be/demo/url-regex
-	  // * http://rodneyrehm.de/t/url-regex.html
-	  URI.find_uri_expression = /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/ig;
-	  URI.findUri = {
-	    // valid "scheme://" or "www."
-	    start: /\b(?:([a-z][a-z0-9.+-]*:\/\/)|www\.)/gi,
-	    // everything up to the next whitespace
-	    end: /[\s\r\n]|$/,
-	    // trim trailing punctuation captured by end RegExp
-	    trim: /[`!()\[\]{};:'".,<>?«»“”„‘’]+$/
-	  };
-	  // http://www.iana.org/assignments/uri-schemes.html
-	  // http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers#Well-known_ports
-	  URI.defaultPorts = {
-	    http: '80',
-	    https: '443',
-	    ftp: '21',
-	    gopher: '70',
-	    ws: '80',
-	    wss: '443'
-	  };
-	  // allowed hostname characters according to RFC 3986
-	  // ALPHA DIGIT "-" "." "_" "~" "!" "$" "&" "'" "(" ")" "*" "+" "," ";" "=" %encoded
-	  // I've never seen a (non-IDN) hostname other than: ALPHA DIGIT . -
-	  URI.invalid_hostname_characters = /[^a-zA-Z0-9\.-]/;
-	  // map DOM Elements to their URI attribute
-	  URI.domAttributes = {
-	    'a': 'href',
-	    'blockquote': 'cite',
-	    'link': 'href',
-	    'base': 'href',
-	    'script': 'src',
-	    'form': 'action',
-	    'img': 'src',
-	    'area': 'href',
-	    'iframe': 'src',
-	    'embed': 'src',
-	    'source': 'src',
-	    'track': 'src',
-	    'input': 'src', // but only if type="image"
-	    'audio': 'src',
-	    'video': 'src'
-	  };
-	  URI.getDomAttribute = function(node) {
-	    if (!node || !node.nodeName) {
-	      return undefined;
-	    }
-	
-	    var nodeName = node.nodeName.toLowerCase();
-	    // <input> should only expose src for type="image"
-	    if (nodeName === 'input' && node.type !== 'image') {
-	      return undefined;
-	    }
-	
-	    return URI.domAttributes[nodeName];
-	  };
-	
-	  function escapeForDumbFirefox36(value) {
-	    // https://github.com/medialize/URI.js/issues/91
-	    return escape(value);
-	  }
-	
-	  // encoding / decoding according to RFC3986
-	  function strictEncodeURIComponent(string) {
-	    // see https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/encodeURIComponent
-	    return encodeURIComponent(string)
-	      .replace(/[!'()*]/g, escapeForDumbFirefox36)
-	      .replace(/\*/g, '%2A');
-	  }
-	  URI.encode = strictEncodeURIComponent;
-	  URI.decode = decodeURIComponent;
-	  URI.iso8859 = function() {
-	    URI.encode = escape;
-	    URI.decode = unescape;
-	  };
-	  URI.unicode = function() {
-	    URI.encode = strictEncodeURIComponent;
-	    URI.decode = decodeURIComponent;
-	  };
-	  URI.characters = {
-	    pathname: {
-	      encode: {
-	        // RFC3986 2.1: For consistency, URI producers and normalizers should
-	        // use uppercase hexadecimal digits for all percent-encodings.
-	        expression: /%(24|26|2B|2C|3B|3D|3A|40)/ig,
-	        map: {
-	          // -._~!'()*
-	          '%24': '$',
-	          '%26': '&',
-	          '%2B': '+',
-	          '%2C': ',',
-	          '%3B': ';',
-	          '%3D': '=',
-	          '%3A': ':',
-	          '%40': '@'
-	        }
-	      },
-	      decode: {
-	        expression: /[\/\?#]/g,
-	        map: {
-	          '/': '%2F',
-	          '?': '%3F',
-	          '#': '%23'
-	        }
-	      }
-	    },
-	    reserved: {
-	      encode: {
-	        // RFC3986 2.1: For consistency, URI producers and normalizers should
-	        // use uppercase hexadecimal digits for all percent-encodings.
-	        expression: /%(21|23|24|26|27|28|29|2A|2B|2C|2F|3A|3B|3D|3F|40|5B|5D)/ig,
-	        map: {
-	          // gen-delims
-	          '%3A': ':',
-	          '%2F': '/',
-	          '%3F': '?',
-	          '%23': '#',
-	          '%5B': '[',
-	          '%5D': ']',
-	          '%40': '@',
-	          // sub-delims
-	          '%21': '!',
-	          '%24': '$',
-	          '%26': '&',
-	          '%27': '\'',
-	          '%28': '(',
-	          '%29': ')',
-	          '%2A': '*',
-	          '%2B': '+',
-	          '%2C': ',',
-	          '%3B': ';',
-	          '%3D': '='
-	        }
-	      }
-	    },
-	    urnpath: {
-	      // The characters under `encode` are the characters called out by RFC 2141 as being acceptable
-	      // for usage in a URN. RFC2141 also calls out "-", ".", and "_" as acceptable characters, but
-	      // these aren't encoded by encodeURIComponent, so we don't have to call them out here. Also
-	      // note that the colon character is not featured in the encoding map; this is because URI.js
-	      // gives the colons in URNs semantic meaning as the delimiters of path segements, and so it
-	      // should not appear unencoded in a segment itself.
-	      // See also the note above about RFC3986 and capitalalized hex digits.
-	      encode: {
-	        expression: /%(21|24|27|28|29|2A|2B|2C|3B|3D|40)/ig,
-	        map: {
-	          '%21': '!',
-	          '%24': '$',
-	          '%27': '\'',
-	          '%28': '(',
-	          '%29': ')',
-	          '%2A': '*',
-	          '%2B': '+',
-	          '%2C': ',',
-	          '%3B': ';',
-	          '%3D': '=',
-	          '%40': '@'
-	        }
-	      },
-	      // These characters are the characters called out by RFC2141 as "reserved" characters that
-	      // should never appear in a URN, plus the colon character (see note above).
-	      decode: {
-	        expression: /[\/\?#:]/g,
-	        map: {
-	          '/': '%2F',
-	          '?': '%3F',
-	          '#': '%23',
-	          ':': '%3A'
-	        }
-	      }
-	    }
-	  };
-	  URI.encodeQuery = function(string, escapeQuerySpace) {
-	    var escaped = URI.encode(string + '');
-	    if (escapeQuerySpace === undefined) {
-	      escapeQuerySpace = URI.escapeQuerySpace;
-	    }
-	
-	    return escapeQuerySpace ? escaped.replace(/%20/g, '+') : escaped;
-	  };
-	  URI.decodeQuery = function(string, escapeQuerySpace) {
-	    string += '';
-	    if (escapeQuerySpace === undefined) {
-	      escapeQuerySpace = URI.escapeQuerySpace;
-	    }
-	
-	    try {
-	      return URI.decode(escapeQuerySpace ? string.replace(/\+/g, '%20') : string);
-	    } catch(e) {
-	      // we're not going to mess with weird encodings,
-	      // give up and return the undecoded original string
-	      // see https://github.com/medialize/URI.js/issues/87
-	      // see https://github.com/medialize/URI.js/issues/92
-	      return string;
-	    }
-	  };
-	  // generate encode/decode path functions
-	  var _parts = {'encode':'encode', 'decode':'decode'};
-	  var _part;
-	  var generateAccessor = function(_group, _part) {
-	    return function(string) {
-	      try {
-	        return URI[_part](string + '').replace(URI.characters[_group][_part].expression, function(c) {
-	          return URI.characters[_group][_part].map[c];
-	        });
-	      } catch (e) {
-	        // we're not going to mess with weird encodings,
-	        // give up and return the undecoded original string
-	        // see https://github.com/medialize/URI.js/issues/87
-	        // see https://github.com/medialize/URI.js/issues/92
-	        return string;
-	      }
-	    };
-	  };
-	
-	  for (_part in _parts) {
-	    URI[_part + 'PathSegment'] = generateAccessor('pathname', _parts[_part]);
-	    URI[_part + 'UrnPathSegment'] = generateAccessor('urnpath', _parts[_part]);
-	  }
-	
-	  var generateSegmentedPathFunction = function(_sep, _codingFuncName, _innerCodingFuncName) {
-	    return function(string) {
-	      // Why pass in names of functions, rather than the function objects themselves? The
-	      // definitions of some functions (but in particular, URI.decode) will occasionally change due
-	      // to URI.js having ISO8859 and Unicode modes. Passing in the name and getting it will ensure
-	      // that the functions we use here are "fresh".
-	      var actualCodingFunc;
-	      if (!_innerCodingFuncName) {
-	        actualCodingFunc = URI[_codingFuncName];
-	      } else {
-	        actualCodingFunc = function(string) {
-	          return URI[_codingFuncName](URI[_innerCodingFuncName](string));
-	        };
-	      }
-	
-	      var segments = (string + '').split(_sep);
-	
-	      for (var i = 0, length = segments.length; i < length; i++) {
-	        segments[i] = actualCodingFunc(segments[i]);
-	      }
-	
-	      return segments.join(_sep);
-	    };
-	  };
-	
-	  // This takes place outside the above loop because we don't want, e.g., encodeUrnPath functions.
-	  URI.decodePath = generateSegmentedPathFunction('/', 'decodePathSegment');
-	  URI.decodeUrnPath = generateSegmentedPathFunction(':', 'decodeUrnPathSegment');
-	  URI.recodePath = generateSegmentedPathFunction('/', 'encodePathSegment', 'decode');
-	  URI.recodeUrnPath = generateSegmentedPathFunction(':', 'encodeUrnPathSegment', 'decode');
-	
-	  URI.encodeReserved = generateAccessor('reserved', 'encode');
-	
-	  URI.parse = function(string, parts) {
-	    var pos;
-	    if (!parts) {
-	      parts = {};
-	    }
-	    // [protocol"://"[username[":"password]"@"]hostname[":"port]"/"?][path]["?"querystring]["#"fragment]
-	
-	    // extract fragment
-	    pos = string.indexOf('#');
-	    if (pos > -1) {
-	      // escaping?
-	      parts.fragment = string.substring(pos + 1) || null;
-	      string = string.substring(0, pos);
-	    }
-	
-	    // extract query
-	    pos = string.indexOf('?');
-	    if (pos > -1) {
-	      // escaping?
-	      parts.query = string.substring(pos + 1) || null;
-	      string = string.substring(0, pos);
-	    }
-	
-	    // extract protocol
-	    if (string.substring(0, 2) === '//') {
-	      // relative-scheme
-	      parts.protocol = null;
-	      string = string.substring(2);
-	      // extract "user:pass@host:port"
-	      string = URI.parseAuthority(string, parts);
-	    } else {
-	      pos = string.indexOf(':');
-	      if (pos > -1) {
-	        parts.protocol = string.substring(0, pos) || null;
-	        if (parts.protocol && !parts.protocol.match(URI.protocol_expression)) {
-	          // : may be within the path
-	          parts.protocol = undefined;
-	        } else if (string.substring(pos + 1, pos + 3) === '//') {
-	          string = string.substring(pos + 3);
-	
-	          // extract "user:pass@host:port"
-	          string = URI.parseAuthority(string, parts);
-	        } else {
-	          string = string.substring(pos + 1);
-	          parts.urn = true;
-	        }
-	      }
-	    }
-	
-	    // what's left must be the path
-	    parts.path = string;
-	
-	    // and we're done
-	    return parts;
-	  };
-	  URI.parseHost = function(string, parts) {
-	    // Copy chrome, IE, opera backslash-handling behavior.
-	    // Back slashes before the query string get converted to forward slashes
-	    // See: https://github.com/joyent/node/blob/386fd24f49b0e9d1a8a076592a404168faeecc34/lib/url.js#L115-L124
-	    // See: https://code.google.com/p/chromium/issues/detail?id=25916
-	    // https://github.com/medialize/URI.js/pull/233
-	    string = string.replace(/\\/g, '/');
-	
-	    // extract host:port
-	    var pos = string.indexOf('/');
-	    var bracketPos;
-	    var t;
-	
-	    if (pos === -1) {
-	      pos = string.length;
-	    }
-	
-	    if (string.charAt(0) === '[') {
-	      // IPv6 host - http://tools.ietf.org/html/draft-ietf-6man-text-addr-representation-04#section-6
-	      // I claim most client software breaks on IPv6 anyways. To simplify things, URI only accepts
-	      // IPv6+port in the format [2001:db8::1]:80 (for the time being)
-	      bracketPos = string.indexOf(']');
-	      parts.hostname = string.substring(1, bracketPos) || null;
-	      parts.port = string.substring(bracketPos + 2, pos) || null;
-	      if (parts.port === '/') {
-	        parts.port = null;
-	      }
-	    } else {
-	      var firstColon = string.indexOf(':');
-	      var firstSlash = string.indexOf('/');
-	      var nextColon = string.indexOf(':', firstColon + 1);
-	      if (nextColon !== -1 && (firstSlash === -1 || nextColon < firstSlash)) {
-	        // IPv6 host contains multiple colons - but no port
-	        // this notation is actually not allowed by RFC 3986, but we're a liberal parser
-	        parts.hostname = string.substring(0, pos) || null;
-	        parts.port = null;
-	      } else {
-	        t = string.substring(0, pos).split(':');
-	        parts.hostname = t[0] || null;
-	        parts.port = t[1] || null;
-	      }
-	    }
-	
-	    if (parts.hostname && string.substring(pos).charAt(0) !== '/') {
-	      pos++;
-	      string = '/' + string;
-	    }
-	
-	    return string.substring(pos) || '/';
-	  };
-	  URI.parseAuthority = function(string, parts) {
-	    string = URI.parseUserinfo(string, parts);
-	    return URI.parseHost(string, parts);
-	  };
-	  URI.parseUserinfo = function(string, parts) {
-	    // extract username:password
-	    var firstSlash = string.indexOf('/');
-	    var pos = string.lastIndexOf('@', firstSlash > -1 ? firstSlash : string.length - 1);
-	    var t;
-	
-	    // authority@ must come before /path
-	    if (pos > -1 && (firstSlash === -1 || pos < firstSlash)) {
-	      t = string.substring(0, pos).split(':');
-	      parts.username = t[0] ? URI.decode(t[0]) : null;
-	      t.shift();
-	      parts.password = t[0] ? URI.decode(t.join(':')) : null;
-	      string = string.substring(pos + 1);
-	    } else {
-	      parts.username = null;
-	      parts.password = null;
-	    }
-	
-	    return string;
-	  };
-	  URI.parseQuery = function(string, escapeQuerySpace) {
-	    if (!string) {
-	      return {};
-	    }
-	
-	    // throw out the funky business - "?"[name"="value"&"]+
-	    string = string.replace(/&+/g, '&').replace(/^\?*&*|&+$/g, '');
-	
-	    if (!string) {
-	      return {};
-	    }
-	
-	    var items = {};
-	    var splits = string.split('&');
-	    var length = splits.length;
-	    var v, name, value;
-	
-	    for (var i = 0; i < length; i++) {
-	      v = splits[i].split('=');
-	      name = URI.decodeQuery(v.shift(), escapeQuerySpace);
-	      // no "=" is null according to http://dvcs.w3.org/hg/url/raw-file/tip/Overview.html#collect-url-parameters
-	      value = v.length ? URI.decodeQuery(v.join('='), escapeQuerySpace) : null;
-	
-	      if (hasOwn.call(items, name)) {
-	        if (typeof items[name] === 'string' || items[name] === null) {
-	          items[name] = [items[name]];
-	        }
-	
-	        items[name].push(value);
-	      } else {
-	        items[name] = value;
-	      }
-	    }
-	
-	    return items;
-	  };
-	
-	  URI.build = function(parts) {
-	    var t = '';
-	
-	    if (parts.protocol) {
-	      t += parts.protocol + ':';
-	    }
-	
-	    if (!parts.urn && (t || parts.hostname)) {
-	      t += '//';
-	    }
-	
-	    t += (URI.buildAuthority(parts) || '');
-	
-	    if (typeof parts.path === 'string') {
-	      if (parts.path.charAt(0) !== '/' && typeof parts.hostname === 'string') {
-	        t += '/';
-	      }
-	
-	      t += parts.path;
-	    }
-	
-	    if (typeof parts.query === 'string' && parts.query) {
-	      t += '?' + parts.query;
-	    }
-	
-	    if (typeof parts.fragment === 'string' && parts.fragment) {
-	      t += '#' + parts.fragment;
-	    }
-	    return t;
-	  };
-	  URI.buildHost = function(parts) {
-	    var t = '';
-	
-	    if (!parts.hostname) {
-	      return '';
-	    } else if (URI.ip6_expression.test(parts.hostname)) {
-	      t += '[' + parts.hostname + ']';
-	    } else {
-	      t += parts.hostname;
-	    }
-	
-	    if (parts.port) {
-	      t += ':' + parts.port;
-	    }
-	
-	    return t;
-	  };
-	  URI.buildAuthority = function(parts) {
-	    return URI.buildUserinfo(parts) + URI.buildHost(parts);
-	  };
-	  URI.buildUserinfo = function(parts) {
-	    var t = '';
-	
-	    if (parts.username) {
-	      t += URI.encode(parts.username);
-	
-	      if (parts.password) {
-	        t += ':' + URI.encode(parts.password);
-	      }
-	
-	      t += '@';
-	    }
-	
-	    return t;
-	  };
-	  URI.buildQuery = function(data, duplicateQueryParameters, escapeQuerySpace) {
-	    // according to http://tools.ietf.org/html/rfc3986 or http://labs.apache.org/webarch/uri/rfc/rfc3986.html
-	    // being »-._~!$&'()*+,;=:@/?« %HEX and alnum are allowed
-	    // the RFC explicitly states ?/foo being a valid use case, no mention of parameter syntax!
-	    // URI.js treats the query string as being application/x-www-form-urlencoded
-	    // see http://www.w3.org/TR/REC-html40/interact/forms.html#form-content-type
-	
-	    var t = '';
-	    var unique, key, i, length;
-	    for (key in data) {
-	      if (hasOwn.call(data, key) && key) {
-	        if (isArray(data[key])) {
-	          unique = {};
-	          for (i = 0, length = data[key].length; i < length; i++) {
-	            if (data[key][i] !== undefined && unique[data[key][i] + ''] === undefined) {
-	              t += '&' + URI.buildQueryParameter(key, data[key][i], escapeQuerySpace);
-	              if (duplicateQueryParameters !== true) {
-	                unique[data[key][i] + ''] = true;
-	              }
-	            }
-	          }
-	        } else if (data[key] !== undefined) {
-	          t += '&' + URI.buildQueryParameter(key, data[key], escapeQuerySpace);
-	        }
-	      }
-	    }
-	
-	    return t.substring(1);
-	  };
-	  URI.buildQueryParameter = function(name, value, escapeQuerySpace) {
-	    // http://www.w3.org/TR/REC-html40/interact/forms.html#form-content-type -- application/x-www-form-urlencoded
-	    // don't append "=" for null values, according to http://dvcs.w3.org/hg/url/raw-file/tip/Overview.html#url-parameter-serialization
-	    return URI.encodeQuery(name, escapeQuerySpace) + (value !== null ? '=' + URI.encodeQuery(value, escapeQuerySpace) : '');
-	  };
-	
-	  URI.addQuery = function(data, name, value) {
-	    if (typeof name === 'object') {
-	      for (var key in name) {
-	        if (hasOwn.call(name, key)) {
-	          URI.addQuery(data, key, name[key]);
-	        }
-	      }
-	    } else if (typeof name === 'string') {
-	      if (data[name] === undefined) {
-	        data[name] = value;
-	        return;
-	      } else if (typeof data[name] === 'string') {
-	        data[name] = [data[name]];
-	      }
-	
-	      if (!isArray(value)) {
-	        value = [value];
-	      }
-	
-	      data[name] = (data[name] || []).concat(value);
-	    } else {
-	      throw new TypeError('URI.addQuery() accepts an object, string as the name parameter');
-	    }
-	  };
-	  URI.removeQuery = function(data, name, value) {
-	    var i, length, key;
-	
-	    if (isArray(name)) {
-	      for (i = 0, length = name.length; i < length; i++) {
-	        data[name[i]] = undefined;
-	      }
-	    } else if (getType(name) === 'RegExp') {
-	      for (key in data) {
-	        if (name.test(key)) {
-	          data[key] = undefined;
-	        }
-	      }
-	    } else if (typeof name === 'object') {
-	      for (key in name) {
-	        if (hasOwn.call(name, key)) {
-	          URI.removeQuery(data, key, name[key]);
-	        }
-	      }
-	    } else if (typeof name === 'string') {
-	      if (value !== undefined) {
-	        if (getType(value) === 'RegExp') {
-	          if (!isArray(data[name]) && value.test(data[name])) {
-	            data[name] = undefined;
-	          } else {
-	            data[name] = filterArrayValues(data[name], value);
-	          }
-	        } else if (data[name] === value) {
-	          data[name] = undefined;
-	        } else if (isArray(data[name])) {
-	          data[name] = filterArrayValues(data[name], value);
-	        }
-	      } else {
-	        data[name] = undefined;
-	      }
-	    } else {
-	      throw new TypeError('URI.removeQuery() accepts an object, string, RegExp as the first parameter');
-	    }
-	  };
-	  URI.hasQuery = function(data, name, value, withinArray) {
-	    if (typeof name === 'object') {
-	      for (var key in name) {
-	        if (hasOwn.call(name, key)) {
-	          if (!URI.hasQuery(data, key, name[key])) {
-	            return false;
-	          }
-	        }
-	      }
-	
-	      return true;
-	    } else if (typeof name !== 'string') {
-	      throw new TypeError('URI.hasQuery() accepts an object, string as the name parameter');
-	    }
-	
-	    switch (getType(value)) {
-	      case 'Undefined':
-	        // true if exists (but may be empty)
-	        return name in data; // data[name] !== undefined;
-	
-	      case 'Boolean':
-	        // true if exists and non-empty
-	        var _booly = Boolean(isArray(data[name]) ? data[name].length : data[name]);
-	        return value === _booly;
-	
-	      case 'Function':
-	        // allow complex comparison
-	        return !!value(data[name], name, data);
-	
-	      case 'Array':
-	        if (!isArray(data[name])) {
-	          return false;
-	        }
-	
-	        var op = withinArray ? arrayContains : arraysEqual;
-	        return op(data[name], value);
-	
-	      case 'RegExp':
-	        if (!isArray(data[name])) {
-	          return Boolean(data[name] && data[name].match(value));
-	        }
-	
-	        if (!withinArray) {
-	          return false;
-	        }
-	
-	        return arrayContains(data[name], value);
-	
-	      case 'Number':
-	        value = String(value);
-	        /* falls through */
-	      case 'String':
-	        if (!isArray(data[name])) {
-	          return data[name] === value;
-	        }
-	
-	        if (!withinArray) {
-	          return false;
-	        }
-	
-	        return arrayContains(data[name], value);
-	
-	      default:
-	        throw new TypeError('URI.hasQuery() accepts undefined, boolean, string, number, RegExp, Function as the value parameter');
-	    }
-	  };
-	
-	
-	  URI.commonPath = function(one, two) {
-	    var length = Math.min(one.length, two.length);
-	    var pos;
-	
-	    // find first non-matching character
-	    for (pos = 0; pos < length; pos++) {
-	      if (one.charAt(pos) !== two.charAt(pos)) {
-	        pos--;
-	        break;
-	      }
-	    }
-	
-	    if (pos < 1) {
-	      return one.charAt(0) === two.charAt(0) && one.charAt(0) === '/' ? '/' : '';
-	    }
-	
-	    // revert to last /
-	    if (one.charAt(pos) !== '/' || two.charAt(pos) !== '/') {
-	      pos = one.substring(0, pos).lastIndexOf('/');
-	    }
-	
-	    return one.substring(0, pos + 1);
-	  };
-	
-	  URI.withinString = function(string, callback, options) {
-	    options || (options = {});
-	    var _start = options.start || URI.findUri.start;
-	    var _end = options.end || URI.findUri.end;
-	    var _trim = options.trim || URI.findUri.trim;
-	    var _attributeOpen = /[a-z0-9-]=["']?$/i;
-	
-	    _start.lastIndex = 0;
-	    while (true) {
-	      var match = _start.exec(string);
-	      if (!match) {
-	        break;
-	      }
-	
-	      var start = match.index;
-	      if (options.ignoreHtml) {
-	        // attribut(e=["']?$)
-	        var attributeOpen = string.slice(Math.max(start - 3, 0), start);
-	        if (attributeOpen && _attributeOpen.test(attributeOpen)) {
-	          continue;
-	        }
-	      }
-	
-	      var end = start + string.slice(start).search(_end);
-	      var slice = string.slice(start, end).replace(_trim, '');
-	      if (options.ignore && options.ignore.test(slice)) {
-	        continue;
-	      }
-	
-	      end = start + slice.length;
-	      var result = callback(slice, start, end, string);
-	      string = string.slice(0, start) + result + string.slice(end);
-	      _start.lastIndex = start + result.length;
-	    }
-	
-	    _start.lastIndex = 0;
-	    return string;
-	  };
-	
-	  URI.ensureValidHostname = function(v) {
-	    // Theoretically URIs allow percent-encoding in Hostnames (according to RFC 3986)
-	    // they are not part of DNS and therefore ignored by URI.js
-	
-	    if (v.match(URI.invalid_hostname_characters)) {
-	      // test punycode
-	      if (!punycode) {
-	        throw new TypeError('Hostname "' + v + '" contains characters other than [A-Z0-9.-] and Punycode.js is not available');
-	      }
-	
-	      if (punycode.toASCII(v).match(URI.invalid_hostname_characters)) {
-	        throw new TypeError('Hostname "' + v + '" contains characters other than [A-Z0-9.-]');
-	      }
-	    }
-	  };
-	
-	  // noConflict
-	  URI.noConflict = function(removeAll) {
-	    if (removeAll) {
-	      var unconflicted = {
-	        URI: this.noConflict()
-	      };
-	
-	      if (root.URITemplate && typeof root.URITemplate.noConflict === 'function') {
-	        unconflicted.URITemplate = root.URITemplate.noConflict();
-	      }
-	
-	      if (root.IPv6 && typeof root.IPv6.noConflict === 'function') {
-	        unconflicted.IPv6 = root.IPv6.noConflict();
-	      }
-	
-	      if (root.SecondLevelDomains && typeof root.SecondLevelDomains.noConflict === 'function') {
-	        unconflicted.SecondLevelDomains = root.SecondLevelDomains.noConflict();
-	      }
-	
-	      return unconflicted;
-	    } else if (root.URI === this) {
-	      root.URI = _URI;
-	    }
-	
-	    return this;
-	  };
-	
-	  p.build = function(deferBuild) {
-	    if (deferBuild === true) {
-	      this._deferred_build = true;
-	    } else if (deferBuild === undefined || this._deferred_build) {
-	      this._string = URI.build(this._parts);
-	      this._deferred_build = false;
-	    }
-	
-	    return this;
-	  };
-	
-	  p.clone = function() {
-	    return new URI(this);
-	  };
-	
-	  p.valueOf = p.toString = function() {
-	    return this.build(false)._string;
-	  };
-	
-	
-	  function generateSimpleAccessor(_part){
-	    return function(v, build) {
-	      if (v === undefined) {
-	        return this._parts[_part] || '';
-	      } else {
-	        this._parts[_part] = v || null;
-	        this.build(!build);
-	        return this;
-	      }
-	    };
-	  }
-	
-	  function generatePrefixAccessor(_part, _key){
-	    return function(v, build) {
-	      if (v === undefined) {
-	        return this._parts[_part] || '';
-	      } else {
-	        if (v !== null) {
-	          v = v + '';
-	          if (v.charAt(0) === _key) {
-	            v = v.substring(1);
-	          }
-	        }
-	
-	        this._parts[_part] = v;
-	        this.build(!build);
-	        return this;
-	      }
-	    };
-	  }
-	
-	  p.protocol = generateSimpleAccessor('protocol');
-	  p.username = generateSimpleAccessor('username');
-	  p.password = generateSimpleAccessor('password');
-	  p.hostname = generateSimpleAccessor('hostname');
-	  p.port = generateSimpleAccessor('port');
-	  p.query = generatePrefixAccessor('query', '?');
-	  p.fragment = generatePrefixAccessor('fragment', '#');
-	
-	  p.search = function(v, build) {
-	    var t = this.query(v, build);
-	    return typeof t === 'string' && t.length ? ('?' + t) : t;
-	  };
-	  p.hash = function(v, build) {
-	    var t = this.fragment(v, build);
-	    return typeof t === 'string' && t.length ? ('#' + t) : t;
-	  };
-	
-	  p.pathname = function(v, build) {
-	    if (v === undefined || v === true) {
-	      var res = this._parts.path || (this._parts.hostname ? '/' : '');
-	      return v ? (this._parts.urn ? URI.decodeUrnPath : URI.decodePath)(res) : res;
-	    } else {
-	      if (this._parts.urn) {
-	        this._parts.path = v ? URI.recodeUrnPath(v) : '';
-	      } else {
-	        this._parts.path = v ? URI.recodePath(v) : '/';
-	      }
-	      this.build(!build);
-	      return this;
-	    }
-	  };
-	  p.path = p.pathname;
-	  p.href = function(href, build) {
-	    var key;
-	
-	    if (href === undefined) {
-	      return this.toString();
-	    }
-	
-	    this._string = '';
-	    this._parts = URI._parts();
-	
-	    var _URI = href instanceof URI;
-	    var _object = typeof href === 'object' && (href.hostname || href.path || href.pathname);
-	    if (href.nodeName) {
-	      var attribute = URI.getDomAttribute(href);
-	      href = href[attribute] || '';
-	      _object = false;
-	    }
-	
-	    // window.location is reported to be an object, but it's not the sort
-	    // of object we're looking for:
-	    // * location.protocol ends with a colon
-	    // * location.query != object.search
-	    // * location.hash != object.fragment
-	    // simply serializing the unknown object should do the trick
-	    // (for location, not for everything...)
-	    if (!_URI && _object && href.pathname !== undefined) {
-	      href = href.toString();
-	    }
-	
-	    if (typeof href === 'string' || href instanceof String) {
-	      this._parts = URI.parse(String(href), this._parts);
-	    } else if (_URI || _object) {
-	      var src = _URI ? href._parts : href;
-	      for (key in src) {
-	        if (hasOwn.call(this._parts, key)) {
-	          this._parts[key] = src[key];
-	        }
-	      }
-	    } else {
-	      throw new TypeError('invalid input');
-	    }
-	
-	    this.build(!build);
-	    return this;
-	  };
-	
-	  // identification accessors
-	  p.is = function(what) {
-	    var ip = false;
-	    var ip4 = false;
-	    var ip6 = false;
-	    var name = false;
-	    var sld = false;
-	    var idn = false;
-	    var punycode = false;
-	    var relative = !this._parts.urn;
-	
-	    if (this._parts.hostname) {
-	      relative = false;
-	      ip4 = URI.ip4_expression.test(this._parts.hostname);
-	      ip6 = URI.ip6_expression.test(this._parts.hostname);
-	      ip = ip4 || ip6;
-	      name = !ip;
-	      sld = name && SLD && SLD.has(this._parts.hostname);
-	      idn = name && URI.idn_expression.test(this._parts.hostname);
-	      punycode = name && URI.punycode_expression.test(this._parts.hostname);
-	    }
-	
-	    switch (what.toLowerCase()) {
-	      case 'relative':
-	        return relative;
-	
-	      case 'absolute':
-	        return !relative;
-	
-	      // hostname identification
-	      case 'domain':
-	      case 'name':
-	        return name;
-	
-	      case 'sld':
-	        return sld;
-	
-	      case 'ip':
-	        return ip;
-	
-	      case 'ip4':
-	      case 'ipv4':
-	      case 'inet4':
-	        return ip4;
-	
-	      case 'ip6':
-	      case 'ipv6':
-	      case 'inet6':
-	        return ip6;
-	
-	      case 'idn':
-	        return idn;
-	
-	      case 'url':
-	        return !this._parts.urn;
-	
-	      case 'urn':
-	        return !!this._parts.urn;
-	
-	      case 'punycode':
-	        return punycode;
-	    }
-	
-	    return null;
-	  };
-	
-	  // component specific input validation
-	  var _protocol = p.protocol;
-	  var _port = p.port;
-	  var _hostname = p.hostname;
-	
-	  p.protocol = function(v, build) {
-	    if (v !== undefined) {
-	      if (v) {
-	        // accept trailing ://
-	        v = v.replace(/:(\/\/)?$/, '');
-	
-	        if (!v.match(URI.protocol_expression)) {
-	          throw new TypeError('Protocol "' + v + '" contains characters other than [A-Z0-9.+-] or doesn\'t start with [A-Z]');
-	        }
-	      }
-	    }
-	    return _protocol.call(this, v, build);
-	  };
-	  p.scheme = p.protocol;
-	  p.port = function(v, build) {
-	    if (this._parts.urn) {
-	      return v === undefined ? '' : this;
-	    }
-	
-	    if (v !== undefined) {
-	      if (v === 0) {
-	        v = null;
-	      }
-	
-	      if (v) {
-	        v += '';
-	        if (v.charAt(0) === ':') {
-	          v = v.substring(1);
-	        }
-	
-	        if (v.match(/[^0-9]/)) {
-	          throw new TypeError('Port "' + v + '" contains characters other than [0-9]');
-	        }
-	      }
-	    }
-	    return _port.call(this, v, build);
-	  };
-	  p.hostname = function(v, build) {
-	    if (this._parts.urn) {
-	      return v === undefined ? '' : this;
-	    }
-	
-	    if (v !== undefined) {
-	      var x = {};
-	      var res = URI.parseHost(v, x);
-	      if (res !== '/') {
-	        throw new TypeError('Hostname "' + v + '" contains characters other than [A-Z0-9.-]');
-	      }
-	
-	      v = x.hostname;
-	    }
-	    return _hostname.call(this, v, build);
-	  };
-	
-	  // compound accessors
-	  p.host = function(v, build) {
-	    if (this._parts.urn) {
-	      return v === undefined ? '' : this;
-	    }
-	
-	    if (v === undefined) {
-	      return this._parts.hostname ? URI.buildHost(this._parts) : '';
-	    } else {
-	      var res = URI.parseHost(v, this._parts);
-	      if (res !== '/') {
-	        throw new TypeError('Hostname "' + v + '" contains characters other than [A-Z0-9.-]');
-	      }
-	
-	      this.build(!build);
-	      return this;
-	    }
-	  };
-	  p.authority = function(v, build) {
-	    if (this._parts.urn) {
-	      return v === undefined ? '' : this;
-	    }
-	
-	    if (v === undefined) {
-	      return this._parts.hostname ? URI.buildAuthority(this._parts) : '';
-	    } else {
-	      var res = URI.parseAuthority(v, this._parts);
-	      if (res !== '/') {
-	        throw new TypeError('Hostname "' + v + '" contains characters other than [A-Z0-9.-]');
-	      }
-	
-	      this.build(!build);
-	      return this;
-	    }
-	  };
-	  p.userinfo = function(v, build) {
-	    if (this._parts.urn) {
-	      return v === undefined ? '' : this;
-	    }
-	
-	    if (v === undefined) {
-	      if (!this._parts.username) {
-	        return '';
-	      }
-	
-	      var t = URI.buildUserinfo(this._parts);
-	      return t.substring(0, t.length -1);
-	    } else {
-	      if (v[v.length-1] !== '@') {
-	        v += '@';
-	      }
-	
-	      URI.parseUserinfo(v, this._parts);
-	      this.build(!build);
-	      return this;
-	    }
-	  };
-	  p.resource = function(v, build) {
-	    var parts;
-	
-	    if (v === undefined) {
-	      return this.path() + this.search() + this.hash();
-	    }
-	
-	    parts = URI.parse(v);
-	    this._parts.path = parts.path;
-	    this._parts.query = parts.query;
-	    this._parts.fragment = parts.fragment;
-	    this.build(!build);
-	    return this;
-	  };
-	
-	  // fraction accessors
-	  p.subdomain = function(v, build) {
-	    if (this._parts.urn) {
-	      return v === undefined ? '' : this;
-	    }
-	
-	    // convenience, return "www" from "www.example.org"
-	    if (v === undefined) {
-	      if (!this._parts.hostname || this.is('IP')) {
-	        return '';
-	      }
-	
-	      // grab domain and add another segment
-	      var end = this._parts.hostname.length - this.domain().length - 1;
-	      return this._parts.hostname.substring(0, end) || '';
-	    } else {
-	      var e = this._parts.hostname.length - this.domain().length;
-	      var sub = this._parts.hostname.substring(0, e);
-	      var replace = new RegExp('^' + escapeRegEx(sub));
-	
-	      if (v && v.charAt(v.length - 1) !== '.') {
-	        v += '.';
-	      }
-	
-	      if (v) {
-	        URI.ensureValidHostname(v);
-	      }
-	
-	      this._parts.hostname = this._parts.hostname.replace(replace, v);
-	      this.build(!build);
-	      return this;
-	    }
-	  };
-	  p.domain = function(v, build) {
-	    if (this._parts.urn) {
-	      return v === undefined ? '' : this;
-	    }
-	
-	    if (typeof v === 'boolean') {
-	      build = v;
-	      v = undefined;
-	    }
-	
-	    // convenience, return "example.org" from "www.example.org"
-	    if (v === undefined) {
-	      if (!this._parts.hostname || this.is('IP')) {
-	        return '';
-	      }
-	
-	      // if hostname consists of 1 or 2 segments, it must be the domain
-	      var t = this._parts.hostname.match(/\./g);
-	      if (t && t.length < 2) {
-	        return this._parts.hostname;
-	      }
-	
-	      // grab tld and add another segment
-	      var end = this._parts.hostname.length - this.tld(build).length - 1;
-	      end = this._parts.hostname.lastIndexOf('.', end -1) + 1;
-	      return this._parts.hostname.substring(end) || '';
-	    } else {
-	      if (!v) {
-	        throw new TypeError('cannot set domain empty');
-	      }
-	
-	      URI.ensureValidHostname(v);
-	
-	      if (!this._parts.hostname || this.is('IP')) {
-	        this._parts.hostname = v;
-	      } else {
-	        var replace = new RegExp(escapeRegEx(this.domain()) + '$');
-	        this._parts.hostname = this._parts.hostname.replace(replace, v);
-	      }
-	
-	      this.build(!build);
-	      return this;
-	    }
-	  };
-	  p.tld = function(v, build) {
-	    if (this._parts.urn) {
-	      return v === undefined ? '' : this;
-	    }
-	
-	    if (typeof v === 'boolean') {
-	      build = v;
-	      v = undefined;
-	    }
-	
-	    // return "org" from "www.example.org"
-	    if (v === undefined) {
-	      if (!this._parts.hostname || this.is('IP')) {
-	        return '';
-	      }
-	
-	      var pos = this._parts.hostname.lastIndexOf('.');
-	      var tld = this._parts.hostname.substring(pos + 1);
-	
-	      if (build !== true && SLD && SLD.list[tld.toLowerCase()]) {
-	        return SLD.get(this._parts.hostname) || tld;
-	      }
-	
-	      return tld;
-	    } else {
-	      var replace;
-	
-	      if (!v) {
-	        throw new TypeError('cannot set TLD empty');
-	      } else if (v.match(/[^a-zA-Z0-9-]/)) {
-	        if (SLD && SLD.is(v)) {
-	          replace = new RegExp(escapeRegEx(this.tld()) + '$');
-	          this._parts.hostname = this._parts.hostname.replace(replace, v);
-	        } else {
-	          throw new TypeError('TLD "' + v + '" contains characters other than [A-Z0-9]');
-	        }
-	      } else if (!this._parts.hostname || this.is('IP')) {
-	        throw new ReferenceError('cannot set TLD on non-domain host');
-	      } else {
-	        replace = new RegExp(escapeRegEx(this.tld()) + '$');
-	        this._parts.hostname = this._parts.hostname.replace(replace, v);
-	      }
-	
-	      this.build(!build);
-	      return this;
-	    }
-	  };
-	  p.directory = function(v, build) {
-	    if (this._parts.urn) {
-	      return v === undefined ? '' : this;
-	    }
-	
-	    if (v === undefined || v === true) {
-	      if (!this._parts.path && !this._parts.hostname) {
-	        return '';
-	      }
-	
-	      if (this._parts.path === '/') {
-	        return '/';
-	      }
-	
-	      var end = this._parts.path.length - this.filename().length - 1;
-	      var res = this._parts.path.substring(0, end) || (this._parts.hostname ? '/' : '');
-	
-	      return v ? URI.decodePath(res) : res;
-	
-	    } else {
-	      var e = this._parts.path.length - this.filename().length;
-	      var directory = this._parts.path.substring(0, e);
-	      var replace = new RegExp('^' + escapeRegEx(directory));
-	
-	      // fully qualifier directories begin with a slash
-	      if (!this.is('relative')) {
-	        if (!v) {
-	          v = '/';
-	        }
-	
-	        if (v.charAt(0) !== '/') {
-	          v = '/' + v;
-	        }
-	      }
-	
-	      // directories always end with a slash
-	      if (v && v.charAt(v.length - 1) !== '/') {
-	        v += '/';
-	      }
-	
-	      v = URI.recodePath(v);
-	      this._parts.path = this._parts.path.replace(replace, v);
-	      this.build(!build);
-	      return this;
-	    }
-	  };
-	  p.filename = function(v, build) {
-	    if (this._parts.urn) {
-	      return v === undefined ? '' : this;
-	    }
-	
-	    if (v === undefined || v === true) {
-	      if (!this._parts.path || this._parts.path === '/') {
-	        return '';
-	      }
-	
-	      var pos = this._parts.path.lastIndexOf('/');
-	      var res = this._parts.path.substring(pos+1);
-	
-	      return v ? URI.decodePathSegment(res) : res;
-	    } else {
-	      var mutatedDirectory = false;
-	
-	      if (v.charAt(0) === '/') {
-	        v = v.substring(1);
-	      }
-	
-	      if (v.match(/\.?\//)) {
-	        mutatedDirectory = true;
-	      }
-	
-	      var replace = new RegExp(escapeRegEx(this.filename()) + '$');
-	      v = URI.recodePath(v);
-	      this._parts.path = this._parts.path.replace(replace, v);
-	
-	      if (mutatedDirectory) {
-	        this.normalizePath(build);
-	      } else {
-	        this.build(!build);
-	      }
-	
-	      return this;
-	    }
-	  };
-	  p.suffix = function(v, build) {
-	    if (this._parts.urn) {
-	      return v === undefined ? '' : this;
-	    }
-	
-	    if (v === undefined || v === true) {
-	      if (!this._parts.path || this._parts.path === '/') {
-	        return '';
-	      }
-	
-	      var filename = this.filename();
-	      var pos = filename.lastIndexOf('.');
-	      var s, res;
-	
-	      if (pos === -1) {
-	        return '';
-	      }
-	
-	      // suffix may only contain alnum characters (yup, I made this up.)
-	      s = filename.substring(pos+1);
-	      res = (/^[a-z0-9%]+$/i).test(s) ? s : '';
-	      return v ? URI.decodePathSegment(res) : res;
-	    } else {
-	      if (v.charAt(0) === '.') {
-	        v = v.substring(1);
-	      }
-	
-	      var suffix = this.suffix();
-	      var replace;
-	
-	      if (!suffix) {
-	        if (!v) {
-	          return this;
-	        }
-	
-	        this._parts.path += '.' + URI.recodePath(v);
-	      } else if (!v) {
-	        replace = new RegExp(escapeRegEx('.' + suffix) + '$');
-	      } else {
-	        replace = new RegExp(escapeRegEx(suffix) + '$');
-	      }
-	
-	      if (replace) {
-	        v = URI.recodePath(v);
-	        this._parts.path = this._parts.path.replace(replace, v);
-	      }
-	
-	      this.build(!build);
-	      return this;
-	    }
-	  };
-	  p.segment = function(segment, v, build) {
-	    var separator = this._parts.urn ? ':' : '/';
-	    var path = this.path();
-	    var absolute = path.substring(0, 1) === '/';
-	    var segments = path.split(separator);
-	
-	    if (segment !== undefined && typeof segment !== 'number') {
-	      build = v;
-	      v = segment;
-	      segment = undefined;
-	    }
-	
-	    if (segment !== undefined && typeof segment !== 'number') {
-	      throw new Error('Bad segment "' + segment + '", must be 0-based integer');
-	    }
-	
-	    if (absolute) {
-	      segments.shift();
-	    }
-	
-	    if (segment < 0) {
-	      // allow negative indexes to address from the end
-	      segment = Math.max(segments.length + segment, 0);
-	    }
-	
-	    if (v === undefined) {
-	      /*jshint laxbreak: true */
-	      return segment === undefined
-	        ? segments
-	        : segments[segment];
-	      /*jshint laxbreak: false */
-	    } else if (segment === null || segments[segment] === undefined) {
-	      if (isArray(v)) {
-	        segments = [];
-	        // collapse empty elements within array
-	        for (var i=0, l=v.length; i < l; i++) {
-	          if (!v[i].length && (!segments.length || !segments[segments.length -1].length)) {
-	            continue;
-	          }
-	
-	          if (segments.length && !segments[segments.length -1].length) {
-	            segments.pop();
-	          }
-	
-	          segments.push(v[i]);
-	        }
-	      } else if (v || typeof v === 'string') {
-	        if (segments[segments.length -1] === '') {
-	          // empty trailing elements have to be overwritten
-	          // to prevent results such as /foo//bar
-	          segments[segments.length -1] = v;
-	        } else {
-	          segments.push(v);
-	        }
-	      }
-	    } else {
-	      if (v) {
-	        segments[segment] = v;
-	      } else {
-	        segments.splice(segment, 1);
-	      }
-	    }
-	
-	    if (absolute) {
-	      segments.unshift('');
-	    }
-	
-	    return this.path(segments.join(separator), build);
-	  };
-	  p.segmentCoded = function(segment, v, build) {
-	    var segments, i, l;
-	
-	    if (typeof segment !== 'number') {
-	      build = v;
-	      v = segment;
-	      segment = undefined;
-	    }
-	
-	    if (v === undefined) {
-	      segments = this.segment(segment, v, build);
-	      if (!isArray(segments)) {
-	        segments = segments !== undefined ? URI.decode(segments) : undefined;
-	      } else {
-	        for (i = 0, l = segments.length; i < l; i++) {
-	          segments[i] = URI.decode(segments[i]);
-	        }
-	      }
-	
-	      return segments;
-	    }
-	
-	    if (!isArray(v)) {
-	      v = (typeof v === 'string' || v instanceof String) ? URI.encode(v) : v;
-	    } else {
-	      for (i = 0, l = v.length; i < l; i++) {
-	        v[i] = URI.encode(v[i]);
-	      }
-	    }
-	
-	    return this.segment(segment, v, build);
-	  };
-	
-	  // mutating query string
-	  var q = p.query;
-	  p.query = function(v, build) {
-	    if (v === true) {
-	      return URI.parseQuery(this._parts.query, this._parts.escapeQuerySpace);
-	    } else if (typeof v === 'function') {
-	      var data = URI.parseQuery(this._parts.query, this._parts.escapeQuerySpace);
-	      var result = v.call(this, data);
-	      this._parts.query = URI.buildQuery(result || data, this._parts.duplicateQueryParameters, this._parts.escapeQuerySpace);
-	      this.build(!build);
-	      return this;
-	    } else if (v !== undefined && typeof v !== 'string') {
-	      this._parts.query = URI.buildQuery(v, this._parts.duplicateQueryParameters, this._parts.escapeQuerySpace);
-	      this.build(!build);
-	      return this;
-	    } else {
-	      return q.call(this, v, build);
-	    }
-	  };
-	  p.setQuery = function(name, value, build) {
-	    var data = URI.parseQuery(this._parts.query, this._parts.escapeQuerySpace);
-	
-	    if (typeof name === 'string' || name instanceof String) {
-	      data[name] = value !== undefined ? value : null;
-	    } else if (typeof name === 'object') {
-	      for (var key in name) {
-	        if (hasOwn.call(name, key)) {
-	          data[key] = name[key];
-	        }
-	      }
-	    } else {
-	      throw new TypeError('URI.addQuery() accepts an object, string as the name parameter');
-	    }
-	
-	    this._parts.query = URI.buildQuery(data, this._parts.duplicateQueryParameters, this._parts.escapeQuerySpace);
-	    if (typeof name !== 'string') {
-	      build = value;
-	    }
-	
-	    this.build(!build);
-	    return this;
-	  };
-	  p.addQuery = function(name, value, build) {
-	    var data = URI.parseQuery(this._parts.query, this._parts.escapeQuerySpace);
-	    URI.addQuery(data, name, value === undefined ? null : value);
-	    this._parts.query = URI.buildQuery(data, this._parts.duplicateQueryParameters, this._parts.escapeQuerySpace);
-	    if (typeof name !== 'string') {
-	      build = value;
-	    }
-	
-	    this.build(!build);
-	    return this;
-	  };
-	  p.removeQuery = function(name, value, build) {
-	    var data = URI.parseQuery(this._parts.query, this._parts.escapeQuerySpace);
-	    URI.removeQuery(data, name, value);
-	    this._parts.query = URI.buildQuery(data, this._parts.duplicateQueryParameters, this._parts.escapeQuerySpace);
-	    if (typeof name !== 'string') {
-	      build = value;
-	    }
-	
-	    this.build(!build);
-	    return this;
-	  };
-	  p.hasQuery = function(name, value, withinArray) {
-	    var data = URI.parseQuery(this._parts.query, this._parts.escapeQuerySpace);
-	    return URI.hasQuery(data, name, value, withinArray);
-	  };
-	  p.setSearch = p.setQuery;
-	  p.addSearch = p.addQuery;
-	  p.removeSearch = p.removeQuery;
-	  p.hasSearch = p.hasQuery;
-	
-	  // sanitizing URLs
-	  p.normalize = function() {
-	    if (this._parts.urn) {
-	      return this
-	        .normalizeProtocol(false)
-	        .normalizePath(false)
-	        .normalizeQuery(false)
-	        .normalizeFragment(false)
-	        .build();
-	    }
-	
-	    return this
-	      .normalizeProtocol(false)
-	      .normalizeHostname(false)
-	      .normalizePort(false)
-	      .normalizePath(false)
-	      .normalizeQuery(false)
-	      .normalizeFragment(false)
-	      .build();
-	  };
-	  p.normalizeProtocol = function(build) {
-	    if (typeof this._parts.protocol === 'string') {
-	      this._parts.protocol = this._parts.protocol.toLowerCase();
-	      this.build(!build);
-	    }
-	
-	    return this;
-	  };
-	  p.normalizeHostname = function(build) {
-	    if (this._parts.hostname) {
-	      if (this.is('IDN') && punycode) {
-	        this._parts.hostname = punycode.toASCII(this._parts.hostname);
-	      } else if (this.is('IPv6') && IPv6) {
-	        this._parts.hostname = IPv6.best(this._parts.hostname);
-	      }
-	
-	      this._parts.hostname = this._parts.hostname.toLowerCase();
-	      this.build(!build);
-	    }
-	
-	    return this;
-	  };
-	  p.normalizePort = function(build) {
-	    // remove port of it's the protocol's default
-	    if (typeof this._parts.protocol === 'string' && this._parts.port === URI.defaultPorts[this._parts.protocol]) {
-	      this._parts.port = null;
-	      this.build(!build);
-	    }
-	
-	    return this;
-	  };
-	  p.normalizePath = function(build) {
-	    var _path = this._parts.path;
-	    if (!_path) {
-	      return this;
-	    }
-	
-	    if (this._parts.urn) {
-	      this._parts.path = URI.recodeUrnPath(this._parts.path);
-	      this.build(!build);
-	      return this;
-	    }
-	
-	    if (this._parts.path === '/') {
-	      return this;
-	    }
-	
-	    var _was_relative;
-	    var _leadingParents = '';
-	    var _parent, _pos;
-	
-	    // handle relative paths
-	    if (_path.charAt(0) !== '/') {
-	      _was_relative = true;
-	      _path = '/' + _path;
-	    }
-	
-	    // handle relative files (as opposed to directories)
-	    if (_path.slice(-3) === '/..' || _path.slice(-2) === '/.') {
-	      _path += '/';
-	    }
-	
-	    // resolve simples
-	    _path = _path
-	      .replace(/(\/(\.\/)+)|(\/\.$)/g, '/')
-	      .replace(/\/{2,}/g, '/');
-	
-	    // remember leading parents
-	    if (_was_relative) {
-	      _leadingParents = _path.substring(1).match(/^(\.\.\/)+/) || '';
-	      if (_leadingParents) {
-	        _leadingParents = _leadingParents[0];
-	      }
-	    }
-	
-	    // resolve parents
-	    while (true) {
-	      _parent = _path.indexOf('/..');
-	      if (_parent === -1) {
-	        // no more ../ to resolve
-	        break;
-	      } else if (_parent === 0) {
-	        // top level cannot be relative, skip it
-	        _path = _path.substring(3);
-	        continue;
-	      }
-	
-	      _pos = _path.substring(0, _parent).lastIndexOf('/');
-	      if (_pos === -1) {
-	        _pos = _parent;
-	      }
-	      _path = _path.substring(0, _pos) + _path.substring(_parent + 3);
-	    }
-	
-	    // revert to relative
-	    if (_was_relative && this.is('relative')) {
-	      _path = _leadingParents + _path.substring(1);
-	    }
-	
-	    _path = URI.recodePath(_path);
-	    this._parts.path = _path;
-	    this.build(!build);
-	    return this;
-	  };
-	  p.normalizePathname = p.normalizePath;
-	  p.normalizeQuery = function(build) {
-	    if (typeof this._parts.query === 'string') {
-	      if (!this._parts.query.length) {
-	        this._parts.query = null;
-	      } else {
-	        this.query(URI.parseQuery(this._parts.query, this._parts.escapeQuerySpace));
-	      }
-	
-	      this.build(!build);
-	    }
-	
-	    return this;
-	  };
-	  p.normalizeFragment = function(build) {
-	    if (!this._parts.fragment) {
-	      this._parts.fragment = null;
-	      this.build(!build);
-	    }
-	
-	    return this;
-	  };
-	  p.normalizeSearch = p.normalizeQuery;
-	  p.normalizeHash = p.normalizeFragment;
-	
-	  p.iso8859 = function() {
-	    // expect unicode input, iso8859 output
-	    var e = URI.encode;
-	    var d = URI.decode;
-	
-	    URI.encode = escape;
-	    URI.decode = decodeURIComponent;
-	    try {
-	      this.normalize();
-	    } finally {
-	      URI.encode = e;
-	      URI.decode = d;
-	    }
-	    return this;
-	  };
-	
-	  p.unicode = function() {
-	    // expect iso8859 input, unicode output
-	    var e = URI.encode;
-	    var d = URI.decode;
-	
-	    URI.encode = strictEncodeURIComponent;
-	    URI.decode = unescape;
-	    try {
-	      this.normalize();
-	    } finally {
-	      URI.encode = e;
-	      URI.decode = d;
-	    }
-	    return this;
-	  };
-	
-	  p.readable = function() {
-	    var uri = this.clone();
-	    // removing username, password, because they shouldn't be displayed according to RFC 3986
-	    uri.username('').password('').normalize();
-	    var t = '';
-	    if (uri._parts.protocol) {
-	      t += uri._parts.protocol + '://';
-	    }
-	
-	    if (uri._parts.hostname) {
-	      if (uri.is('punycode') && punycode) {
-	        t += punycode.toUnicode(uri._parts.hostname);
-	        if (uri._parts.port) {
-	          t += ':' + uri._parts.port;
-	        }
-	      } else {
-	        t += uri.host();
-	      }
-	    }
-	
-	    if (uri._parts.hostname && uri._parts.path && uri._parts.path.charAt(0) !== '/') {
-	      t += '/';
-	    }
-	
-	    t += uri.path(true);
-	    if (uri._parts.query) {
-	      var q = '';
-	      for (var i = 0, qp = uri._parts.query.split('&'), l = qp.length; i < l; i++) {
-	        var kv = (qp[i] || '').split('=');
-	        q += '&' + URI.decodeQuery(kv[0], this._parts.escapeQuerySpace)
-	          .replace(/&/g, '%26');
-	
-	        if (kv[1] !== undefined) {
-	          q += '=' + URI.decodeQuery(kv[1], this._parts.escapeQuerySpace)
-	            .replace(/&/g, '%26');
-	        }
-	      }
-	      t += '?' + q.substring(1);
-	    }
-	
-	    t += URI.decodeQuery(uri.hash(), true);
-	    return t;
-	  };
-	
-	  // resolving relative and absolute URLs
-	  p.absoluteTo = function(base) {
-	    var resolved = this.clone();
-	    var properties = ['protocol', 'username', 'password', 'hostname', 'port'];
-	    var basedir, i, p;
-	
-	    if (this._parts.urn) {
-	      throw new Error('URNs do not have any generally defined hierarchical components');
-	    }
-	
-	    if (!(base instanceof URI)) {
-	      base = new URI(base);
-	    }
-	
-	    if (!resolved._parts.protocol) {
-	      resolved._parts.protocol = base._parts.protocol;
-	    }
-	
-	    if (this._parts.hostname) {
-	      return resolved;
-	    }
-	
-	    for (i = 0; (p = properties[i]); i++) {
-	      resolved._parts[p] = base._parts[p];
-	    }
-	
-	    if (!resolved._parts.path) {
-	      resolved._parts.path = base._parts.path;
-	      if (!resolved._parts.query) {
-	        resolved._parts.query = base._parts.query;
-	      }
-	    } else if (resolved._parts.path.substring(-2) === '..') {
-	      resolved._parts.path += '/';
-	    }
-	
-	    if (resolved.path().charAt(0) !== '/') {
-	      basedir = base.directory();
-	      basedir = basedir ? basedir : base.path().indexOf('/') === 0 ? '/' : '';
-	      resolved._parts.path = (basedir ? (basedir + '/') : '') + resolved._parts.path;
-	      resolved.normalizePath();
-	    }
-	
-	    resolved.build();
-	    return resolved;
-	  };
-	  p.relativeTo = function(base) {
-	    var relative = this.clone().normalize();
-	    var relativeParts, baseParts, common, relativePath, basePath;
-	
-	    if (relative._parts.urn) {
-	      throw new Error('URNs do not have any generally defined hierarchical components');
-	    }
-	
-	    base = new URI(base).normalize();
-	    relativeParts = relative._parts;
-	    baseParts = base._parts;
-	    relativePath = relative.path();
-	    basePath = base.path();
-	
-	    if (relativePath.charAt(0) !== '/') {
-	      throw new Error('URI is already relative');
-	    }
-	
-	    if (basePath.charAt(0) !== '/') {
-	      throw new Error('Cannot calculate a URI relative to another relative URI');
-	    }
-	
-	    if (relativeParts.protocol === baseParts.protocol) {
-	      relativeParts.protocol = null;
-	    }
-	
-	    if (relativeParts.username !== baseParts.username || relativeParts.password !== baseParts.password) {
-	      return relative.build();
-	    }
-	
-	    if (relativeParts.protocol !== null || relativeParts.username !== null || relativeParts.password !== null) {
-	      return relative.build();
-	    }
-	
-	    if (relativeParts.hostname === baseParts.hostname && relativeParts.port === baseParts.port) {
-	      relativeParts.hostname = null;
-	      relativeParts.port = null;
-	    } else {
-	      return relative.build();
-	    }
-	
-	    if (relativePath === basePath) {
-	      relativeParts.path = '';
-	      return relative.build();
-	    }
-	
-	    // determine common sub path
-	    common = URI.commonPath(relativePath, basePath);
-	
-	    // If the paths have nothing in common, return a relative URL with the absolute path.
-	    if (!common) {
-	      return relative.build();
-	    }
-	
-	    var parents = baseParts.path
-	      .substring(common.length)
-	      .replace(/[^\/]*$/, '')
-	      .replace(/.*?\//g, '../');
-	
-	    relativeParts.path = (parents + relativeParts.path.substring(common.length)) || './';
-	
-	    return relative.build();
-	  };
-	
-	  // comparing URIs
-	  p.equals = function(uri) {
-	    var one = this.clone();
-	    var two = new URI(uri);
-	    var one_map = {};
-	    var two_map = {};
-	    var checked = {};
-	    var one_query, two_query, key;
-	
-	    one.normalize();
-	    two.normalize();
-	
-	    // exact match
-	    if (one.toString() === two.toString()) {
-	      return true;
-	    }
-	
-	    // extract query string
-	    one_query = one.query();
-	    two_query = two.query();
-	    one.query('');
-	    two.query('');
-	
-	    // definitely not equal if not even non-query parts match
-	    if (one.toString() !== two.toString()) {
-	      return false;
-	    }
-	
-	    // query parameters have the same length, even if they're permuted
-	    if (one_query.length !== two_query.length) {
-	      return false;
-	    }
-	
-	    one_map = URI.parseQuery(one_query, this._parts.escapeQuerySpace);
-	    two_map = URI.parseQuery(two_query, this._parts.escapeQuerySpace);
-	
-	    for (key in one_map) {
-	      if (hasOwn.call(one_map, key)) {
-	        if (!isArray(one_map[key])) {
-	          if (one_map[key] !== two_map[key]) {
-	            return false;
-	          }
-	        } else if (!arraysEqual(one_map[key], two_map[key])) {
-	          return false;
-	        }
-	
-	        checked[key] = true;
-	      }
-	    }
-	
-	    for (key in two_map) {
-	      if (hasOwn.call(two_map, key)) {
-	        if (!checked[key]) {
-	          // two contains a parameter not present in one
-	          return false;
-	        }
-	      }
-	    }
-	
-	    return true;
-	  };
-	
-	  // state
-	  p.duplicateQueryParameters = function(v) {
-	    this._parts.duplicateQueryParameters = !!v;
-	    return this;
-	  };
-	
-	  p.escapeQuerySpace = function(v) {
-	    this._parts.escapeQuerySpace = !!v;
-	    return this;
-	  };
-	
-	  return URI;
-	}));
-
-
-/***/ },
-/* 215 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! http://mths.be/punycode v1.2.3 by @mathias */
-	;(function(root) {
-	
-		/** Detect free variables */
-		var freeExports = typeof exports == 'object' && exports;
-		var freeModule = typeof module == 'object' && module &&
-			module.exports == freeExports && module;
-		var freeGlobal = typeof global == 'object' && global;
-		if (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal) {
-			root = freeGlobal;
-		}
-	
-		/**
-		 * The `punycode` object.
-		 * @name punycode
-		 * @type Object
-		 */
-		var punycode,
-	
-		/** Highest positive signed 32-bit float value */
-		maxInt = 2147483647, // aka. 0x7FFFFFFF or 2^31-1
-	
-		/** Bootstring parameters */
-		base = 36,
-		tMin = 1,
-		tMax = 26,
-		skew = 38,
-		damp = 700,
-		initialBias = 72,
-		initialN = 128, // 0x80
-		delimiter = '-', // '\x2D'
-	
-		/** Regular expressions */
-		regexPunycode = /^xn--/,
-		regexNonASCII = /[^ -~]/, // unprintable ASCII chars + non-ASCII chars
-		regexSeparators = /\x2E|\u3002|\uFF0E|\uFF61/g, // RFC 3490 separators
-	
-		/** Error messages */
-		errors = {
-			'overflow': 'Overflow: input needs wider integers to process',
-			'not-basic': 'Illegal input >= 0x80 (not a basic code point)',
-			'invalid-input': 'Invalid input'
-		},
-	
-		/** Convenience shortcuts */
-		baseMinusTMin = base - tMin,
-		floor = Math.floor,
-		stringFromCharCode = String.fromCharCode,
-	
-		/** Temporary variable */
-		key;
-	
-		/*--------------------------------------------------------------------------*/
-	
-		/**
-		 * A generic error utility function.
-		 * @private
-		 * @param {String} type The error type.
-		 * @returns {Error} Throws a `RangeError` with the applicable error message.
-		 */
-		function error(type) {
-			throw RangeError(errors[type]);
-		}
-	
-		/**
-		 * A generic `Array#map` utility function.
-		 * @private
-		 * @param {Array} array The array to iterate over.
-		 * @param {Function} callback The function that gets called for every array
-		 * item.
-		 * @returns {Array} A new array of values returned by the callback function.
-		 */
-		function map(array, fn) {
-			var length = array.length;
-			while (length--) {
-				array[length] = fn(array[length]);
-			}
-			return array;
-		}
-	
-		/**
-		 * A simple `Array#map`-like wrapper to work with domain name strings.
-		 * @private
-		 * @param {String} domain The domain name.
-		 * @param {Function} callback The function that gets called for every
-		 * character.
-		 * @returns {Array} A new string of characters returned by the callback
-		 * function.
-		 */
-		function mapDomain(string, fn) {
-			return map(string.split(regexSeparators), fn).join('.');
-		}
-	
-		/**
-		 * Creates an array containing the numeric code points of each Unicode
-		 * character in the string. While JavaScript uses UCS-2 internally,
-		 * this function will convert a pair of surrogate halves (each of which
-		 * UCS-2 exposes as separate characters) into a single code point,
-		 * matching UTF-16.
-		 * @see `punycode.ucs2.encode`
-		 * @see <http://mathiasbynens.be/notes/javascript-encoding>
-		 * @memberOf punycode.ucs2
-		 * @name decode
-		 * @param {String} string The Unicode input string (UCS-2).
-		 * @returns {Array} The new array of code points.
-		 */
-		function ucs2decode(string) {
-			var output = [],
-			    counter = 0,
-			    length = string.length,
-			    value,
-			    extra;
-			while (counter < length) {
-				value = string.charCodeAt(counter++);
-				if (value >= 0xD800 && value <= 0xDBFF && counter < length) {
-					// high surrogate, and there is a next character
-					extra = string.charCodeAt(counter++);
-					if ((extra & 0xFC00) == 0xDC00) { // low surrogate
-						output.push(((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
-					} else {
-						// unmatched surrogate; only append this code unit, in case the next
-						// code unit is the high surrogate of a surrogate pair
-						output.push(value);
-						counter--;
-					}
-				} else {
-					output.push(value);
-				}
-			}
-			return output;
-		}
-	
-		/**
-		 * Creates a string based on an array of numeric code points.
-		 * @see `punycode.ucs2.decode`
-		 * @memberOf punycode.ucs2
-		 * @name encode
-		 * @param {Array} codePoints The array of numeric code points.
-		 * @returns {String} The new Unicode string (UCS-2).
-		 */
-		function ucs2encode(array) {
-			return map(array, function(value) {
-				var output = '';
-				if (value > 0xFFFF) {
-					value -= 0x10000;
-					output += stringFromCharCode(value >>> 10 & 0x3FF | 0xD800);
-					value = 0xDC00 | value & 0x3FF;
-				}
-				output += stringFromCharCode(value);
-				return output;
-			}).join('');
-		}
-	
-		/**
-		 * Converts a basic code point into a digit/integer.
-		 * @see `digitToBasic()`
-		 * @private
-		 * @param {Number} codePoint The basic numeric code point value.
-		 * @returns {Number} The numeric value of a basic code point (for use in
-		 * representing integers) in the range `0` to `base - 1`, or `base` if
-		 * the code point does not represent a value.
-		 */
-		function basicToDigit(codePoint) {
-			if (codePoint - 48 < 10) {
-				return codePoint - 22;
-			}
-			if (codePoint - 65 < 26) {
-				return codePoint - 65;
-			}
-			if (codePoint - 97 < 26) {
-				return codePoint - 97;
-			}
-			return base;
-		}
-	
-		/**
-		 * Converts a digit/integer into a basic code point.
-		 * @see `basicToDigit()`
-		 * @private
-		 * @param {Number} digit The numeric value of a basic code point.
-		 * @returns {Number} The basic code point whose value (when used for
-		 * representing integers) is `digit`, which needs to be in the range
-		 * `0` to `base - 1`. If `flag` is non-zero, the uppercase form is
-		 * used; else, the lowercase form is used. The behavior is undefined
-		 * if `flag` is non-zero and `digit` has no uppercase form.
-		 */
-		function digitToBasic(digit, flag) {
-			//  0..25 map to ASCII a..z or A..Z
-			// 26..35 map to ASCII 0..9
-			return digit + 22 + 75 * (digit < 26) - ((flag != 0) << 5);
-		}
-	
-		/**
-		 * Bias adaptation function as per section 3.4 of RFC 3492.
-		 * http://tools.ietf.org/html/rfc3492#section-3.4
-		 * @private
-		 */
-		function adapt(delta, numPoints, firstTime) {
-			var k = 0;
-			delta = firstTime ? floor(delta / damp) : delta >> 1;
-			delta += floor(delta / numPoints);
-			for (/* no initialization */; delta > baseMinusTMin * tMax >> 1; k += base) {
-				delta = floor(delta / baseMinusTMin);
-			}
-			return floor(k + (baseMinusTMin + 1) * delta / (delta + skew));
-		}
-	
-		/**
-		 * Converts a Punycode string of ASCII-only symbols to a string of Unicode
-		 * symbols.
-		 * @memberOf punycode
-		 * @param {String} input The Punycode string of ASCII-only symbols.
-		 * @returns {String} The resulting string of Unicode symbols.
-		 */
-		function decode(input) {
-			// Don't use UCS-2
-			var output = [],
-			    inputLength = input.length,
-			    out,
-			    i = 0,
-			    n = initialN,
-			    bias = initialBias,
-			    basic,
-			    j,
-			    index,
-			    oldi,
-			    w,
-			    k,
-			    digit,
-			    t,
-			    length,
-			    /** Cached calculation results */
-			    baseMinusT;
-	
-			// Handle the basic code points: let `basic` be the number of input code
-			// points before the last delimiter, or `0` if there is none, then copy
-			// the first basic code points to the output.
-	
-			basic = input.lastIndexOf(delimiter);
-			if (basic < 0) {
-				basic = 0;
-			}
-	
-			for (j = 0; j < basic; ++j) {
-				// if it's not a basic code point
-				if (input.charCodeAt(j) >= 0x80) {
-					error('not-basic');
-				}
-				output.push(input.charCodeAt(j));
-			}
-	
-			// Main decoding loop: start just after the last delimiter if any basic code
-			// points were copied; start at the beginning otherwise.
-	
-			for (index = basic > 0 ? basic + 1 : 0; index < inputLength; /* no final expression */) {
-	
-				// `index` is the index of the next character to be consumed.
-				// Decode a generalized variable-length integer into `delta`,
-				// which gets added to `i`. The overflow checking is easier
-				// if we increase `i` as we go, then subtract off its starting
-				// value at the end to obtain `delta`.
-				for (oldi = i, w = 1, k = base; /* no condition */; k += base) {
-	
-					if (index >= inputLength) {
-						error('invalid-input');
-					}
-	
-					digit = basicToDigit(input.charCodeAt(index++));
-	
-					if (digit >= base || digit > floor((maxInt - i) / w)) {
-						error('overflow');
-					}
-	
-					i += digit * w;
-					t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
-	
-					if (digit < t) {
-						break;
-					}
-	
-					baseMinusT = base - t;
-					if (w > floor(maxInt / baseMinusT)) {
-						error('overflow');
-					}
-	
-					w *= baseMinusT;
-	
-				}
-	
-				out = output.length + 1;
-				bias = adapt(i - oldi, out, oldi == 0);
-	
-				// `i` was supposed to wrap around from `out` to `0`,
-				// incrementing `n` each time, so we'll fix that now:
-				if (floor(i / out) > maxInt - n) {
-					error('overflow');
-				}
-	
-				n += floor(i / out);
-				i %= out;
-	
-				// Insert `n` at position `i` of the output
-				output.splice(i++, 0, n);
-	
-			}
-	
-			return ucs2encode(output);
-		}
-	
-		/**
-		 * Converts a string of Unicode symbols to a Punycode string of ASCII-only
-		 * symbols.
-		 * @memberOf punycode
-		 * @param {String} input The string of Unicode symbols.
-		 * @returns {String} The resulting Punycode string of ASCII-only symbols.
-		 */
-		function encode(input) {
-			var n,
-			    delta,
-			    handledCPCount,
-			    basicLength,
-			    bias,
-			    j,
-			    m,
-			    q,
-			    k,
-			    t,
-			    currentValue,
-			    output = [],
-			    /** `inputLength` will hold the number of code points in `input`. */
-			    inputLength,
-			    /** Cached calculation results */
-			    handledCPCountPlusOne,
-			    baseMinusT,
-			    qMinusT;
-	
-			// Convert the input in UCS-2 to Unicode
-			input = ucs2decode(input);
-	
-			// Cache the length
-			inputLength = input.length;
-	
-			// Initialize the state
-			n = initialN;
-			delta = 0;
-			bias = initialBias;
-	
-			// Handle the basic code points
-			for (j = 0; j < inputLength; ++j) {
-				currentValue = input[j];
-				if (currentValue < 0x80) {
-					output.push(stringFromCharCode(currentValue));
-				}
-			}
-	
-			handledCPCount = basicLength = output.length;
-	
-			// `handledCPCount` is the number of code points that have been handled;
-			// `basicLength` is the number of basic code points.
-	
-			// Finish the basic string - if it is not empty - with a delimiter
-			if (basicLength) {
-				output.push(delimiter);
-			}
-	
-			// Main encoding loop:
-			while (handledCPCount < inputLength) {
-	
-				// All non-basic code points < n have been handled already. Find the next
-				// larger one:
-				for (m = maxInt, j = 0; j < inputLength; ++j) {
-					currentValue = input[j];
-					if (currentValue >= n && currentValue < m) {
-						m = currentValue;
-					}
-				}
-	
-				// Increase `delta` enough to advance the decoder's <n,i> state to <m,0>,
-				// but guard against overflow
-				handledCPCountPlusOne = handledCPCount + 1;
-				if (m - n > floor((maxInt - delta) / handledCPCountPlusOne)) {
-					error('overflow');
-				}
-	
-				delta += (m - n) * handledCPCountPlusOne;
-				n = m;
-	
-				for (j = 0; j < inputLength; ++j) {
-					currentValue = input[j];
-	
-					if (currentValue < n && ++delta > maxInt) {
-						error('overflow');
-					}
-	
-					if (currentValue == n) {
-						// Represent delta as a generalized variable-length integer
-						for (q = delta, k = base; /* no condition */; k += base) {
-							t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
-							if (q < t) {
-								break;
-							}
-							qMinusT = q - t;
-							baseMinusT = base - t;
-							output.push(
-								stringFromCharCode(digitToBasic(t + qMinusT % baseMinusT, 0))
-							);
-							q = floor(qMinusT / baseMinusT);
-						}
-	
-						output.push(stringFromCharCode(digitToBasic(q, 0)));
-						bias = adapt(delta, handledCPCountPlusOne, handledCPCount == basicLength);
-						delta = 0;
-						++handledCPCount;
-					}
-				}
-	
-				++delta;
-				++n;
-	
-			}
-			return output.join('');
-		}
-	
-		/**
-		 * Converts a Punycode string representing a domain name to Unicode. Only the
-		 * Punycoded parts of the domain name will be converted, i.e. it doesn't
-		 * matter if you call it on a string that has already been converted to
-		 * Unicode.
-		 * @memberOf punycode
-		 * @param {String} domain The Punycode domain name to convert to Unicode.
-		 * @returns {String} The Unicode representation of the given Punycode
-		 * string.
-		 */
-		function toUnicode(domain) {
-			return mapDomain(domain, function(string) {
-				return regexPunycode.test(string)
-					? decode(string.slice(4).toLowerCase())
-					: string;
-			});
-		}
-	
-		/**
-		 * Converts a Unicode string representing a domain name to Punycode. Only the
-		 * non-ASCII parts of the domain name will be converted, i.e. it doesn't
-		 * matter if you call it with a domain that's already in ASCII.
-		 * @memberOf punycode
-		 * @param {String} domain The domain name to convert, as a Unicode string.
-		 * @returns {String} The Punycode representation of the given domain name.
-		 */
-		function toASCII(domain) {
-			return mapDomain(domain, function(string) {
-				return regexNonASCII.test(string)
-					? 'xn--' + encode(string)
-					: string;
-			});
-		}
-	
-		/*--------------------------------------------------------------------------*/
-	
-		/** Define the public API */
-		punycode = {
-			/**
-			 * A string representing the current Punycode.js version number.
-			 * @memberOf punycode
-			 * @type String
-			 */
-			'version': '1.2.3',
-			/**
-			 * An object of methods to convert from JavaScript's internal character
-			 * representation (UCS-2) to Unicode code points, and back.
-			 * @see <http://mathiasbynens.be/notes/javascript-encoding>
-			 * @memberOf punycode
-			 * @type Object
-			 */
-			'ucs2': {
-				'decode': ucs2decode,
-				'encode': ucs2encode
-			},
-			'decode': decode,
-			'encode': encode,
-			'toASCII': toASCII,
-			'toUnicode': toUnicode
-		};
-	
-		/** Expose `punycode` */
-		// Some AMD build optimizers, like r.js, check for specific condition patterns
-		// like the following:
-		if (
-			true
-		) {
-			!(__WEBPACK_AMD_DEFINE_RESULT__ = function() {
-				return punycode;
-			}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-		}	else if (freeExports && !freeExports.nodeType) {
-			if (freeModule) { // in Node.js or RingoJS v0.8.0+
-				freeModule.exports = punycode;
-			} else { // in Narwhal or RingoJS v0.7.0-
-				for (key in punycode) {
-					punycode.hasOwnProperty(key) && (freeExports[key] = punycode[key]);
-				}
-			}
-		} else { // in Rhino or a web browser
-			root.punycode = punycode;
-		}
-	
-	}(this));
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(216)(module), (function() { return this; }())))
-
-/***/ },
 /* 216 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = function(module) {
-		if(!module.webpackPolyfill) {
-			module.deprecate = function() {};
-			module.paths = [];
-			// module.parent = undefined by default
-			module.children = [];
-			module.webpackPolyfill = 1;
-		}
-		return module;
+	'use strict';
+	
+	var required = __webpack_require__(217)
+	  , lolcation = __webpack_require__(218)
+	  , qs = __webpack_require__(219)
+	  , relativere = /^\/(?!\/)/;
+	
+	/**
+	 * These are the parse instructions for the URL parsers, it informs the parser
+	 * about:
+	 *
+	 * 0. The char it Needs to parse, if it's a string it should be done using
+	 *    indexOf, RegExp using exec and NaN means set as current value.
+	 * 1. The property we should set when parsing this value.
+	 * 2. Indication if it's backwards or forward parsing, when set as number it's
+	 *    the value of extra chars that should be split off.
+	 * 3. Inherit from location if non existing in the parser.
+	 * 4. `toLowerCase` the resulting value.
+	 */
+	var instructions = [
+	  ['#', 'hash'],                        // Extract from the back.
+	  ['?', 'query'],                       // Extract from the back.
+	  ['//', 'protocol', 2, 1, 1],          // Extract from the front.
+	  ['/', 'pathname'],                    // Extract from the back.
+	  ['@', 'auth', 1],                     // Extract from the front.
+	  [NaN, 'host', undefined, 1, 1],       // Set left over value.
+	  [/\:(\d+)$/, 'port'],                 // RegExp the back.
+	  [NaN, 'hostname', undefined, 1, 1]    // Set left over.
+	];
+	
+	/**
+	 * The actual URL instance. Instead of returning an object we've opted-in to
+	 * create an actual constructor as it's much more memory efficient and
+	 * faster and it pleases my CDO.
+	 *
+	 * @constructor
+	 * @param {String} address URL we want to parse.
+	 * @param {Boolean|function} parser Parser for the query string.
+	 * @param {Object} location Location defaults for relative paths.
+	 * @api public
+	 */
+	function URL(address, location, parser) {
+	  if (!(this instanceof URL)) {
+	    return new URL(address, location, parser);
+	  }
+	
+	  var relative = relativere.test(address)
+	    , parse, instruction, index, key
+	    , type = typeof location
+	    , url = this
+	    , i = 0;
+	
+	  //
+	  // The following if statements allows this module two have compatibility with
+	  // 2 different API:
+	  //
+	  // 1. Node.js's `url.parse` api which accepts a URL, boolean as arguments
+	  //    where the boolean indicates that the query string should also be parsed.
+	  //
+	  // 2. The `URL` interface of the browser which accepts a URL, object as
+	  //    arguments. The supplied object will be used as default values / fall-back
+	  //    for relative paths.
+	  //
+	  if ('object' !== type && 'string' !== type) {
+	    parser = location;
+	    location = null;
+	  }
+	
+	  if (parser && 'function' !== typeof parser) {
+	    parser = qs.parse;
+	  }
+	
+	  location = lolcation(location);
+	
+	  for (; i < instructions.length; i++) {
+	    instruction = instructions[i];
+	    parse = instruction[0];
+	    key = instruction[1];
+	
+	    if (parse !== parse) {
+	      url[key] = address;
+	    } else if ('string' === typeof parse) {
+	      if (~(index = address.indexOf(parse))) {
+	        if ('number' === typeof instruction[2]) {
+	          url[key] = address.slice(0, index);
+	          address = address.slice(index + instruction[2]);
+	        } else {
+	          url[key] = address.slice(index);
+	          address = address.slice(0, index);
+	        }
+	      }
+	    } else if (index = parse.exec(address)) {
+	      url[key] = index[1];
+	      address = address.slice(0, address.length - index[0].length);
+	    }
+	
+	    url[key] = url[key] || (instruction[3] || ('port' === key && relative) ? location[key] || '' : '');
+	
+	    //
+	    // Hostname, host and protocol should be lowercased so they can be used to
+	    // create a proper `origin`.
+	    //
+	    if (instruction[4]) {
+	      url[key] = url[key].toLowerCase();
+	    }
+	  }
+	
+	  //
+	  // Also parse the supplied query string in to an object. If we're supplied
+	  // with a custom parser as function use that instead of the default build-in
+	  // parser.
+	  //
+	  if (parser) url.query = parser(url.query);
+	
+	  //
+	  // We should not add port numbers if they are already the default port number
+	  // for a given protocol. As the host also contains the port number we're going
+	  // override it with the hostname which contains no port number.
+	  //
+	  if (!required(url.port, url.protocol)) {
+	    url.host = url.hostname;
+	    url.port = '';
+	  }
+	
+	  //
+	  // Parse down the `auth` for the username and password.
+	  //
+	  url.username = url.password = '';
+	  if (url.auth) {
+	    instruction = url.auth.split(':');
+	    url.username = instruction[0] || '';
+	    url.password = instruction[1] || '';
+	  }
+	
+	  //
+	  // The href is just the compiled result.
+	  //
+	  url.href = url.toString();
 	}
+	
+	/**
+	 * This is convenience method for changing properties in the URL instance to
+	 * insure that they all propagate correctly.
+	 *
+	 * @param {String} prop Property we need to adjust.
+	 * @param {Mixed} value The newly assigned value.
+	 * @returns {URL}
+	 * @api public
+	 */
+	URL.prototype.set = function set(part, value, fn) {
+	  var url = this;
+	
+	  if ('query' === part) {
+	    if ('string' === typeof value && value.length) {
+	      value = (fn || qs.parse)(value);
+	    }
+	
+	    url[part] = value;
+	  } else if ('port' === part) {
+	    url[part] = value;
+	
+	    if (!required(value, url.protocol)) {
+	      url.host = url.hostname;
+	      url[part] = '';
+	    } else if (value) {
+	      url.host = url.hostname +':'+ value;
+	    }
+	  } else if ('hostname' === part) {
+	    url[part] = value;
+	
+	    if (url.port) value += ':'+ url.port;
+	    url.host = value;
+	  } else if ('host' === part) {
+	    url[part] = value;
+	
+	    if (/\:\d+/.test(value)) {
+	      value = value.split(':');
+	      url.hostname = value[0];
+	      url.port = value[1];
+	    }
+	  } else {
+	    url[part] = value;
+	  }
+	
+	  url.href = url.toString();
+	  return url;
+	};
+	
+	/**
+	 * Transform the properties back in to a valid and full URL string.
+	 *
+	 * @param {Function} stringify Optional query stringify function.
+	 * @returns {String}
+	 * @api public
+	 */
+	URL.prototype.toString = function toString(stringify) {
+	  if (!stringify || 'function' !== typeof stringify) stringify = qs.stringify;
+	
+	  var query
+	    , url = this
+	    , result = url.protocol +'//';
+	
+	  if (url.username) {
+	    result += url.username;
+	    if (url.password) result += ':'+ url.password;
+	    result += '@';
+	  }
+	
+	  result += url.hostname;
+	  if (url.port) result += ':'+ url.port;
+	
+	  result += url.pathname;
+	
+	  query = 'object' === typeof url.query ? stringify(url.query) : url.query;
+	  if (query) result += '?' !== query.charAt(0) ? '?'+ query : query;
+	
+	  if (url.hash) result += url.hash;
+	
+	  return result;
+	};
+	
+	//
+	// Expose the URL parser and some additional properties that might be useful for
+	// others.
+	//
+	URL.qs = qs;
+	URL.location = lolcation;
+	module.exports = URL;
 
 
 /***/ },
 /* 217 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	/*!
-	 * URI.js - Mutating URLs
-	 * IPv6 Support
+	'use strict';
+	
+	/**
+	 * Check if we're required to add a port number.
 	 *
-	 * Version: 1.16.1
-	 *
-	 * Author: Rodney Rehm
-	 * Web: http://medialize.github.io/URI.js/
-	 *
-	 * Licensed under
-	 *   MIT License http://www.opensource.org/licenses/mit-license
-	 *   GPL v3 http://opensource.org/licenses/GPL-3.0
-	 *
+	 * @see https://url.spec.whatwg.org/#default-port
+	 * @param {Number|String} port Port number we need to check
+	 * @param {String} protocol Protocol we need to check against.
+	 * @returns {Boolean} Is it a default port for the given protocol
+	 * @api private
 	 */
+	module.exports = function required(port, protocol) {
+	  protocol = protocol.split(':')[0];
+	  port = +port;
 	
-	(function (root, factory) {
-	  'use strict';
-	  // https://github.com/umdjs/umd/blob/master/returnExports.js
-	  if (true) {
-	    // Node
-	    module.exports = factory();
-	  } else if (typeof define === 'function' && define.amd) {
-	    // AMD. Register as an anonymous module.
-	    define(factory);
-	  } else {
-	    // Browser globals (root is window)
-	    root.IPv6 = factory(root);
-	  }
-	}(this, function (root) {
-	  'use strict';
+	  if (!port) return false;
 	
-	  /*
-	  var _in = "fe80:0000:0000:0000:0204:61ff:fe9d:f156";
-	  var _out = IPv6.best(_in);
-	  var _expected = "fe80::204:61ff:fe9d:f156";
+	  switch (protocol) {
+	    case 'http':
+	    case 'ws':
+	    return port !== 80;
 	
-	  console.log(_in, _out, _expected, _out === _expected);
-	  */
+	    case 'https':
+	    case 'wss':
+	    return port !== 443;
 	
-	  // save current IPv6 variable, if any
-	  var _IPv6 = root && root.IPv6;
+	    case 'ftp':
+	    return port !== 21;
 	
-	  function bestPresentation(address) {
-	    // based on:
-	    // Javascript to test an IPv6 address for proper format, and to
-	    // present the "best text representation" according to IETF Draft RFC at
-	    // http://tools.ietf.org/html/draft-ietf-6man-text-addr-representation-04
-	    // 8 Feb 2010 Rich Brown, Dartware, LLC
-	    // Please feel free to use this code as long as you provide a link to
-	    // http://www.intermapper.com
-	    // http://intermapper.com/support/tools/IPV6-Validator.aspx
-	    // http://download.dartware.com/thirdparty/ipv6validator.js
+	    case 'gopher':
+	    return port !== 70;
 	
-	    var _address = address.toLowerCase();
-	    var segments = _address.split(':');
-	    var length = segments.length;
-	    var total = 8;
-	
-	    // trim colons (:: or ::a:b:c… or …a:b:c::)
-	    if (segments[0] === '' && segments[1] === '' && segments[2] === '') {
-	      // must have been ::
-	      // remove first two items
-	      segments.shift();
-	      segments.shift();
-	    } else if (segments[0] === '' && segments[1] === '') {
-	      // must have been ::xxxx
-	      // remove the first item
-	      segments.shift();
-	    } else if (segments[length - 1] === '' && segments[length - 2] === '') {
-	      // must have been xxxx::
-	      segments.pop();
-	    }
-	
-	    length = segments.length;
-	
-	    // adjust total segments for IPv4 trailer
-	    if (segments[length - 1].indexOf('.') !== -1) {
-	      // found a "." which means IPv4
-	      total = 7;
-	    }
-	
-	    // fill empty segments them with "0000"
-	    var pos;
-	    for (pos = 0; pos < length; pos++) {
-	      if (segments[pos] === '') {
-	        break;
-	      }
-	    }
-	
-	    if (pos < total) {
-	      segments.splice(pos, 1, '0000');
-	      while (segments.length < total) {
-	        segments.splice(pos, 0, '0000');
-	      }
-	
-	      length = segments.length;
-	    }
-	
-	    // strip leading zeros
-	    var _segments;
-	    for (var i = 0; i < total; i++) {
-	      _segments = segments[i].split('');
-	      for (var j = 0; j < 3 ; j++) {
-	        if (_segments[0] === '0' && _segments.length > 1) {
-	          _segments.splice(0,1);
-	        } else {
-	          break;
-	        }
-	      }
-	
-	      segments[i] = _segments.join('');
-	    }
-	
-	    // find longest sequence of zeroes and coalesce them into one segment
-	    var best = -1;
-	    var _best = 0;
-	    var _current = 0;
-	    var current = -1;
-	    var inzeroes = false;
-	    // i; already declared
-	
-	    for (i = 0; i < total; i++) {
-	      if (inzeroes) {
-	        if (segments[i] === '0') {
-	          _current += 1;
-	        } else {
-	          inzeroes = false;
-	          if (_current > _best) {
-	            best = current;
-	            _best = _current;
-	          }
-	        }
-	      } else {
-	        if (segments[i] === '0') {
-	          inzeroes = true;
-	          current = i;
-	          _current = 1;
-	        }
-	      }
-	    }
-	
-	    if (_current > _best) {
-	      best = current;
-	      _best = _current;
-	    }
-	
-	    if (_best > 1) {
-	      segments.splice(best, _best, '');
-	    }
-	
-	    length = segments.length;
-	
-	    // assemble remaining segments
-	    var result = '';
-	    if (segments[0] === '')  {
-	      result = ':';
-	    }
-	
-	    for (i = 0; i < length; i++) {
-	      result += segments[i];
-	      if (i === length - 1) {
-	        break;
-	      }
-	
-	      result += ':';
-	    }
-	
-	    if (segments[length - 1] === '') {
-	      result += ':';
-	    }
-	
-	    return result;
+	    case 'file':
+	    return false;
 	  }
 	
-	  function noConflict() {
-	    /*jshint validthis: true */
-	    if (root.IPv6 === this) {
-	      root.IPv6 = _IPv6;
-	    }
-	  
-	    return this;
-	  }
-	
-	  return {
-	    best: bestPresentation,
-	    noConflict: noConflict
-	  };
-	}));
+	  return port !== 0;
+	};
 
 
 /***/ },
 /* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/*!
-	 * URI.js - Mutating URLs
-	 * Second Level Domain (SLD) Support
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+	
+	/**
+	 * These properties should not be copied or inherited from. This is only needed
+	 * for all non blob URL's as the a blob URL does not include a hash, only the
+	 * origin.
 	 *
-	 * Version: 1.16.1
-	 *
-	 * Author: Rodney Rehm
-	 * Web: http://medialize.github.io/URI.js/
-	 *
-	 * Licensed under
-	 *   MIT License http://www.opensource.org/licenses/mit-license
-	 *   GPL v3 http://opensource.org/licenses/GPL-3.0
-	 *
+	 * @type {Object}
+	 * @private
 	 */
+	var ignore = { hash: 1, query: 1 }
+	  , URL;
 	
-	(function (root, factory) {
-	  'use strict';
-	  // https://github.com/umdjs/umd/blob/master/returnExports.js
-	  if (true) {
-	    // Node
-	    module.exports = factory();
-	  } else if (typeof define === 'function' && define.amd) {
-	    // AMD. Register as an anonymous module.
-	    define(factory);
-	  } else {
-	    // Browser globals (root is window)
-	    root.SecondLevelDomains = factory(root);
+	/**
+	 * The location object differs when your code is loaded through a normal page,
+	 * Worker or through a worker using a blob. And with the blobble begins the
+	 * trouble as the location object will contain the URL of the blob, not the
+	 * location of the page where our code is loaded in. The actual origin is
+	 * encoded in the `pathname` so we can thankfully generate a good "default"
+	 * location from it so we can generate proper relative URL's again.
+	 *
+	 * @param {Object} loc Optional default location object.
+	 * @returns {Object} lolcation object.
+	 * @api public
+	 */
+	module.exports = function lolcation(loc) {
+	  loc = loc || global.location || {};
+	  URL = URL || __webpack_require__(216);
+	
+	  var finaldestination = {}
+	    , type = typeof loc
+	    , key;
+	
+	  if ('blob:' === loc.protocol) {
+	    finaldestination = new URL(unescape(loc.pathname), {});
+	  } else if ('string' === type) {
+	    finaldestination = new URL(loc, {});
+	    for (key in ignore) delete finaldestination[key];
+	  } else if ('object' === type) for (key in loc) {
+	    if (key in ignore) continue;
+	    finaldestination[key] = loc[key];
 	  }
-	}(this, function (root) {
-	  'use strict';
 	
-	  // save current SecondLevelDomains variable, if any
-	  var _SecondLevelDomains = root && root.SecondLevelDomains;
+	  return finaldestination;
+	};
 	
-	  var SLD = {
-	    // list of known Second Level Domains
-	    // converted list of SLDs from https://github.com/gavingmiller/second-level-domains
-	    // ----
-	    // publicsuffix.org is more current and actually used by a couple of browsers internally.
-	    // downside is it also contains domains like "dyndns.org" - which is fine for the security
-	    // issues browser have to deal with (SOP for cookies, etc) - but is way overboard for URI.js
-	    // ----
-	    list: {
-	      'ac':' com gov mil net org ',
-	      'ae':' ac co gov mil name net org pro sch ',
-	      'af':' com edu gov net org ',
-	      'al':' com edu gov mil net org ',
-	      'ao':' co ed gv it og pb ',
-	      'ar':' com edu gob gov int mil net org tur ',
-	      'at':' ac co gv or ',
-	      'au':' asn com csiro edu gov id net org ',
-	      'ba':' co com edu gov mil net org rs unbi unmo unsa untz unze ',
-	      'bb':' biz co com edu gov info net org store tv ',
-	      'bh':' biz cc com edu gov info net org ',
-	      'bn':' com edu gov net org ',
-	      'bo':' com edu gob gov int mil net org tv ',
-	      'br':' adm adv agr am arq art ato b bio blog bmd cim cng cnt com coop ecn edu eng esp etc eti far flog fm fnd fot fst g12 ggf gov imb ind inf jor jus lel mat med mil mus net nom not ntr odo org ppg pro psc psi qsl rec slg srv tmp trd tur tv vet vlog wiki zlg ',
-	      'bs':' com edu gov net org ',
-	      'bz':' du et om ov rg ',
-	      'ca':' ab bc mb nb nf nl ns nt nu on pe qc sk yk ',
-	      'ck':' biz co edu gen gov info net org ',
-	      'cn':' ac ah bj com cq edu fj gd gov gs gx gz ha hb he hi hl hn jl js jx ln mil net nm nx org qh sc sd sh sn sx tj tw xj xz yn zj ',
-	      'co':' com edu gov mil net nom org ',
-	      'cr':' ac c co ed fi go or sa ',
-	      'cy':' ac biz com ekloges gov ltd name net org parliament press pro tm ',
-	      'do':' art com edu gob gov mil net org sld web ',
-	      'dz':' art asso com edu gov net org pol ',
-	      'ec':' com edu fin gov info med mil net org pro ',
-	      'eg':' com edu eun gov mil name net org sci ',
-	      'er':' com edu gov ind mil net org rochest w ',
-	      'es':' com edu gob nom org ',
-	      'et':' biz com edu gov info name net org ',
-	      'fj':' ac biz com info mil name net org pro ',
-	      'fk':' ac co gov net nom org ',
-	      'fr':' asso com f gouv nom prd presse tm ',
-	      'gg':' co net org ',
-	      'gh':' com edu gov mil org ',
-	      'gn':' ac com gov net org ',
-	      'gr':' com edu gov mil net org ',
-	      'gt':' com edu gob ind mil net org ',
-	      'gu':' com edu gov net org ',
-	      'hk':' com edu gov idv net org ',
-	      'hu':' 2000 agrar bolt casino city co erotica erotika film forum games hotel info ingatlan jogasz konyvelo lakas media news org priv reklam sex shop sport suli szex tm tozsde utazas video ',
-	      'id':' ac co go mil net or sch web ',
-	      'il':' ac co gov idf k12 muni net org ',
-	      'in':' ac co edu ernet firm gen gov i ind mil net nic org res ',
-	      'iq':' com edu gov i mil net org ',
-	      'ir':' ac co dnssec gov i id net org sch ',
-	      'it':' edu gov ',
-	      'je':' co net org ',
-	      'jo':' com edu gov mil name net org sch ',
-	      'jp':' ac ad co ed go gr lg ne or ',
-	      'ke':' ac co go info me mobi ne or sc ',
-	      'kh':' com edu gov mil net org per ',
-	      'ki':' biz com de edu gov info mob net org tel ',
-	      'km':' asso com coop edu gouv k medecin mil nom notaires pharmaciens presse tm veterinaire ',
-	      'kn':' edu gov net org ',
-	      'kr':' ac busan chungbuk chungnam co daegu daejeon es gangwon go gwangju gyeongbuk gyeonggi gyeongnam hs incheon jeju jeonbuk jeonnam k kg mil ms ne or pe re sc seoul ulsan ',
-	      'kw':' com edu gov net org ',
-	      'ky':' com edu gov net org ',
-	      'kz':' com edu gov mil net org ',
-	      'lb':' com edu gov net org ',
-	      'lk':' assn com edu gov grp hotel int ltd net ngo org sch soc web ',
-	      'lr':' com edu gov net org ',
-	      'lv':' asn com conf edu gov id mil net org ',
-	      'ly':' com edu gov id med net org plc sch ',
-	      'ma':' ac co gov m net org press ',
-	      'mc':' asso tm ',
-	      'me':' ac co edu gov its net org priv ',
-	      'mg':' com edu gov mil nom org prd tm ',
-	      'mk':' com edu gov inf name net org pro ',
-	      'ml':' com edu gov net org presse ',
-	      'mn':' edu gov org ',
-	      'mo':' com edu gov net org ',
-	      'mt':' com edu gov net org ',
-	      'mv':' aero biz com coop edu gov info int mil museum name net org pro ',
-	      'mw':' ac co com coop edu gov int museum net org ',
-	      'mx':' com edu gob net org ',
-	      'my':' com edu gov mil name net org sch ',
-	      'nf':' arts com firm info net other per rec store web ',
-	      'ng':' biz com edu gov mil mobi name net org sch ',
-	      'ni':' ac co com edu gob mil net nom org ',
-	      'np':' com edu gov mil net org ',
-	      'nr':' biz com edu gov info net org ',
-	      'om':' ac biz co com edu gov med mil museum net org pro sch ',
-	      'pe':' com edu gob mil net nom org sld ',
-	      'ph':' com edu gov i mil net ngo org ',
-	      'pk':' biz com edu fam gob gok gon gop gos gov net org web ',
-	      'pl':' art bialystok biz com edu gda gdansk gorzow gov info katowice krakow lodz lublin mil net ngo olsztyn org poznan pwr radom slupsk szczecin torun warszawa waw wroc wroclaw zgora ',
-	      'pr':' ac biz com edu est gov info isla name net org pro prof ',
-	      'ps':' com edu gov net org plo sec ',
-	      'pw':' belau co ed go ne or ',
-	      'ro':' arts com firm info nom nt org rec store tm www ',
-	      'rs':' ac co edu gov in org ',
-	      'sb':' com edu gov net org ',
-	      'sc':' com edu gov net org ',
-	      'sh':' co com edu gov net nom org ',
-	      'sl':' com edu gov net org ',
-	      'st':' co com consulado edu embaixada gov mil net org principe saotome store ',
-	      'sv':' com edu gob org red ',
-	      'sz':' ac co org ',
-	      'tr':' av bbs bel biz com dr edu gen gov info k12 name net org pol tel tsk tv web ',
-	      'tt':' aero biz cat co com coop edu gov info int jobs mil mobi museum name net org pro tel travel ',
-	      'tw':' club com ebiz edu game gov idv mil net org ',
-	      'mu':' ac co com gov net or org ',
-	      'mz':' ac co edu gov org ',
-	      'na':' co com ',
-	      'nz':' ac co cri geek gen govt health iwi maori mil net org parliament school ',
-	      'pa':' abo ac com edu gob ing med net nom org sld ',
-	      'pt':' com edu gov int net nome org publ ',
-	      'py':' com edu gov mil net org ',
-	      'qa':' com edu gov mil net org ',
-	      're':' asso com nom ',
-	      'ru':' ac adygeya altai amur arkhangelsk astrakhan bashkiria belgorod bir bryansk buryatia cbg chel chelyabinsk chita chukotka chuvashia com dagestan e-burg edu gov grozny int irkutsk ivanovo izhevsk jar joshkar-ola kalmykia kaluga kamchatka karelia kazan kchr kemerovo khabarovsk khakassia khv kirov koenig komi kostroma kranoyarsk kuban kurgan kursk lipetsk magadan mari mari-el marine mil mordovia mosreg msk murmansk nalchik net nnov nov novosibirsk nsk omsk orenburg org oryol penza perm pp pskov ptz rnd ryazan sakhalin samara saratov simbirsk smolensk spb stavropol stv surgut tambov tatarstan tom tomsk tsaritsyn tsk tula tuva tver tyumen udm udmurtia ulan-ude vladikavkaz vladimir vladivostok volgograd vologda voronezh vrn vyatka yakutia yamal yekaterinburg yuzhno-sakhalinsk ',
-	      'rw':' ac co com edu gouv gov int mil net ',
-	      'sa':' com edu gov med net org pub sch ',
-	      'sd':' com edu gov info med net org tv ',
-	      'se':' a ac b bd c d e f g h i k l m n o org p parti pp press r s t tm u w x y z ',
-	      'sg':' com edu gov idn net org per ',
-	      'sn':' art com edu gouv org perso univ ',
-	      'sy':' com edu gov mil net news org ',
-	      'th':' ac co go in mi net or ',
-	      'tj':' ac biz co com edu go gov info int mil name net nic org test web ',
-	      'tn':' agrinet com defense edunet ens fin gov ind info intl mincom nat net org perso rnrt rns rnu tourism ',
-	      'tz':' ac co go ne or ',
-	      'ua':' biz cherkassy chernigov chernovtsy ck cn co com crimea cv dn dnepropetrovsk donetsk dp edu gov if in ivano-frankivsk kh kharkov kherson khmelnitskiy kiev kirovograd km kr ks kv lg lugansk lutsk lviv me mk net nikolaev od odessa org pl poltava pp rovno rv sebastopol sumy te ternopil uzhgorod vinnica vn zaporizhzhe zhitomir zp zt ',
-	      'ug':' ac co go ne or org sc ',
-	      'uk':' ac bl british-library co cym gov govt icnet jet lea ltd me mil mod national-library-scotland nel net nhs nic nls org orgn parliament plc police sch scot soc ',
-	      'us':' dni fed isa kids nsn ',
-	      'uy':' com edu gub mil net org ',
-	      've':' co com edu gob info mil net org web ',
-	      'vi':' co com k12 net org ',
-	      'vn':' ac biz com edu gov health info int name net org pro ',
-	      'ye':' co com gov ltd me net org plc ',
-	      'yu':' ac co edu gov org ',
-	      'za':' ac agric alt bourse city co cybernet db edu gov grondar iaccess imt inca landesign law mil net ngo nis nom olivetti org pix school tm web ',
-	      'zm':' ac co com edu gov net org sch '
-	    },
-	    // gorhill 2013-10-25: Using indexOf() instead Regexp(). Significant boost
-	    // in both performance and memory footprint. No initialization required.
-	    // http://jsperf.com/uri-js-sld-regex-vs-binary-search/4
-	    // Following methods use lastIndexOf() rather than array.split() in order
-	    // to avoid any memory allocations.
-	    has: function(domain) {
-	      var tldOffset = domain.lastIndexOf('.');
-	      if (tldOffset <= 0 || tldOffset >= (domain.length-1)) {
-	        return false;
-	      }
-	      var sldOffset = domain.lastIndexOf('.', tldOffset-1);
-	      if (sldOffset <= 0 || sldOffset >= (tldOffset-1)) {
-	        return false;
-	      }
-	      var sldList = SLD.list[domain.slice(tldOffset+1)];
-	      if (!sldList) {
-	        return false;
-	      }
-	      return sldList.indexOf(' ' + domain.slice(sldOffset+1, tldOffset) + ' ') >= 0;
-	    },
-	    is: function(domain) {
-	      var tldOffset = domain.lastIndexOf('.');
-	      if (tldOffset <= 0 || tldOffset >= (domain.length-1)) {
-	        return false;
-	      }
-	      var sldOffset = domain.lastIndexOf('.', tldOffset-1);
-	      if (sldOffset >= 0) {
-	        return false;
-	      }
-	      var sldList = SLD.list[domain.slice(tldOffset+1)];
-	      if (!sldList) {
-	        return false;
-	      }
-	      return sldList.indexOf(' ' + domain.slice(0, tldOffset) + ' ') >= 0;
-	    },
-	    get: function(domain) {
-	      var tldOffset = domain.lastIndexOf('.');
-	      if (tldOffset <= 0 || tldOffset >= (domain.length-1)) {
-	        return null;
-	      }
-	      var sldOffset = domain.lastIndexOf('.', tldOffset-1);
-	      if (sldOffset <= 0 || sldOffset >= (tldOffset-1)) {
-	        return null;
-	      }
-	      var sldList = SLD.list[domain.slice(tldOffset+1)];
-	      if (!sldList) {
-	        return null;
-	      }
-	      if (sldList.indexOf(' ' + domain.slice(sldOffset+1, tldOffset) + ' ') < 0) {
-	        return null;
-	      }
-	      return domain.slice(sldOffset+1);
-	    },
-	    noConflict: function(){
-	      if (root.SecondLevelDomains === this) {
-	        root.SecondLevelDomains = _SecondLevelDomains;
-	      }
-	      return this;
-	    }
-	  };
-	
-	  return SLD;
-	}));
-
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 /* 219 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	var has = Object.prototype.hasOwnProperty;
+	
+	/**
+	 * Simple query string parser.
+	 *
+	 * @param {String} query The query string that needs to be parsed.
+	 * @returns {Object}
+	 * @api public
+	 */
+	function querystring(query) {
+	  var parser = /([^=?&]+)=([^&]*)/g
+	    , result = {}
+	    , part;
+	
+	  //
+	  // Little nifty parsing hack, leverage the fact that RegExp.exec increments
+	  // the lastIndex property so we can continue executing this loop until we've
+	  // parsed all results.
+	  //
+	  for (;
+	    part = parser.exec(query);
+	    result[decodeURIComponent(part[1])] = decodeURIComponent(part[2])
+	  );
+	
+	  return result;
+	}
+	
+	/**
+	 * Transform a query string to an object.
+	 *
+	 * @param {Object} obj Object that should be transformed.
+	 * @param {String} prefix Optional prefix.
+	 * @returns {String}
+	 * @api public
+	 */
+	function querystringify(obj, prefix) {
+	  prefix = prefix || '';
+	
+	  var pairs = [];
+	
+	  //
+	  // Optionally prefix with a '?' if needed
+	  //
+	  if ('string' !== typeof prefix) prefix = '?';
+	
+	  for (var key in obj) {
+	    if (has.call(obj, key)) {
+	      pairs.push(encodeURIComponent(key) +'='+ encodeURIComponent(obj[key]));
+	    }
+	  }
+	
+	  return pairs.length ? prefix + pairs.join('&') : '';
+	}
+	
+	//
+	// Expose the module.
+	//
+	exports.stringify = querystringify;
+	exports.parse = querystring;
+
+
+/***/ },
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31017,7 +28112,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsUnsetFilterJs = __webpack_require__(220);
+	var _actionsUnsetFilterJs = __webpack_require__(221);
 	
 	var _actionsUnsetFilterJs2 = _interopRequireDefault(_actionsUnsetFilterJs);
 	
@@ -31025,7 +28120,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 220 */
+/* 221 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31033,7 +28128,9 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	function unsetFilter(args, state) {
+	function unsetFilter(_ref) {
+	  var state = _ref.state;
+	
 	  state.set('filter', 'all');
 	};
 	
@@ -31041,7 +28138,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 221 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31052,7 +28149,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsSetNewTodoTitleJs = __webpack_require__(222);
+	var _actionsSetNewTodoTitleJs = __webpack_require__(223);
 	
 	var _actionsSetNewTodoTitleJs2 = _interopRequireDefault(_actionsSetNewTodoTitleJs);
 	
@@ -31060,7 +28157,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 222 */
+/* 223 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31068,7 +28165,10 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	function setNewTodoTitle(input, state, output) {
+	function setNewTodoTitle(_ref) {
+	  var input = _ref.input;
+	  var state = _ref.state;
+	
 	  state.set('newTodoTitle', input.title);
 	};
 	
@@ -31076,7 +28176,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 223 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31087,27 +28187,27 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsAddTodoJs = __webpack_require__(224);
+	var _actionsAddTodoJs = __webpack_require__(225);
 	
 	var _actionsAddTodoJs2 = _interopRequireDefault(_actionsAddTodoJs);
 	
-	var _actionsSaveTodoJs = __webpack_require__(225);
+	var _actionsSaveTodoJs = __webpack_require__(226);
 	
 	var _actionsSaveTodoJs2 = _interopRequireDefault(_actionsSaveTodoJs);
 	
-	var _actionsSetSavingJs = __webpack_require__(226);
+	var _actionsSetSavingJs = __webpack_require__(227);
 	
 	var _actionsSetSavingJs2 = _interopRequireDefault(_actionsSetSavingJs);
 	
-	var _actionsUnsetSavingJs = __webpack_require__(227);
+	var _actionsUnsetSavingJs = __webpack_require__(228);
 	
 	var _actionsUnsetSavingJs2 = _interopRequireDefault(_actionsUnsetSavingJs);
 	
-	var _actionsUpdateTodoJs = __webpack_require__(228);
+	var _actionsUpdateTodoJs = __webpack_require__(229);
 	
 	var _actionsUpdateTodoJs2 = _interopRequireDefault(_actionsUpdateTodoJs);
 	
-	var _actionsSetTodoErrorJs = __webpack_require__(229);
+	var _actionsSetTodoErrorJs = __webpack_require__(230);
 	
 	var _actionsSetTodoErrorJs2 = _interopRequireDefault(_actionsSetTodoErrorJs);
 	
@@ -31118,7 +28218,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 224 */
+/* 225 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31126,7 +28226,9 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	function addTodo(args, state, output) {
+	function addTodo(_ref) {
+	  var state = _ref.state;
+	  var output = _ref.output;
 	
 	  var ref = state.get('nextRef');
 	  var todo = {
@@ -31149,7 +28251,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 225 */
+/* 226 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31157,15 +28259,18 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	function saveTodo(args, state, next) {
+	function saveTodo(_ref) {
+	  var input = _ref.input;
+	  var state = _ref.state;
+	  var output = _ref.output;
 	
-	  var todo = state.get('todos', args.ref);
+	  var todo = state.get('todos', input.ref);
 	
 	  // Simulating posting the todo.data and get an ID from
 	  // the server. We resolve with the new id
 	  setTimeout(function () {
 	
-	    next.success({
+	    output.success({
 	      id: Date.now() + parseInt(Math.random() * 1000)
 	    });
 	
@@ -31177,22 +28282,6 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 226 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	function setSaving(args, state) {
-	  state.set('isSaving', true);
-	};
-	
-	exports['default'] = setSaving;
-	module.exports = exports['default'];
-
-/***/ },
 /* 227 */
 /***/ function(module, exports) {
 
@@ -31201,11 +28290,13 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	function unsetSaving(args, state) {
-	  state.set('isSaving', false);
+	function setSaving(_ref) {
+	  var state = _ref.state;
+	
+	  state.set('isSaving', true);
 	};
 	
-	exports['default'] = unsetSaving;
+	exports['default'] = setSaving;
 	module.exports = exports['default'];
 
 /***/ },
@@ -31217,19 +28308,13 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	function updateTodo(args, state) {
+	function unsetSaving(_ref) {
+	  var state = _ref.state;
 	
-	  var path = ['todos', args.ref];
-	
-	  var todo = state.get(path);
-	
-	  state.merge(path, {
-	    id: args.id,
-	    $isSaving: false
-	  });
+	  state.set('isSaving', false);
 	};
 	
-	exports['default'] = updateTodo;
+	exports['default'] = unsetSaving;
 	module.exports = exports['default'];
 
 /***/ },
@@ -31241,7 +28326,35 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	function setTodoError(input, state) {
+	function updateTodo(_ref) {
+	  var input = _ref.input;
+	  var state = _ref.state;
+	
+	  var path = ['todos', input.ref];
+	
+	  var todo = state.get(path);
+	
+	  state.merge(path, {
+	    id: input.id,
+	    $isSaving: false
+	  });
+	};
+	
+	exports['default'] = updateTodo;
+	module.exports = exports['default'];
+
+/***/ },
+/* 230 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	function setTodoError(_ref) {
+	  var input = _ref.input;
+	  var state = _ref.state;
 	
 	  var path = ['todos', input.ref];
 	
@@ -31258,7 +28371,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 230 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31269,7 +28382,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsRemoveTodoJs = __webpack_require__(231);
+	var _actionsRemoveTodoJs = __webpack_require__(232);
 	
 	var _actionsRemoveTodoJs2 = _interopRequireDefault(_actionsRemoveTodoJs);
 	
@@ -31277,7 +28390,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 231 */
+/* 232 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31285,15 +28398,18 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	function removeTodo(args, state) {
-	  state.unset(['todos', args.ref]);
+	function removeTodo(_ref) {
+	  var input = _ref.input;
+	  var state = _ref.state;
+	
+	  state.unset(['todos', input.ref]);
 	};
 	
 	exports['default'] = removeTodo;
 	module.exports = exports['default'];
 
 /***/ },
-/* 232 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31304,7 +28420,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsToggleTodoCompletedJs = __webpack_require__(233);
+	var _actionsToggleTodoCompletedJs = __webpack_require__(234);
 	
 	var _actionsToggleTodoCompletedJs2 = _interopRequireDefault(_actionsToggleTodoCompletedJs);
 	
@@ -31312,7 +28428,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 233 */
+/* 234 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31320,9 +28436,11 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	function toggleTodoCompleted(args, state) {
-	  console.log(args);
-	  var path = ['todos', args.ref];
+	function toggleTodoCompleted(_ref) {
+	  var input = _ref.input;
+	  var state = _ref.state;
+	
+	  var path = ['todos', input.ref];
 	  var todo = state.get(path);
 	  state.set(path.concat('completed'), !todo.completed);
 	};
@@ -31331,7 +28449,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 234 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31342,7 +28460,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsToggleAllCheckedJs = __webpack_require__(235);
+	var _actionsToggleAllCheckedJs = __webpack_require__(236);
 	
 	var _actionsToggleAllCheckedJs2 = _interopRequireDefault(_actionsToggleAllCheckedJs);
 	
@@ -31350,7 +28468,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31358,7 +28476,8 @@
 	Object.defineProperty(exports, '__esModule', {
 	    value: true
 	});
-	function toggleAllChecked(args, state) {
+	function toggleAllChecked(_ref) {
+	    var state = _ref.state;
 	
 	    var isCompleted = !state.get('isAllChecked');
 	    var todos = state.get('todos');
@@ -31375,7 +28494,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31386,7 +28505,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsSetFilterJs = __webpack_require__(237);
+	var _actionsSetFilterJs = __webpack_require__(238);
 	
 	var _actionsSetFilterJs2 = _interopRequireDefault(_actionsSetFilterJs);
 	
@@ -31394,7 +28513,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31402,15 +28521,18 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	function setFilter(args, state) {
-	  state.set('filter', args.route.params.filter);
+	function setFilter(_ref) {
+	  var input = _ref.input;
+	  var state = _ref.state;
+	
+	  state.set('filter', input.filter);
 	};
 	
 	exports['default'] = setFilter;
 	module.exports = exports['default'];
 
 /***/ },
-/* 238 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31421,7 +28543,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsClearCompletedJs = __webpack_require__(239);
+	var _actionsClearCompletedJs = __webpack_require__(240);
 	
 	var _actionsClearCompletedJs2 = _interopRequireDefault(_actionsClearCompletedJs);
 	
@@ -31429,7 +28551,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31437,7 +28559,8 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	function clearCompleted(args, state) {
+	function clearCompleted(_ref) {
+	  var state = _ref.state;
 	
 	  var todos = state.get('todos');
 	
@@ -31452,7 +28575,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31463,7 +28586,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsEditTodoJs = __webpack_require__(241);
+	var _actionsEditTodoJs = __webpack_require__(242);
 	
 	var _actionsEditTodoJs2 = _interopRequireDefault(_actionsEditTodoJs);
 	
@@ -31471,7 +28594,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 241 */
+/* 242 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31479,9 +28602,11 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	function editTodo(args, state) {
+	function editTodo(_ref) {
+	  var input = _ref.input;
+	  var state = _ref.state;
 	
-	  var path = ['todos', args.ref];
+	  var path = ['todos', input.ref];
 	  var todo = state.get(path);
 	
 	  state.merge(path, {
@@ -31493,7 +28618,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 242 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31504,7 +28629,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsSetTodoNewTitleJs = __webpack_require__(243);
+	var _actionsSetTodoNewTitleJs = __webpack_require__(244);
 	
 	var _actionsSetTodoNewTitleJs2 = _interopRequireDefault(_actionsSetTodoNewTitleJs);
 	
@@ -31512,7 +28637,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 243 */
+/* 244 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31520,9 +28645,12 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	function setTodoNewTitle(args, state) {
-	  state.merge(['todos', args.ref], {
-	    $newTitle: args.title
+	function setTodoNewTitle(_ref) {
+	  var input = _ref.input;
+	  var state = _ref.state;
+	
+	  state.merge(['todos', input.ref], {
+	    $newTitle: input.title
 	  });
 	};
 	
@@ -31530,7 +28658,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 244 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31541,7 +28669,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsStopEditingTodoJs = __webpack_require__(245);
+	var _actionsStopEditingTodoJs = __webpack_require__(246);
 	
 	var _actionsStopEditingTodoJs2 = _interopRequireDefault(_actionsStopEditingTodoJs);
 	
@@ -31549,7 +28677,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 245 */
+/* 246 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31557,9 +28685,11 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	function stopEditingTodo(args, state) {
+	function stopEditingTodo(_ref) {
+	  var input = _ref.input;
+	  var state = _ref.state;
 	
-	  var path = ['todos', args.ref];
+	  var path = ['todos', input.ref];
 	  var todo = state.get(path);
 	
 	  if (!todo.$newTitle) {
@@ -31577,7 +28707,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 246 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31588,7 +28718,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsRecordJs = __webpack_require__(247);
+	var _actionsRecordJs = __webpack_require__(248);
 	
 	var _actionsRecordJs2 = _interopRequireDefault(_actionsRecordJs);
 	
@@ -31596,7 +28726,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 247 */
+/* 248 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31604,7 +28734,10 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	function record(input, state, output, services) {
+	function record(_ref) {
+	  var state = _ref.state;
+	  var services = _ref.services;
+	
 	  state.set(['recorder', 'isRecording'], true);
 	  services.recorder.record();
 	}
@@ -31613,7 +28746,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 248 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31624,7 +28757,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsPlayJs = __webpack_require__(249);
+	var _actionsPlayJs = __webpack_require__(250);
 	
 	var _actionsPlayJs2 = _interopRequireDefault(_actionsPlayJs);
 	
@@ -31632,7 +28765,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 249 */
+/* 250 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31640,7 +28773,10 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	function play(input, state, output, services) {
+	function play(_ref) {
+	  var state = _ref.state;
+	  var services = _ref.services;
+	
 	  services.recorder.seek(0);
 	  state.merge('recorder', {
 	    isPlaying: true
@@ -31652,7 +28788,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 250 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31663,7 +28799,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsStopJs = __webpack_require__(251);
+	var _actionsStopJs = __webpack_require__(252);
 	
 	var _actionsStopJs2 = _interopRequireDefault(_actionsStopJs);
 	
@@ -31671,7 +28807,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 251 */
+/* 252 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31679,7 +28815,10 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	function stop(input, state, output, services) {
+	function stop(_ref) {
+	  var state = _ref.state;
+	  var services = _ref.services;
+	
 	  state.merge('recorder', {
 	    isPlaying: false,
 	    isRecording: false,

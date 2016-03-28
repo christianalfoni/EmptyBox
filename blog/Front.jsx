@@ -59,8 +59,7 @@ var Front = React.createClass({
             on current and new developments in the world of web applications.
           </p>
           <p className="text-small">
-            Currently employed at <strong>Gloppens EDB Lag</strong>, working with React JS in a rich
-            web application. Please contact me on <a href="mailto:christianalfoni@gmail.com">christianalfoni@gmail.com</a> if
+            Currently running my own startup and doing consultancy. Please contact me on <a href="mailto:christianalfoni@gmail.com">christianalfoni@gmail.com</a> if
             you have any questions or feedback.
           </p>
           <h2 className="header-sidebar">Projects</h2>

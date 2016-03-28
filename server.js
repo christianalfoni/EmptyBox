@@ -11,6 +11,12 @@ var cerebralPublicPath = path.resolve(__dirname, 'cerebral_public');
 
 var app = express();
 
-app.use('/cerebral', express.static(cerebralPublicPath))
+app.use('/cerebral', function (req, res) {
+  res.redirect('http://www.cerebraljs.com');
+})
+
+app.use('/todomvc', function (req, res) {
+  res.redirect('http://www.cerebraljs.com/todomvc');
+})
 
 start(app);

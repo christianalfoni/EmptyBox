@@ -1,6 +1,8 @@
 var React = require('react');
 var hljs = require('highlight.js');
 
+require('highlight.js/lib/languages/elm')(hljs);
+
 var CodeComponent = React.createClass({
   componentDidMount: function () {
     this.refs.code.getDOMNode().innerHTML = hljs.highlight(this.props.language, this.props.code).value;

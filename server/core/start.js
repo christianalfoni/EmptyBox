@@ -61,6 +61,10 @@ module.exports = function(app) {
     app.get('/articles/*', function(req, res) {
       var blogHtml = renderBlog(req.path);
       var article = articles.getByUrl(req.path);
+      if (!article) {
+        res.sendStatus(404)
+        return;
+      }
       var html = index.replace('{{BLOG_TITLE}}', packageJson.name + ' - ' + article.title);
       html = html.replace('{{BLOG}}', blogHtml);
       html = html.replace('{{SESSION_BLOG_STATE}}', JSON.stringify({
@@ -72,8 +76,8 @@ module.exports = function(app) {
 
     app.get('/rss', rss);
 
-    app.listen(8080, function() {
-      console.log('Blog ready at localhost:3000');
+    app.listen(process.env.PORT || 8080, function() {
+      console.log('Blog ready');
     });
 
   } else {

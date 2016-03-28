@@ -1,6 +1,6 @@
 var React = require('react');
 
-var TwitterShare = React.createClass({
+var RSS = React.createClass({
   render: function () {
     return (
       <a className="emptybox-rss"
@@ -12,5 +12,4 @@ var TwitterShare = React.createClass({
   }
 });
 
-module.exports = TwitterShare;
-
+module.exports = RSS;
