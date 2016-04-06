@@ -67,12 +67,12 @@ When something happens in our applications we want to produce some new state. In
 5. Set the isLoading state to `isLoading: false`
 6. Set an error state if server response fails
 
-So an observable in our application does not only do "one thing", it can do lots of stuff. This is what I mean saying that **input -> output** has lots of stuff happening in between. Although you start with a click and end up with and updated UI, there are lots more happening here.
+So we need the observables of our app to access a lot more than a *count state*. The question is how we can share this state produced between different observables. Like the count on the initial example can only be changed through the created observables, not a completely new one inside a different component.
 
-So what we need is a concept where we can define an observable and do all of the things we see on this list. We also need a way to generically produce state. The example above is hardcoded to changing the count. Lets head on!
+To solve this we create a global state store. Personally I have very good experience with creating a single state store/tree for the application. This prevents you getting into issues where one part of your state is isolated from other state. We will use [ImmutableJS](https://facebook.github.io/immutable-js/) to hold the state. This will also allow for render optimizations later and gives a nice API for updating the state in our state store.
 
 #### Producing state with observables
-Our global state store will use [ImmutableJS]() to hold the state of the application. This will allow for render optimizations later and gives a nice API for updating the state in our state store. So first lets look at how you define an observable in the application:
+Lets see how our little framework creates a new application with some state and an observable which changes some state.
 
 ```javascript
 
@@ -178,6 +178,7 @@ const observables = {
         Observable.fromPromise(axios.get('http://jsonplaceholder.typicode.com/posts'))
       )
       .map(result => result.data)
+      .share(); // Make it HOT (run once regardless of subscriber count)
 
     // Whenever we click we also want to reset the posts array
     const resetPosts$ = observable
