@@ -1,10 +1,10 @@
 # CycleJS driven by state
 
-So [CycleJS](http://cycle.js.org/), created by André Staltz, is an interesting project. It runs on the philosophy that applications are just inputs (from the user, normally) and outputs. This analogy fits very well with [Observables](), which CycleJS is all about.
+So [CycleJS](http://cycle.js.org/), created by André Staltz, is an interesting project. It runs on the philosophy that applications are just inputs (interaction, normally) and outputs (UI, normally). This analogy fits very well with [Observables](http://reactivex.io/documentation/observable.html), which CycleJS is all about.
 
 If you are not familiar with Observables they can be explained much like CycleJS. Inputs and outputs. What makes Observables so powerful is how you can transform and control this flow of information going through the observable.
 
-So let us just look at a very simple example of doing this transformation and control reacting to a click that increases a count after 200ms:
+So let us just look at a very simple example of doing this transformation and control. Lets react to a click that will increase a count after 200ms:
 
 ```javascript
 
@@ -25,9 +25,9 @@ As you can see transforming and controlling the flow is a lot more expressive an
 I am no expert in CycleJS. I read documentation and try to relate. Sometimes I get skeptic and sometimes I experiment. This article is exactly that. Experimenting with CycleJS to make it relate to my needs as a developer to build large scale applications.
 
 ### The CycleJS example
-Often application frameworks uses counters or BMI counters to show the core ideas of the framework without too much boilerplate. This is a double edged sword. On one hand it is good to see the essence of the framework, but a counter or a BMI calculator is not an application, at least not in my book. It is a widget. But is not a widget just a small application? And a full size application many widgets? You could say that, but there is one important difference. A widget is isolated with its own state. A full size application is very difficult to create with a bunch of isolated widgets. You want a central state store to expose all state across all the widgets.
+Often application frameworks uses counters or BMI counters to show the core ideas of the framework without too much boilerplate. This is a double edged sword. On one hand it is good to see the essence of the framework, but a counter or a BMI calculator is not an application, at least not in my book. It is a widget. But is not a widget just a small application, and a full size application many widgets? You could say that, but there is one important difference. A widget is isolated with its own state. A full size application is very difficult to create with a bunch of isolated widgets. You want a central state store to expose all state across all the widgets.
 
-So a central state store for large applications allows you to extract any state of the application in any of your views/components. This exact reason is why frameworks like [Backbone](http://backbonejs.org/) and [Angular](https://angularjs.org/) can get really messy. You put your state inside the views/controller and now you start firing off events or whatever other mechanism, trying to keep everything in sync. The idea of a central state store, that is not only server side entities (model and collections), but also client side state, is what Flux enforced.
+So a central state store for large applications allows you to extract any state of the application in any of your views/components. This exact reason is why frameworks like [Backbone](http://backbonejs.org/) and [Angular](https://angularjs.org/) can get really messy. You put your state inside the views/controller and now you start firing off events or whatever other mechanism, trying to keep everything in sync. The idea of a central state store is that you treat your client specific state the same way as server side entities, as plain objects and arrays. Facebook Flux enforced this idea.
 
 Maybe you disagree with this, or have not worked on very large applications, but in my experience this is very important. So let us look at a small CycleJS example:
 
@@ -67,7 +67,7 @@ First of all we need a central state store. A state store holding all the state 
 1. It is a lot simpler to add new state and get an overview of existing state
 2. When some piece of your UI (or something else) produces new state you want that to be available to any part of your UI
 
-So let us add a **StateStoreDriver** using [ImmutableJS](http://facebook.github.io/immutable-js/). Immutable JS makes sure we do not make any state changes from our views and it will allow for render optimizations by doing shallow checking of state.
+So let us add a **StateStoreDriver** using [ImmutableJS](http://facebook.github.io/immutable-js/). Immutable JS makes sure we do not make any state changes inside views and it will allow for render optimizations by doing shallow checking of state.
 
 ```javascript
 
@@ -152,7 +152,7 @@ Cycle.run(main, {
 So now we have control of our state and we are able to update it using any source, typically DOM. We have also started a concept of a view. Lets dive more into that.
 
 ### Views
-Instead of defining our view as a variable lets define it as a function. Also let us pass in the state to it:
+Instead of defining our view as a variable lets define it as a module. Also let us pass in the state to it:
 
 ```javascript
 
@@ -163,7 +163,7 @@ export default state =>
   ])
 ```
 
-And there we pretty much have it. Our abstraction for a view/component. Let see it with the rest of our code:
+And there we pretty much have it. Our abstraction for a view/component. Lets see it with the rest of our code:
 
 ```javascript
 
@@ -207,7 +207,7 @@ import Rx from 'rx';
 import Cycle from '@cycle/core';
 import {div, makeDOMDriver} from '@cycle/dom';
 import makeStateStoreDriver from './makeStateStoreDriver';
-import stateChanges from './addStateChanges';
+import stateChanges from './stateChanges';
 import InputView from './InputView';
 
 function main({store, DOM}) {
@@ -255,7 +255,7 @@ export default state =>
 
 It is indeed very weird that our view says nothing about how it changes state and our state change logic just has some random class names it listens to. This selector also has some challenges thinking scalability. Imagine an application with hundreds of elements and you depend on classnames to find your elements. It is very fragile. Maybe we can do something about that.
 
-Of course we want to use observables, so let us create a new source to actually trigger state changes. Lets us call them actions:
+Of course we want to use observables, so let us create a new source to actually trigger state changes. Let us call them actions:
 
 ```javascript
 
@@ -307,7 +307,7 @@ export default (state, actions) =>
     label('Input:'),
     input({
       value: state.get('inputValue'),
-      oninput: event => actions[CHANGE_INPUT_VALUE].next(event.target.value)
+      oninput: event => actions[CHANGE_INPUT_VALUE].onNext(event.target.value)
     })
   ])
 ```
@@ -415,8 +415,8 @@ Cycle.run(main, {
 So there we have it. An application that scales. You can keep adding views, actions and state changing logic. All state is available to all views and any view can trigger any action. If your app grows really big you can simply start namespacing the state, create more functions to define state changing logic. Maybe even a concept of a "module" could be added, where you pass some state and logic to change that state.
 
 ### Summary
-There are still one concern and that is render optimizations. Even though we have Immutable JS we do not have any logic to ensure that when the state used in a view does not change, do not rerender the view. And even if we did implement that logic we would quickly get into trouble due to the passing of state. The scenario occurs if a child view grabs some state that the parent view does not. That means a change on the state in question would cause the parent view not to render, which means the child view will not either. But these kinds of concerns only arise on very very big apps, which might not be in the scope of CycleJS.
+There are still one concern and that is render optimizations. Even though we have Immutable JS we do not have any logic to ensure that when the state used in a view does not change, do not rerender the view. And even if we did implement that logic we would quickly get into trouble due to the passing of state. The scenario occurs if a child view grabs some state that the parent view does not. That means a change on the state in question would cause the parent view not to render, which means the child view will neither. But these kinds of concerns only arise on very very big apps, which might not be in the scope of CycleJS.
 
 So these are just thoughts and ideas. Maybe you come from a completely different perspective on building apps and CycleJS fits like a glove. That is great! Please share any thoughts you have.
 
-Really looking forward to follow this project and thanks for reading!
+Really looking forward to see here this project is moving and thanks for reading!

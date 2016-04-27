@@ -64,6 +64,12 @@ var Front = React.createClass({
           </p>
           <h2 className="header-sidebar">Projects</h2>
           <h3 className="header-sidebar-small">
+            <a href="http://www.webpackbin.com" target="new">WebackBin</a>
+          </h3>
+          <p className="text-small">
+            A code sharing tool that supports NPM and modern worfklows
+          </p>
+          <h3 className="header-sidebar-small">
             <a href="https://github.com/christianalfoni/cerebral" target="new">Cerebral</a>
           </h3>
           <p className="text-small">
@@ -75,21 +81,6 @@ var Front = React.createClass({
           <p className="text-small">
             This blog is built with EmptyBox. It is an isomorphic hackable blog project based on
             React JS.
-          </p>
-          <h3 className="header-sidebar-small">
-            <a href="http://www.instaslideshow.com" target="new">instaslideshow.com</a>
-          </h3>
-          <p className="text-small">
-            Log in with instagram and type a hashtag to get a slideshow. Live updates and also
-            supports videos.
-          </p>
-          <h3 className="header-sidebar-small">
-            <a href="http://www.jsfridge.com" target="new">JSFridge</a>
-          </h3>
-          <p className="text-small">
-            A "teach to code" service that will be used as a prototype for a new exciting
-            project I will be working on with the Norwegian organization
-            <a href="http://www.kidsakoder.no/"> "Lær kidsa koding"</a>.
           </p>
           <h3 className="header-sidebar-small">
             <a href="https://github.com/christianalfoni/react-webpack-cookbook/wiki" target="new">Webpack React Cookbook</a>

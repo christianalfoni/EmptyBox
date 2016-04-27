@@ -120,7 +120,8 @@ class SomeComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {count: 0};
-    this.onClick$ = new Subject().subscribe(() => this.setState({count: this.state.count + 1}));
+    this.onClick$ = new Subject();
+    this.onClick$.subscribe(() => this.setState({count: this.state.count + 1}));
   }
   render() {
     return (
