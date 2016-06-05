@@ -223,7 +223,7 @@ function main({store, DOM}) {
 
 Cycle.run(main, {
   DOM: makeDOMDriver('#app'),
-  state: makeStateStoreDriver({
+  store: makeStateStoreDriver({
     inputValue: ''
   })
 });

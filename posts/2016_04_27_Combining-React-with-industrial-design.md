@@ -1,6 +1,6 @@
 # Combining React with industrial design
 
-In the world of web applications it is not enough to just write code. We also need a well thought out interface for our users to interact with the application. The web has changed a lot the last few years as we have moved from building static websites to full fledged complex applications. The workflow of writing code, collaborating with designers and push great products out the door is still changing as we explore this brave new world. In this article I am going to tell you about this newly evolved collaboration of how a designer treats me as a manufacturer of components, and how that makes me a very happy developer.
+In the world of web applications it is not enough to just write code. We also need a well thought out interface for our users to interact with the application. The web has changed a lot the last few years as we have moved from building static websites to full fledged complex applications. The workflow of writing code, collaborating with designers and push great products out the door is still changing as we explore this brave new world. In this article I am going to tell you about a collaboration where the designer treats the developer as a manufacturer of components, and how this idea can make very happy developers and designers.
 
 ### Meet Arne
 When you meet Arne the first time, looking at his style in clothing and that huge keychain he drags around, you kinda get this impression of a punk rocker who works as a janitor. Though Arne is indeed a practical guy he does all his work on and on top of a small laptop. I kid you not, he has a tiny external mouse using the hand resting point of his laptop as the scroll surface. Consider this in addition to him always being late, impossible to get his attention due to always listening to loud music and last but not least, his workspace of choice, you can safely state that Arne is an original.
@@ -54,7 +54,7 @@ With an industrial design mindset we can solve these issues. The reason is that 
 
 ![blueprint](/images/ducky/3.png)
 
-This is the real specification. This is what tells the developer what components that composes an application specific component. And this is where the magic happens. Instead of the developer being concerned with producing multiple components, implementing their UI structure and styling, the developer can focus only on the business logic. So either you build small stateless components defining UI structure and styling on one project, or you sit on an other project composing them together and hooking them up to a stateful components and the business logic.
+This is the real specification. This is what tells the developer what components that composes an application specific component. And this is where the magic happens. Instead of the developer being concerned with producing multiple components, implementing their UI structure and styling, the developer can focus only on the business logic. So either you build small stateless components defining UI structure and styling on one project, or you sit on an other project composing them together and hooking them up to stateful components and the business logic.
 
 #### Properties and deviations
 
@@ -66,7 +66,7 @@ In design there are always small deviations, often related to colors. In these s
 
 ![sequence](/images/ducky/5.png)
 
-Users interacts with the interface and it can have many different states. This is what makes application design differ from web design. You have to imagine all the states and ideally also design them. You have hover states, loading states, dynamic lists etc. And this is where it gets tricky. Often these states are related to waiting on data from server, but the designer usually has no idea about that. In Ducky we just keep a fast feedback loop to identify when a description is missing a state related to data fetching or something else.
+Users interacts with the interface and it can have many different states. This is what makes application design different from web design. You have to imagine all the states and ideally also design them. You have hover states, disabled states, loading states, dynamic lists etc. And this is where it gets tricky. Often these states are related to waiting on data from server, but the designer usually has no idea about that. In Ducky we just keep a fast feedback loop to identify when a description is missing a state related to data fetching or something else.
 
 #### Links to components
 All components, being in the main project or the components project, has their own github issue. Application components in the main project has links to the components they are composed by. This makes it easy for us to identify that the base components are implemented and ready to be composed into our main project.
@@ -78,7 +78,9 @@ Github also links the other way around, so when we click a base component in our
 ![parentlinks](/images/ducky/7.png)
 
 ### Scoping components
-So on one side we have these large application components and on the other side we have these small base components. What about abstractions in between? Let me give an example. One stateless component can be an icon, `<Icon type="favorite"/>`. But now we want to use that icon in a button. How do we handle that?
+So on one side we have these large application components and on the other side we have these small base components. What about abstractions in between? Let me give an example.
+
+One stateless component can be an icon, `<Icon type="favorite"/>`. But now we want to use that icon in a button. How do we handle that?
 
 1. We can create an `<IconButton type="favorite">My button</IconButton>`
 2. We can configure a button `<Button icon="favorite">My button</Button>`
@@ -97,7 +99,9 @@ Here at Ducky we favor composition over abstraction any day. In other words, we 
 - We rarely pass a prop from our application component to a stateless component which just passes that prop down to another component. That way we keep the UI structure less rigid
 - We can easily introduce new compositions. For example maybe we wanted to wrap our `<Icon/>` in a `<Tooltip text="wheeee"><Icon/></Tooltip>`. With the two other approaches we would have to move back to the components project and implement new components or props with `if (tooltip) {}`.
 
-But some components should be abstracted? Well, ideally not. I think we need to move ourselves from traditional thinking where we imagine the *tabs* actually has something to do with the tab content. They really do not, let me explain. Your application is in a state where the current tab index is for example `1`.
+But some components should be abstracted? Well, ideally not. I think we need to move ourselves from traditional thinking where we imagine the *tabs* actually has something to do with the *tab content*. They really do not, let me explain.
+
+Your application is in a state where the current tab index is `1`.
 
 ```javascript
 
