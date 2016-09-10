@@ -27,7 +27,7 @@ They also have the benefit of composability.
 test.equals(multiply(add(4, 4), 2), 16)
 ```
 
-And they can easily be used in a declarative manner, here with two other pure functions.
+And they can easily be used in a declarative manner.
 
 ```javascript
 
@@ -36,7 +36,7 @@ const totalPoints = users
   .reduce(sum, 0)
 ```
 
-But if you take a look at your application. How much of it can really be expressed as a pure function? How much of it is really about transforming values, which pure functions traditionally do? I would suggest most of your code is not about transforming values, but running side effects. You do http requests, DOM manipulation, websockets, local storage, workers, state changes etc. That is what application development is all about, at least on the web.
+But if you take a look at your application. How much of it can really be expressed as a pure function? How much of it is really about transforming values, which pure functions traditionally do? I would suggest most of your code is not about transforming values, but running side effects. You do http requests, DOM manipulation, websockets, local storage, workers, application state changes etc. That is what application development is all about, at least on the web.
 
 ## Side effects
 Typically we refer to side effects as:
@@ -167,7 +167,7 @@ function loadData() {
   }
 }
 ```
-As you can see we are doing everything wrong here. This is not readable, declarative, composable or testable. But there is actually one benefit. Everything that happens when you call **loadData** is defined in one file and in order. If we would push our side effects "to the edge of the application" this would look more like, showing some parts of the flow:
+As you can see we are doing everything wrong here. This is not readable, declarative, composable or testable. But there is actually one benefit. Everything that happens when you call **loadData** is defined as it runs, in order, and in one file. If we would push our side effects "to the edge of the application" this would look more like, showing some parts of the flow:
 
 ```javascript
 
@@ -221,7 +221,7 @@ function getAssignments() {
 
 Each part reads better than our previous example and it is also easier to compose these into other flows. The problem though is the decoupling. It is difficult to understand how these parts relate to each other, because you can not see which function leads to the execution of an other function. We need to jump into multiple files and compose in our head how one dispatch causes a side effect, which triggers a new dispatch which causes another side effect, which again results in a new dispatch.
 
-So pushing side effects to the edge of your application to keep the code pure does not necessarily make it easier to reason about the code. This can of course be argued, and it should, but I hope I got the point through with the examples and the reasoning above.
+So pushing side effects to the edge of your application does indeed give benefits, but it also has a negative effect, it is harder to reason about how these side effect flows run. This can of course be argued, and it should, but I hope I got the point through with the examples and the reasoning above.
 
 ## Making it declarative
 So what if we could write the flow above like this:
@@ -684,5 +684,7 @@ export default [
 
 ## What is the use case?
 When you build applications running side effects in complex asynchronous flows a **function-tree** can help you. That said, the benefits of testability and forcing you to split up your logic into "lego blocks" may be enough reason to consider it as well. It basically helps you write more readable and maintainable code.
+
+The project can be found on the [function-tree repo](https://github.com/cerebral/function-tree) and the Chrome debugger can be found [in the chrome store](https://chrome.google.com/webstore/detail/function-tree-debugger/ppfbmcnapdgakfiocieggdgbhmlalgjp).
 
 Please let me know what you think in the comments below and if you have references to other patterns and methods to solve the things discussed in this article. Thanks for taking a look!
