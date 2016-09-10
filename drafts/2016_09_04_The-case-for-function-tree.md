@@ -1,6 +1,6 @@
 # The case for function tree
 
-In this article I am going to talk about writing good code and what challenges we face reaching for it. Readable, declarative, composable and testable are all terms related to writing good code. Often pure functions is referred to as the solution, but writing web applications is mostly about side effects and complex asynchronous flows, concepts that are inherently impure. We are going to look at a concept that allows us to inherit all these great attributes of pure functions and still embrace side effects and complex asynchronous flows.
+In this article we are going to talk about writing good code and what challenges we face reaching for it. Readable, declarative, composable and testable are all terms related to writing good code. Often pure functions is referred to as the solution, but writing web applications is mostly about side effects and complex asynchronous flows, concepts that are inherently impure. This article will explain a concept that allows us to inherit all these great attributes of pure functions and still embrace side effects and complex asynchronous flows.
 
 ## Writing good code
 The holy grail of writing good code is **pure functions**. A pure function is basically a function that will always produce the same output based on the input:
@@ -24,7 +24,7 @@ They also have the benefit of composability.
 
 ```javascript
 
-test.equals(add(2, add(4, 4)), 10)
+test.equals(multiply(add(4, 4), 2), 16)
 ```
 
 And they can easily be used in a declarative manner, here with two other pure functions.
@@ -32,7 +32,7 @@ And they can easily be used in a declarative manner, here with two other pure fu
 ```javascript
 
 const totalPoints = users
-  .map(take('points'))
+  .map(takePoints)
   .reduce(sum, 0)
 ```
 
@@ -43,28 +43,58 @@ Typically we refer to side effects as:
 
 ```javascript
 
-var numberThatMayChange = 5
-function add(num) {
-  return num + numberThatMayChange
+function getUsers() {
+  return axios.get('/users')
+    .then(response => ({users: response.data}))
 }
 ```
 
-Our function points to something "outside itself", so we can not ensure that the function will return the same result every time.
-
-A popular term with projects like [Elm](), [Cycle](), and implementations in [redux](), is to "push side effects to the edge of your app". This basically means that your application business logic is kept pure and whenever you want to do a side effect you have to decouple it. The problem with this approach, arguably, is that it does not help readability. You can not express a coherent complex flow. Your application will have multiple decoupled cycles which hides the relationship of one side effect causing an other side effect, and so on. This does not matter on simple apps, because you rarely have more than one extra cycle, but in big applications you can end up with a lot of cycles and it is very difficult to understand how it is all connected.
-
-But what about this function, is it pure?
+Our function points to something "outside itself", axios, and the resolved value is not always the same as it is a server response. We can still use this function declaratively and compose it into many different chains though:
 
 ```javascript
 
-function getUsers(fetch) {
-  return fetch('/users')
+doSomething()
+  .then(getUsers)
+  .then(doSomethingElse)
+```
+
+But we will have a hard time testing it as *axios* is out of our control.
+
+But what if we did:
+
+```javascript
+
+function getUsers(axios) {
+  return axios.get('/users')
+    .then(response => ({users: response.data}))
 }
 ```
 
-Given the function gets the request object, it will always return a promise. It still causes a side effect though and we can not ensure the promised value. Nevertheless a promise will be returned. By this definition I would state that this is indeed a pure function. You might not agree with that, but my point here is not to argue the definition of a pure function, but rather say that we can achieve readable, declarative, composable and testable code embracing side effects as well... we just need to handle them in a way that allows us to get these benefits.
+Now it is easy to test it:
 
-Lets dive a bit more into this.
+```javascript
+
+const axiosMock = Promise.resolve({data: ['userA', 'userB']})
+
+getUsers(axiosMock).then(result => {
+  assert.deepEqual(result, {users: ['userA', 'userB']})
+})
+```
+
+But now we will have problems composing it into different chains as *axios* needs to be explicitly passed in.
+
+```javascript
+
+doSomething() // Has to return axios
+  .then(getUsers) // to pass it in here
+  .then(doSomethingElse)
+```
+
+Functions running side effects is problematic indeed.
+
+A popular term with projects like [Elm](http://elm-lang.org/), [Cycle](http://cycle.js.org/), and implementations in [redux (redux-loop)](https://github.com/redux-loop/redux-loop), is to "push side effects to the edge of your app". This basically means that your application business logic is kept pure and whenever you want to do a side effect you have to decouple it. The problem with this approach, arguably, is that it does not help readability. You can not express a coherent complex flow. Your application will have multiple decoupled cycles which hides the relationship of one side effect causing an other side effect, and so on. This does not matter on simple apps, because you rarely have more than one extra cycle, but in big applications you can end up with many cycles and it is difficult to understand how they relate to each other.
+
+Let me explain this in more detail looking at some code.
 
 ## A typical application flow
 So lets say you have an application. When the application mounts you want to grab data about the user to verify if the user is logged in or not. Then you want to grab some assignments. These assignments refers to other users, so you need to dynamically grab information about them as well based on the result of the assignments. How would we go about making this flow readable, declarative, composable and testable?
@@ -137,7 +167,7 @@ function loadData() {
   }
 }
 ```
-As you can see we are doing everything wrong here. This is not readable, declarative, composable or testable. But there is actually one benefit. Everything that happens when you call **loadData** is defined in one file. If we would push our side effects "to the edge of the application" this would look more like:
+As you can see we are doing everything wrong here. This is not readable, declarative, composable or testable. But there is actually one benefit. Everything that happens when you call **loadData** is defined in one file and in order. If we would push our side effects "to the edge of the application" this would look more like, showing some parts of the flow:
 
 ```javascript
 
@@ -189,9 +219,7 @@ function getAssignments() {
 }
 ```
 
-Note that this is just part of the flow.
-
-Each part reads better than our previous example and it is also easier to compose these into other flows. The problem though is the decoupling. It is very hard to understand how these parts relate to each other, because you can not see which function leads to the execution of an other function. We need to jump into multiple files and compose in our head how one dispatch causes a side effect, which does something and triggers a new dispatch which causes another side effect, which again causes something else to happen with a new dispatch...
+Each part reads better than our previous example and it is also easier to compose these into other flows. The problem though is the decoupling. It is difficult to understand how these parts relate to each other, because you can not see which function leads to the execution of an other function. We need to jump into multiple files and compose in our head how one dispatch causes a side effect, which triggers a new dispatch which causes another side effect, which again results in a new dispatch.
 
 So pushing side effects to the edge of your application to keep the code pure does not necessarily make it easier to reason about the code. This can of course be argued, and it should, but I hope I got the point through with the examples and the reasoning above.
 
@@ -482,6 +510,8 @@ Allows you to see everything that is happening as you execute these trees in you
 
 If you use function tree on the server you can debug using the **NodeDebuggerProvider** which looks something like this:
 
+![debugger](/images/functiontree-nodedebugger.png)
+
 ## Testability
 But maybe most importantly we need a good way to test the function tree. As it turns out this is very easy to do. To test one of the functions in a function tree you just call it with a custom context. For example a function doing this side effect:
 
@@ -494,38 +524,14 @@ function setData({window, input}) {
 
 ```javascript
 
-const mockedWindow = { app: {}}
-
-setData({
+const context = {
   input: {result: 'foo'},
-  window: mockedWindow
-})
-
-test.deepEqual(mockedWindow, {app: {data: 'foo'}})
-```
-
-### Testing returned results
-
-```javascript
-
-function setData({window, input}) {
-  window.app.data = input.result
-  return {
-    foo: 'bar'
-  }
+  window: { app: {}}
 }
-```
 
-```javascript
+setData(context)
 
-const mockedWindow = { app: {}}
-const result = setData({
-  input: {result: 'foo'},
-  window: mockedWindow
-})
-
-test.deepEqual(mockedWindow, {app: {data: 'foo'}})
-test.deepEqual(result, {foo: 'bar'})
+test.deepEqual(context.window, {app: {data: 'foo'}})
 ```
 
 ### Testing async functions
@@ -576,7 +582,7 @@ Let us imagine a simple tree like:
 ]
 ```
 
-These functions uses axios to fetch data and then sets the data on the window. We test this by creating a new function tree where we mock the providers. Then we execute it and verify the changes when it is done running.
+These functions uses axios to fetch data and then sets the data on the window. We test this by creating a new function tree where we mock the added context. Then we execute it and verify the changes when it is done running.
 
 ```javascript
 
@@ -613,6 +619,8 @@ function dispatchFactory(action) {
       payload: input
     })
   }
+  // The displayName overrides the function name. This is
+  // used in the debugger
   dispatchFunction.displayName = `dispatch - ${action}`;
 
   return dispatchFunction;
@@ -621,7 +629,7 @@ function dispatchFactory(action) {
 export default dispatchFactory;
 ```
 
-It is a good idea to create factories for your application to avoid creating specific functions for everything. Let us say you want to use the [Baobab]() project, the single state tree, to store state.
+It is a good idea to create factories for your application to avoid creating specific functions for everything. Let us say you want to use the [Baobab](https://github.com/Yomguithereal/baobab) project, the single state tree, to store state.
 
 ```javascript
 
@@ -649,7 +657,7 @@ This factory allows you to make state changes directly in the tree with:
 You can pretty much use factories to create a domain specific language for the app. Some of these factories are so generic that they are actually part of function tree.
 
 ### Debounce
-Debounce allows you to hold an execution for a set time. If new executions are triggered on the same tree existing holding executions will go down the *discarded* path. If no new executions are triggered within the time set, it will run down the *accepted* path. This is typically used for search typeahead.
+Debounce allows you to hold an execution for a set time. If new executions are triggered on the same tree, existing pending executions will go down the *discarded* path. If no new executions are triggered within the time set, it will run down the *accepted* path. This is typically used for search typeahead.
 
 ```javascript
 
@@ -674,6 +682,7 @@ export default [
 ]
 ```
 
-### Throttle
+## What is the use case?
+When you build applications running side effects in complex asynchronous flows a **function-tree** can help you. That said, the benefits of testability and forcing you to split up your logic into "lego blocks" may be enough reason to consider it as well. It basically helps you write more readable and maintainable code.
 
-### Wait
+Please let me know what you think in the comments below and if you have references to other patterns and methods to solve the things discussed in this article. Thanks for taking a look!
