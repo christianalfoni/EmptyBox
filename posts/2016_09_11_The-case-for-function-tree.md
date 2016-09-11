@@ -221,7 +221,7 @@ function getAssignments() {
 
 Each part reads better than our previous example and it is also easier to compose these into other flows. The problem though is the decoupling. It is difficult to understand how these parts relate to each other, because you can not see which function leads to the execution of an other function. We need to jump into multiple files and compose in our head how one dispatch causes a side effect, which triggers a new dispatch which causes another side effect, which again results in a new dispatch.
 
-So pushing side effects to the edge of your application does indeed give benefits, but it also has a negative effect, it is harder to reason about how these side effect flows run. This can of course be argued, and it should, but I hope I got the point through with the examples and the reasoning above.
+So pushing side effects to the edge of your application does indeed give benefits, but it also has a negative effect, it is harder to reason about the flow. This can of course be argued, and it should, but I hope I got the point through with the examples and the reasoning above.
 
 ## Making it declarative
 So what if we could write the flow above like this:
@@ -384,7 +384,7 @@ execute([
 })
 ```
 
-It does not matter if the function is synchronous or asynchronous, you just return an object.
+It does not matter if the function is synchronous or asynchronous, you just return/resolve an object.
 
 ```javascript
 
@@ -612,10 +612,10 @@ Since the tree is functional you can create factories that will speed up your de
 
 ```javascript
 
-function dispatchFactory(action) {
+function dispatchFactory(type) {
   function dispatchFunction({input, dispatch}) {
     dispatch({
-      type: action,
+      type,
       payload: input
     })
   }
@@ -644,7 +644,7 @@ function setFactory(path, value) {
 export default set;
 ```
 
-This factory allows you to make state changes directly in the tree with:
+This factory allows you to express state changes directly in the tree with:
 
 ```javascript
 
@@ -685,6 +685,6 @@ export default [
 ## What is the use case?
 When you build applications running side effects in complex asynchronous flows a **function-tree** can help you. That said, the benefits of testability and forcing you to split up your logic into "lego blocks" may be enough reason to consider it as well. It basically helps you write more readable and maintainable code.
 
-The project can be found on the [function-tree repo](https://github.com/cerebral/function-tree) and the Chrome debugger can be found [in the chrome store](https://chrome.google.com/webstore/detail/function-tree-debugger/ppfbmcnapdgakfiocieggdgbhmlalgjp).
+The project can be found on the [function-tree repo](https://github.com/cerebral/function-tree) and the Chrome debugger can be found [in the chrome store](https://chrome.google.com/webstore/detail/function-tree-debugger/ppfbmcnapdgakfiocieggdgbhmlalgjp). You can also check out the use of this in a real application [right here](https://github.com/cerebral/function-tree/tree/master/referenceApp).
 
 Please let me know what you think in the comments below and if you have references to other patterns and methods to solve the things discussed in this article. Thanks for taking a look!
