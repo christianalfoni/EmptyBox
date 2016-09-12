@@ -621,7 +621,7 @@ function dispatchFactory(type) {
   }
   // The displayName overrides the function name. This is
   // used in the debugger
-  dispatchFunction.displayName = `dispatch - ${action}`;
+  dispatchFunction.displayName = `dispatch - ${type}`;
 
   return dispatchFunction;
 }
@@ -686,5 +686,7 @@ export default [
 When you build applications running side effects in complex asynchronous flows a **function-tree** can help you. That said, the benefits of testability and forcing you to split up your logic into "lego blocks" may be enough reason to consider it as well. It basically helps you write more readable and maintainable code.
 
 The project can be found on the [function-tree repo](https://github.com/cerebral/function-tree) and the Chrome debugger can be found [in the chrome store](https://chrome.google.com/webstore/detail/function-tree-debugger/ppfbmcnapdgakfiocieggdgbhmlalgjp). You can also check out the use of this in a real application [right here](https://github.com/cerebral/function-tree/tree/master/referenceApp).
+
+Function tree is a project with origins in the [cerebral](http://www.cerebraljs.com) project. You can think of the signals implementation in Cerebral as an opinionated abstraction over function tree. Currently Cerebral is running its own implementation, but with Cerebral 2.0 function tree will be brought into Cerebral, powering the signals. A big thanks to Aleksey (@Guria) for refactoring and carving the ideas of the Cerebral signals to inspire this stand alone and generic concept.
 
 Please let me know what you think in the comments below and if you have references to other patterns and methods to solve the things discussed in this article. Thanks for taking a look!
