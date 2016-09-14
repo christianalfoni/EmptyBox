@@ -99,7 +99,7 @@ Let me explain this in more detail looking at some code.
 ## A typical application flow
 So lets say you have an application. When the application mounts you want to grab data about the user to verify if the user is logged in or not. Then you want to grab some assignments. These assignments refers to other users, so you need to dynamically grab information about them as well based on the result of the assignments. How would we go about making this flow readable, declarative, composable and testable?
 
-A naive implementation would be, using [redux]() as an example:
+A naive implementation would be, using [redux](http://redux.js.org/) as an example:
 
 ```javascript
 
@@ -262,7 +262,7 @@ So what if we could write the flow above like this:
 Notice here that this is valid code for what we are about to dive into. Also notice that we are not using any magical API here, it is just arrays, objects and functions. But most importantly we take full advantage of declarative code to create a coherent and readable description of a complex application flow.
 
 ## Function Tree
-So what we just did now was to define a function tree. As mentioned there was no special API to define this. It is just functions **decleared** in a tree... a function tree. Any of the functions used here, also the factories (dispatch) can be reused in any other tree definition. That means it is **composable**. What makes these trees particularly interesting in regards of composability is that not only each function can be composed into other trees, but you can compose a whole tree into an other:
+So what we just did now was to define a function tree. As mentioned there was no special API to define this. It is just functions **declared** in a tree... a function tree. Any of the functions used here, also the factories (dispatch) can be reused in any other tree definition. That means it is **composable**. What makes these trees particularly interesting in regards of composability is that not only each function can be composed into other trees, but you can compose a whole tree into an other:
 
 ```javascript
 
@@ -432,7 +432,9 @@ execute([
 
 You can also pass a payload to a path by passing an object to the path method.
 
-So why are these paths a good thing? First of all, they are declarative. There are no **IF** or **SWITCH** statements here. This increases the readability. But there are small hidden traits here as well. For example when you define a function tree you can do so without implementing anything. That means all the possible paths of execution is also defined before implementation. This forces you to think about what you need to handle and it is less likely that you ignore or forget about scenarios that might occur.
+So why are these paths a good thing? First of all, they are declarative. There are no **IF** or **SWITCH** statements here. This increases the readability. But more importantly a path has nothing to do with throwing errors. Often flows are thought of as "do this or break out if error occurs". But that is not the case with web applications. There are many reasons why you want to go down different execution paths. It can be based on a user role, a returned server response, some application state, a passed value etc. The point is that a *function-tree* does not catch errors, does bubbling and the likes. It just runs functions and lets functions return paths where the execution needs to diverge.
+
+There are also small hidden traits here as well. For example when you define a function tree you can do so without implementing anything. That means all the possible paths of execution is also defined before implementation. This forces you to think about what you need to handle and it is less likely that you ignore or forget about scenarios that might occur.
 
 ### Providers
 So an **input** and a **path** does not get you very far. That is why function tree is based on a concept called **providers**. Actually both the input and the path are providers. There are already optional providers available and you are completely free to build your own. Lets say you want to use Redux:
@@ -681,6 +683,23 @@ export default [
   }
 ]
 ```
+
+## How does this differ from rxjs and promises?
+Both Rxjs and Promises are about execution control, but neither of them have declarative conditional execution paths, you have to decouple the streams, write *IF* and *SWITCH* statements or throw an error. In the examples above we were able to diverge our execution down a `success` or `error` path just as declaratively as our functions. This helps readability. But that paths could be anything, for example:
+
+```js
+[
+  withUserRole, {
+    admin: [],
+    superuser: [],
+    user: []
+  }
+]
+```
+
+So a path has nothing to do with throwing errors. Unlike promises and Rxjs where throwing an error is the only way to break out of the current execution path, a function-tree lets you choose a path at any step in the execution.
+
+Rxjs and Promises are also based on value transformation. That means only the value returned from the previous function is available in the next. This works when you indeed want to transform values, but events in your application are not only about value transformation, they are about running side effects and going through one of multiple execution paths. That is where **function-tree** differs.
 
 ## What is the use case?
 When you build applications running side effects in complex asynchronous flows a **function-tree** can help you. That said, the benefits of testability and forcing you to split up your logic into "lego blocks" may be enough reason to consider it as well. It basically helps you write more readable and maintainable code.
