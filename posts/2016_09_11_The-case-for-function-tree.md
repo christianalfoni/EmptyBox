@@ -378,7 +378,8 @@ function bar({input}) {
 }
 
 execute([
-  foo
+  foo,
+  bar
 ], {
   foo: 'bar'
 })
@@ -643,7 +644,7 @@ function setFactory(path, value) {
   return set;
 }
 
-export default set;
+export default setFactory;
 ```
 
 This factory allows you to express state changes directly in the tree with:
