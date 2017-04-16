@@ -482,8 +482,72 @@ This is an example of the function-tree debugger:
 
 ![ft_debugger](/images/ft_debugger.png)
 
+## Async / Await
+But you might say... why even try to define this flow with promises? You can just use the new [async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function). Even though async await does make it easier to define flows it does not encourage declarative code, it encourages imperative code. Let us convert the example above:
+
+```js
+
+async function startAsyncAwaitFlow (props) {
+  let bananas = null
+
+  if (props.bananasUrl) {
+    bananas = await get(bananasUrl)
+  }
+
+  const apples = await get(props.applesUrl)
+  const basket = [bananas, apples]
+
+  state.fruitBasket = basket
+}
+
+startAsyncAwaitFlow({
+  bananasUrl: '/bananas',
+  applesUrl: '/apples'
+})
+```
+
+Even though async / await allows us to more safely access variables, as the flow is defined in one function, it does not help us write declarative code. It is also difficult to test, as we are likely to point to "outside side effects". When this flow increases in complexity it will become harder and harder to understand the code, cause you have to read through all the implementation details and you can not reuse any of this code. Unlike:
+
+```js
+
+ft.run({
+  bananasUrl: '/bananas',
+  applesUrl: '/apples'
+}, [
+  hasBananasUrl, {
+    true: getBananas,
+    false: []
+  },
+  getApples,
+  createBasket,
+  set('fruitBasket', 'basket')
+])
+``` 
+
+Where complexity can increase a lot, without loosing readability. Also each part of this flow can be reused in any other flow. Even the whole flow itself can be reused:
+
+```js
+
+const getFruits = [
+  hasBananasUrl, {
+    true: getBananas,
+    false: []
+  },
+  getApples,
+]
+
+ft.run({
+  bananasUrl: '/bananas',
+  applesUrl: '/apples'
+}, [
+  getFruits,
+  createBasket,
+  set('fruitBasket', 'basket')
+])
+```
+
 ## Summary
-So this article was not about saying that promises are bad. Promises are great! But promises are a bit too low level when we want to handle complex flows and write code that is readable and maintainable. With function-tree you get some opinions and guarantees:
+So this article was not about saying that promises and async/await are bad. They are great! But they are also a bit too low level when we want to handle complex flows and write code that is readable and maintainable. With function-tree you get some opinions and guarantees:
 
 - Your side effects are separated from the execution, meaning that testing is easier
 - You never have to break out of declarative code, as all you need is on the context. Even when diverging execution you use declarative paths
