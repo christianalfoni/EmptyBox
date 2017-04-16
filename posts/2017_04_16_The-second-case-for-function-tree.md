@@ -483,7 +483,7 @@ This is an example of the function-tree debugger:
 ![ft_debugger](/images/ft_debugger.png)
 
 ## Async / Await
-But you might say... why even try to define this flow with promises? You can just use the new [async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function). Even though async await does make it easier to define flows it does not encourage declarative code, it encourages imperative code. Let us convert the example above:
+But you might say... why even try to define this flow with promises? You can just use the new [async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function). Even though async await does make it easier to define flows compared to promises it does not encourage declarative code, it encourages imperative code. Let us convert the example above:
 
 ```js
 
@@ -506,25 +506,11 @@ startAsyncAwaitFlow({
 })
 ```
 
-Even though async / await allows us to more safely access variables, as the flow is defined in one function, it does not help us write declarative code. It is also difficult to test, as we are likely to point to "outside side effects". When this flow increases in complexity it will become harder and harder to understand the code, cause you have to read through all the implementation details and you can not reuse any of this code. Unlike:
-
-```js
-
-ft.run({
-  bananasUrl: '/bananas',
-  applesUrl: '/apples'
-}, [
-  hasBananasUrl, {
-    true: getBananas,
-    false: []
-  },
-  getApples,
-  createBasket,
-  set('fruitBasket', 'basket')
-])
-``` 
-
-Where complexity can increase a lot, without loosing readability. Also each part of this flow can be reused in any other flow. Even the whole flow itself can be reused:
+ Async / await allows us to more naturally access shared variables, as the flow is defined in one function, but it is not declarative. In this example we need to read all the implementation details to understand what it does conceptually. Declarative by definition helps readability and it allows us to create tools like the debugger.
+ 
+ It is also difficult to test this code, as we are likely to point to "outside side effects".
+ 
+ None of the code in the example above can be partly reused, unlike:
 
 ```js
 
@@ -533,7 +519,7 @@ const getFruits = [
     true: getBananas,
     false: []
   },
-  getApples,
+  getApples
 ]
 
 ft.run({
