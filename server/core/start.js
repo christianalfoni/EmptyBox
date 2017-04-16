@@ -77,7 +77,7 @@ module.exports = function(app) {
     app.get('/rss', rss);
 
     app.listen(process.env.PORT || 8080, function() {
-      console.log('Blog ready');
+      console.log('Blog ready on ' + (process.env.PORT || 8080));
     });
 
   } else {
