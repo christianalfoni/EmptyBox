@@ -294,7 +294,7 @@ When you execute a function tree you would rather list the functions in an array
 
 ```javascript
 
-startFunctionTreeFlow({
+ft.run({
   bananasUrl: '/bananas',
   applesUrl: '/apples'
 }, [
