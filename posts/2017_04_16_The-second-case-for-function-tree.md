@@ -108,13 +108,13 @@ function getBananas (payload) {
 
 function startFlow (payload) {  
   return Promise.resolve(payload)
-    .then(getBananas)
 }
 
 startFlow({
   bananasUrl: '/bananas',
   applesUrl: '/apples'
 })
+  .then(getBananas)
 ```
 
 ### Passing the payload
@@ -150,18 +150,18 @@ function createBasket (payload) {
 
 function startFlow (payload) {  
   return Promise.resolve(payload)
-    .then(getBananas)
-    .then(getApples)
-    .then(createBasket)
-    .catch(function (error) {
-
-    })
 }
 
 startFlow({
   bananasUrl: '/bananas',
   applesUrl: '/apples'
 })
+  .then(getBananas)
+  .then(getApples)
+  .then(createBasket)
+  .catch(function (error) {
+
+  })
 ```
 
 ### Side effects
@@ -175,8 +175,8 @@ const state = {}
 
 function get (url) {...}
 
-// We create a startFlow factory instead which by
-// default includes our side effects and just adds the props
+// We rather pass an object containing
+// our side effects and props
 function startFlow (props) {
   return Promise.resolve({
     get,
