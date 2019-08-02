@@ -23,10 +23,6 @@ module.exports = function(app) {
 
   if (global.isProduction) {
 
-    app.use(forceDomain({
-      hostname: 'www.christianalfoni.com'
-    }));
-
     app.use(compress());
 
     Promise.all([
